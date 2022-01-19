@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(432, 241)
+        MainWindow.resize(432, 442)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 221))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 421))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -115,7 +115,7 @@ class Ui_MainWindow(object):
         self.IDBotLineEdit.setReadOnly(False)
         self.IDBotLineEdit.setObjectName("IDBotLineEdit")
         self.StartBotButton = QtWidgets.QPushButton(self.Window)
-        self.StartBotButton.setGeometry(QtCore.QRect(230, 160, 161, 41))
+        self.StartBotButton.setGeometry(QtCore.QRect(210, 360, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -123,7 +123,6 @@ class Ui_MainWindow(object):
         self.StartBotButton.setFont(font)
         self.StartBotButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.StartBotButton.setStyleSheet("QPushButton{\n"
-"    color: #404040;\n"
 "    border-radius: 8px;\n"
 "    background-color: #75ea00;\n"
 "}\n"
@@ -137,7 +136,7 @@ class Ui_MainWindow(object):
 "}")
         self.StartBotButton.setObjectName("StartBotButton")
         self.SaveBotSettingsButton = QtWidgets.QPushButton(self.Window)
-        self.SaveBotSettingsButton.setGeometry(QtCore.QRect(20, 160, 191, 41))
+        self.SaveBotSettingsButton.setGeometry(QtCore.QRect(20, 360, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -181,6 +180,86 @@ class Ui_MainWindow(object):
         self.ShowVKTokenButton.setIcon(icon)
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
+        self.LogListWidget = QtWidgets.QListWidget(self.Window)
+        self.LogListWidget.setGeometry(QtCore.QRect(20, 150, 371, 151))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.LogListWidget.setFont(font)
+        self.LogListWidget.setTabletTracking(False)
+        self.LogListWidget.setAutoFillBackground(False)
+        self.LogListWidget.setStyleSheet("color: white;\n"
+"border-radius: 7px;\n"
+"background-color: #2C313C;\n"
+"")
+        self.LogListWidget.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.LogListWidget.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.LogListWidget.setLineWidth(1)
+        self.LogListWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.LogListWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.LogListWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.LogListWidget.setAutoScroll(True)
+        self.LogListWidget.setTabKeyNavigation(False)
+        self.LogListWidget.setProperty("showDropIndicator", True)
+        self.LogListWidget.setDragDropOverwriteMode(False)
+        self.LogListWidget.setAlternatingRowColors(False)
+        self.LogListWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
+        self.LogListWidget.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
+        self.LogListWidget.setMovement(QtWidgets.QListView.Static)
+        self.LogListWidget.setFlow(QtWidgets.QListView.TopToBottom)
+        self.LogListWidget.setProperty("isWrapping", False)
+        self.LogListWidget.setResizeMode(QtWidgets.QListView.Fixed)
+        self.LogListWidget.setLayoutMode(QtWidgets.QListView.SinglePass)
+        self.LogListWidget.setViewMode(QtWidgets.QListView.ListMode)
+        self.LogListWidget.setUniformItemSizes(False)
+        self.LogListWidget.setWordWrap(False)
+        self.LogListWidget.setSelectionRectVisible(False)
+        self.LogListWidget.setObjectName("LogListWidget")
+        self.SaveLogButton = QtWidgets.QPushButton(self.Window)
+        self.SaveLogButton.setGeometry(QtCore.QRect(20, 310, 181, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.SaveLogButton.setFont(font)
+        self.SaveLogButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.SaveLogButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.SaveLogButton.setObjectName("SaveLogButton")
+        self.ClearLogButton = QtWidgets.QPushButton(self.Window)
+        self.ClearLogButton.setGeometry(QtCore.QRect(210, 310, 181, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ClearLogButton.setFont(font)
+        self.ClearLogButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ClearLogButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.ClearLogButton.setObjectName("ClearLogButton")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -195,3 +274,6 @@ class Ui_MainWindow(object):
         self.IDBotLineEdit.setPlaceholderText(_translate("MainWindow", "Введите ID бота"))
         self.StartBotButton.setText(_translate("MainWindow", "Запустить бота"))
         self.SaveBotSettingsButton.setText(_translate("MainWindow", "Сохраниить настройки"))
+        self.LogListWidget.setSortingEnabled(False)
+        self.SaveLogButton.setText(_translate("MainWindow", "Сохранить логи"))
+        self.ClearLogButton.setText(_translate("MainWindow", "Очистить логи"))

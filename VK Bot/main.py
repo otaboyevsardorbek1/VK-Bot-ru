@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # VK_API
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
@@ -75,6 +77,8 @@ class Registration(QtWidgets.QMainWindow): # Окно регистрации
 		# Обработчики основных кнопок
 		self.ui.ShowPasswordButton.clicked.connect(self.show_password)
 		self.ui.CreateAccountButton.clicked.connect(self.create_account)
+		self.ui.LoginLineEdit.returnPressed.connect(self.create_account)
+		self.ui.PasswordLineEdit.returnPressed.connect(self.create_account)
 		self.ui.AskButton.clicked.connect(self.authorization_window)
 
 		# Обработчики кнопок с панели
@@ -149,6 +153,8 @@ class Authorization(QtWidgets.QMainWindow): # Окно авторизации
 		# Обработчики основных кнопок
 		self.ui.ShowPasswordButton.clicked.connect(self.show_password)
 		self.ui.AuthorizationButton.clicked.connect(self.authorization)
+		self.ui.LoginLineEdit.returnPressed.connect(self.authorization)
+		self.ui.PasswordLineEdit.returnPressed.connect(self.authorization)
 		self.ui.AskButton.clicked.connect(self.registration_window)
 
 		# Обработчики кнопок с панели
@@ -221,6 +227,8 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
+		self.logs = ''
+
 		file_find = False
 		for file in os.listdir():
 			if file == 'Bot-Settings.json':
@@ -233,6 +241,8 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 
 		# Обработчики основных кнопок
 		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token)
+		self.ui.SaveLogButton.clicked.connect(self.save_log)
+		self.ui.ClearLogButton.clicked.connect(self.clear_log_widget)
 		self.ui.StartBotButton.clicked.connect(self.start_bot)
 		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings)
 
@@ -274,16 +284,18 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 			self.ui.ShowVKTokenButton.setIcon(icon)
 			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
 
+	def save_log(self):
+		with open('Logs.txt', 'w') as file:
+			file.write(self.logs)
+
+	def clear_log_widget(self):
+		pass
+
 	def start_bot(self):
 		if self.ui.StartBotButton.text() == 'Запустить бота':
-			self.muteTime = MuteTime()
-			self.bot = Bot(self.ui.VKTokenLineEdit.text(), self.ui.IDBotLineEdit.text())
-			self.bot.signalMuteTime.connect(self.muteTime.start)
-			self.bot.start()
 			self.ui.StartBotButton.setText('Выключить бота')
 			self.ui.StartBotButton.setStyleSheet("""\
 				QPushButton{
-					color: #404040;
 					border-radius: 8px;
 					background-color: #ed3a2d;
 				}
@@ -296,12 +308,15 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 					background-color: #b5382f;
 				}
 			""")
+			self.muteTime = MuteTime()
+			self.bot = Bot(self.ui.VKTokenLineEdit.text(), self.ui.IDBotLineEdit.text())
+			self.bot.signalMuteTime.connect(self.muteTime.start)
+			self.bot.signalPrintUserMessage.connect(self.print_user_messgae)
+			self.bot.start()
 		else:
-			self.bot.quit()
 			self.ui.StartBotButton.setText('Запустить бота')
 			self.ui.StartBotButton.setStyleSheet("""\
 				QPushButton{
-					color: #404040;
 					border-radius: 8px;
 					background-color: #75ea00;
 				}
@@ -314,6 +329,7 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 					background-color: #62c400;
 				}
 			""")
+			self.bot.quit()
 
 	def save_bot_settings(self):
 		with open('Bot-Settings.json', 'w') as file:
@@ -323,6 +339,20 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 			}
 			file.write(json.dumps(data, ensure_ascii = False))
 		MessageBox.success('Успешное сохранение настроек бота в файл "Bot-Settings.json"')
+	# ==================================================================
+
+	# Сигналы QtCore.pyqtSignal
+	# ==================================================================
+	def print_user_messgae(self, user, message):
+		self.logs += f'{user}: {message}'
+
+		item = QtWidgets.QListWidgetItem()
+		self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
+		item.setIcon(QtGui.QIcon('../Icons/user.png'))
+		item.setTextAlignment(QtCore.Qt.AlignLeft)
+		item.setText(f'{user}:\n{message}')
+		self.ui.LogListWidget.addItem(item)
+
 # ==================================================================
 
 # VK Бот
@@ -435,6 +465,7 @@ class MuteTime(QtCore.QThread):
 
 class Bot(QtCore.QThread):
 	signalMuteTime = QtCore.pyqtSignal()
+	signalPrintUserMessage = QtCore.pyqtSignal(str, str)
 
 	def __init__(self, token, group_id):
 		QtCore.QThread.__init__(self)
@@ -533,7 +564,12 @@ PS: Для того, чтобы использовать "Команды для 
 			else:
 				self._sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), вы не можете пожать руку пользователю @id{other_id} ({other_user_data['first_name']} {other_user_data['last_name']}), потому-что он не является участником данной беседы!")
 
-	def new_message(self, event, id, peer_id, message):
+	def new_message(self, event):
+		id, peer_id, message = event.obj.from_id, event.obj.peer_id, event.obj.text
+
+		user_data = self.vk_session.method('users.get', {'user_ids': id, 'fields': 'verified'})[0]
+		self.signalPrintUserMessage.emit(f"{user_data['first_name']} {user_data['last_name']}", message)
+
 		user = Server.find(f"SELECT * FROM Users WHERE id = '{id}'")
 		if user == None:
 			user_data = self.vk_session.method('users.get', {'user_ids': id, 'fields': 'verified'})[0]
@@ -558,19 +594,20 @@ PS: Для того, чтобы использовать "Команды для 
 				if user[1] in Config.RANKS and Config.RANKS[user[1]] != user[4]:
 					Server.edit_database(f"UPDATE Users SET rank = '{Config.RANKS[user[1]]}' WHERE id = '{id}'")
 					self._sender.send_message(peer_id, f"Пользователь @id{id} ({user_data['first_name']} {user_data['last_name']}) получает новый ранг \"{Config.RANKS[user[1]]}\"!")
-
-			if list(message.strip())[0] == '!':
-				message = ''.join(list(message)[1:len(list(message)) + 1])
-				if peer_id - 2000000000 > 0:
-					if message.lower() == 'список команд':
-						self.send_command_list(peer_id)
-					elif message.split()[0].lower() == 'статистика':
-						self.send_statistic(id, peer_id, message)
-					elif ' '.join(message.split()[:3]).lower() == 'пожать руку пользователю':
-						self.shake_hands_with_the_user(id, peer_id, message)
-				else:
-					if message.lower() == 'мут-чата':
-						self.send_mute_chat_time(id)
+			
+			if len(list(message.strip())) > 1:
+				if list(message.strip())[0] == '!':
+					message = ''.join(list(message)[1:len(list(message)) + 1])
+					if peer_id - 2000000000 > 0:
+						if message.lower() == 'список команд':
+							self.send_command_list(peer_id)
+						elif message.split()[0].lower() == 'статистика':
+							self.send_statistic(id, peer_id, message)
+						elif ' '.join(message.split()[:3]).lower() == 'пожать руку пользователю':
+							self.shake_hands_with_the_user(id, peer_id, message)
+					else:
+						if message.lower() == 'мут-чата':
+							self.send_mute_chat_time(id)
 
 	def run(self):
 		for event in self.longpoll.listen():
@@ -601,7 +638,7 @@ PS: Для того, чтобы использовать "Команды для 
 							self.dict_for_warning_func.update({peer_id: [message, 1]})
 					else:
 						self.dict_for_warning_func.update({peer_id: [message, 1]})
-				self.new_message(event, id, peer_id, message)
+				self.new_message(event)
 # ==================================================================
 
 if __name__ == '__main__':

@@ -99,7 +99,7 @@ QPushButton:pressed{
      <widget class="QPushButton" name="MinimizeWindowButton">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>319</x>
         <y>0</y>
         <width>41</width>
         <height>31</height>

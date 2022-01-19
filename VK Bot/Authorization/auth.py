@@ -60,7 +60,7 @@ class Ui_MainWindow(object):
 "}")
         self.CloseWindowButton.setObjectName("CloseWindowButton")
         self.MinimizeWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.MinimizeWindowButton.setGeometry(QtCore.QRect(330, 0, 41, 31))
+        self.MinimizeWindowButton.setGeometry(QtCore.QRect(329, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -118,12 +118,15 @@ class Ui_MainWindow(object):
         self.LoginLineEdit.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
         self.LoginLineEdit.setObjectName("LoginLineEdit")
         self.PasswordLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.PasswordLineEdit.setGeometry(QtCore.QRect(20, 160, 371, 41))
+        self.PasswordLineEdit.setGeometry(QtCore.QRect(20, 160, 331, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.PasswordLineEdit.setFont(font)
         self.PasswordLineEdit.setStyleSheet("QLineEdit{\n"
-"    border-radius: 12px;\n"
+"    border-bottom-right-radius: 0px;\n"
+"    border-top-right-radius: 0px;\n"
+"    border-bottom-left-radius: 12px;\n"
+"    border-top-left-radius: 12px;\n"
 "}")
         self.PasswordLineEdit.setInputMask("")
         self.PasswordLineEdit.setText("")
@@ -154,17 +157,6 @@ class Ui_MainWindow(object):
 "    background-color: #434965;\n"
 "}")
         self.AuthorizationButton.setObjectName("AuthorizationButton")
-        self.ShowPasswordButton = QtWidgets.QPushButton(self.Window)
-        self.ShowPasswordButton.setGeometry(QtCore.QRect(350, 160, 41, 41))
-        self.ShowPasswordButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
-"}")
-        self.ShowPasswordButton.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ShowPasswordButton.setIcon(icon)
-        self.ShowPasswordButton.setIconSize(QtCore.QSize(32, 32))
-        self.ShowPasswordButton.setObjectName("ShowPasswordButton")
         self.AskButton = QtWidgets.QPushButton(self.Window)
         self.AskButton.setGeometry(QtCore.QRect(40, 230, 151, 21))
         font = QtGui.QFont()
@@ -188,6 +180,29 @@ class Ui_MainWindow(object):
 "    color: white;\n"
 "}")
         self.AskButton.setObjectName("AskButton")
+        self.frame = QtWidgets.QFrame(self.Window)
+        self.frame.setGeometry(QtCore.QRect(350, 160, 41, 41))
+        self.frame.setStyleSheet("QFrame{\n"
+"    border-bottom-right-radius: 12px;\n"
+"    border-top-right-radius: 12px;\n"
+"    border-bottom-left-radius: 0px;\n"
+"    border-top-left-radius: 0px;\n"
+"    background-color: white;\n"
+"}")
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.ShowPasswordButton = QtWidgets.QPushButton(self.frame)
+        self.ShowPasswordButton.setGeometry(QtCore.QRect(0, 0, 41, 41))
+        self.ShowPasswordButton.setStyleSheet("QPushButton{\n"
+"    border: none;\n"
+"}")
+        self.ShowPasswordButton.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.ShowPasswordButton.setIcon(icon)
+        self.ShowPasswordButton.setIconSize(QtCore.QSize(32, 32))
+        self.ShowPasswordButton.setObjectName("ShowPasswordButton")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
