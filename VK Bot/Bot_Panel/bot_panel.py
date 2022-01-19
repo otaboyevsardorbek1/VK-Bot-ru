@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(431, 239)
+        MainWindow.resize(432, 241)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
@@ -60,7 +60,7 @@ class Ui_MainWindow(object):
 "}")
         self.CloseWindowButton.setObjectName("CloseWindowButton")
         self.MinimizeWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.MinimizeWindowButton.setGeometry(QtCore.QRect(330, 0, 41, 31))
+        self.MinimizeWindowButton.setGeometry(QtCore.QRect(329, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
