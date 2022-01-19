@@ -103,7 +103,7 @@ class Registration(QtWidgets.QMainWindow): # Окно регистрации
 			self.oldPos = event.globalPos()
 		except AttributeError:
 			pass
-    # ==================================================================
+	# ==================================================================
 
 	# Логика основных кнопок
 	# ==================================================================
@@ -179,7 +179,7 @@ class Authorization(QtWidgets.QMainWindow): # Окно авторизации
 			self.oldPos = event.globalPos()
 		except AttributeError:
 			pass
-    # ==================================================================
+	# ==================================================================
 
 	# Логика основных кнопок
 	# ==================================================================
@@ -227,8 +227,6 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
-		self.logs = ''
-
 		file_find = False
 		for file in os.listdir():
 			if file == 'Bot-Settings.json':
@@ -268,7 +266,7 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 			self.oldPos = event.globalPos()
 		except AttributeError:
 			pass
-    # ==================================================================
+	# ==================================================================
 
 	# Логика основных кнопок
 	# ==================================================================
@@ -285,11 +283,22 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
 
 	def save_log(self):
+		items = []
+		for num in range(self.ui.LogListWidget.count()):
+			items.append(self.ui.LogListWidget.item(num))
+		logs = ''
+		for item in items:
+			text = ' '.join(item.text().split('\n'))
+			logs += f'{text}\n'
 		with open('Logs.txt', 'w') as file:
-			file.write(self.logs)
+			file.write(logs)
 
 	def clear_log_widget(self):
-		pass
+		items = []
+		for num in range(self.ui.LogListWidget.count()):
+			items.append(self.ui.LogListWidget.item(num))
+		for item in items:
+			self.ui.LogListWidget.takeItem(self.ui.LogListWidget.row(item))
 
 	def start_bot(self):
 		if self.ui.StartBotButton.text() == 'Запустить бота':
@@ -344,8 +353,6 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
 	def print_user_messgae(self, user, message):
-		self.logs += f'{user}: {message}'
-
 		item = QtWidgets.QListWidgetItem()
 		self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
 		item.setIcon(QtGui.QIcon('../Icons/user.png'))
@@ -383,55 +390,55 @@ class Sender:
 			)
 
 class Server:
-    @staticmethod
-    def find(sqlite3_command):
-        server_answer = requests.post(f'{Config.SERVER}/vk_bot/database/find', json = {
-                'SQLite3_Command': sqlite3_command,
-                'Unique_Key': Config.UNIQUE_KEY
-            }
-        )
-        server_answer_text = json.loads(server_answer.text)
-        if server_answer.status_code == 200:
-            return server_answer_text['Result']
-        else:
-            if 'Details' in server_answer_text:
-                MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
-            else:
-                MessageBox.error(text = server_answer_text['Answer'])
+	@staticmethod
+	def find(sqlite3_command):
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/database/find', json = {
+				'SQLite3_Command': sqlite3_command,
+				'Unique_Key': Config.UNIQUE_KEY
+			}
+		)
+		server_answer_text = json.loads(server_answer.text)
+		if server_answer.status_code == 200:
+			return server_answer_text['Result']
+		else:
+			if 'Details' in server_answer_text:
+				MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
+			else:
+				MessageBox.error(text = server_answer_text['Answer'])
 
-    @staticmethod
-    def find_all(sqlite3_command):
-        server_answer = requests.post(f'{Config.SERVER}/vk_bot/database/find_all', json = {
-                'SQLite3_Command': sqlite3_command,
-                'Unique_Key': Config.UNIQUE_KEY
-            }
-        )
-        server_answer_text = json.loads(server_answer.text)
-        if server_answer.status_code == 200:
-            return server_answer_text['Result']
-        else:
-            if 'Details' in server_answer_text:
-                MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
-            else:
-                MessageBox.error(text = server_answer_text['Answer'])
+	@staticmethod
+	def find_all(sqlite3_command):
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/database/find_all', json = {
+				'SQLite3_Command': sqlite3_command,
+				'Unique_Key': Config.UNIQUE_KEY
+			}
+		)
+		server_answer_text = json.loads(server_answer.text)
+		if server_answer.status_code == 200:
+			return server_answer_text['Result']
+		else:
+			if 'Details' in server_answer_text:
+				MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
+			else:
+				MessageBox.error(text = server_answer_text['Answer'])
 
-    @staticmethod
-    def edit_database(sqlite3_command, values = ()):
-        server_answer = requests.post(f'{Config.SERVER}/vk_bot/database/edit_database', json = {
-                'SQLite3_Command': sqlite3_command,
-                'Unique_Key': Config.UNIQUE_KEY,
-                'Values': values
-            } if values != () else {
-                'SQLite3_Command': sqlite3_command,
-                'Unique_Key': Config.UNIQUE_KEY
-            }
-        )
-        server_answer_text = json.loads(server_answer.text)
-        if server_answer.status_code == 400:
-            if 'Details' in server_answer_text:
-                MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
-            else:
-                MessageBox.error(text = server_answer_text['Answer'])
+	@staticmethod
+	def edit_database(sqlite3_command, values = ()):
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/database/edit_database', json = {
+				'SQLite3_Command': sqlite3_command,
+				'Unique_Key': Config.UNIQUE_KEY,
+				'Values': values
+			} if values != () else {
+				'SQLite3_Command': sqlite3_command,
+				'Unique_Key': Config.UNIQUE_KEY
+			}
+		)
+		server_answer_text = json.loads(server_answer.text)
+		if server_answer.status_code == 400:
+			if 'Details' in server_answer_text:
+				MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
+			else:
+				MessageBox.error(text = server_answer_text['Answer'])
 
 class MyBotLongPool(VkBotLongPoll):
 	def listen(self):
