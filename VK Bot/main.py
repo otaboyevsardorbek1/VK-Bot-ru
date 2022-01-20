@@ -20,6 +20,18 @@ import time
 import sys
 import os
 
+# Функция для поиска файлов
+def find_file(find_name, path = None):
+	file_find = False
+	if path == None:
+		listdir = os.listdir()
+	else:
+		listdir = os.listdir(path)
+	for file in listdir:
+		if file == find_name:
+			file_find = True
+	return file_find
+
 # Настройки бота
 class Config:
 	SERVER = 'http://exg1o.pythonanywhere.com'
@@ -227,20 +239,28 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
-		file_find = False
-		for file in os.listdir():
-			if file == 'Bot-Settings.json':
-				file_find = True
-		if file_find == True:
+		if find_file('Bot-Settings.json') == True:
 			with open('Bot-Settings.json', 'r') as file:
 				content = json.loads(file.read())
 				self.ui.VKTokenLineEdit.setText(content['VK_Token'])
 				self.ui.IDBotLineEdit.setText(content['Group_ID'])
+		if find_file('Logs.txt') == True:
+			with open('Logs.txt', 'r') as file:
+				logs = file.read().split('\n')
+				for text in logs:
+					if text != '':
+						text = text.split(': ')
+						item = QtWidgets.QListWidgetItem()
+						self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
+						item.setIcon(QtGui.QIcon('../Icons/user.png'))
+						item.setTextAlignment(QtCore.Qt.AlignLeft)
+						item.setText(f'{text[0]}:\n{text[1]}')
+						self.ui.LogListWidget.addItem(item)
 
 		# Обработчики основных кнопок
 		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token)
-		self.ui.SaveLogButton.clicked.connect(self.save_log)
-		self.ui.ClearLogButton.clicked.connect(self.clear_log_widget)
+		self.ui.SaveLogButton.clicked.connect(self.save_logs)
+		self.ui.ClearLogButton.clicked.connect(self.clear_logs)
 		self.ui.StartBotButton.clicked.connect(self.start_bot)
 		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings)
 
@@ -282,7 +302,7 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 			self.ui.ShowVKTokenButton.setIcon(icon)
 			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
 
-	def save_log(self):
+	def save_logs(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
 			items.append(self.ui.LogListWidget.item(num))
@@ -293,12 +313,14 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 		with open('Logs.txt', 'w') as file:
 			file.write(logs)
 
-	def clear_log_widget(self):
+	def clear_logs(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
 			items.append(self.ui.LogListWidget.item(num))
 		for item in items:
 			self.ui.LogListWidget.takeItem(self.ui.LogListWidget.row(item))
+		if find_file('Logs.txt') == True:
+			os.remove('Logs.txt')
 
 	def start_bot(self):
 		if self.ui.StartBotButton.text() == 'Запустить бота':

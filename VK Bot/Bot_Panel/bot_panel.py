@@ -124,15 +124,15 @@ class Ui_MainWindow(object):
         self.StartBotButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.StartBotButton.setStyleSheet("QPushButton{\n"
 "    border-radius: 8px;\n"
-"    background-color: #75ea00;\n"
+"    background-color: #02d609;\n"
 "}\n"
 "\n"
 "QPushButton:hover{\n"
-"    background-color: #6fdd00;\n"
+"    background-color: #02c709;\n"
 "}\n"
 "\n"
 "QPushButton:pressed{\n"
-"    background-color: #62c400;\n"
+"    background-color: #04b309;\n"
 "}")
         self.StartBotButton.setObjectName("StartBotButton")
         self.SaveBotSettingsButton = QtWidgets.QPushButton(self.Window)
@@ -176,7 +176,7 @@ class Ui_MainWindow(object):
 "}")
         self.ShowVKTokenButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ShowVKTokenButton.setIcon(icon)
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")

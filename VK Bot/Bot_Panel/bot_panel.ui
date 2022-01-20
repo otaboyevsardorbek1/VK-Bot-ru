@@ -244,15 +244,15 @@ QPushButton:pressed{
      <property name="styleSheet">
       <string notr="true">QPushButton{
 	border-radius: 8px;
-	background-color: #75ea00;
+	background-color: #02d609;
 }
 
 QPushButton:hover{
-	background-color: #6fdd00;
+	background-color: #02c709;
 }
 
 QPushButton:pressed{
-	background-color: #62c400;
+	background-color: #04b309;
 }</string>
      </property>
      <property name="text">
