@@ -176,7 +176,7 @@ class Ui_MainWindow(object):
 "}")
         self.ShowVKTokenButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ShowVKTokenButton.setIcon(icon)
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
