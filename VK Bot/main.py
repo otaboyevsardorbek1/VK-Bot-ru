@@ -468,7 +468,8 @@ class MyBotLongPool(VkBotLongPoll):
 		while self.bot_run:
 			try:
 				for event in self.check():
-					yield event
+					if self.bot_run == True:
+						yield event
 			except:
 				pass
 
@@ -627,17 +628,20 @@ PS: Для того, чтобы использовать "Команды для 
 
 			if len(list(message.strip())) > 1:
 				if list(message.strip())[0] == '!':
-					message = ''.join(list(message)[1:len(list(message)) + 1])
-					if peer_id - 2000000000 > 0:
-						if message.lower() == 'список команд':
-							self.send_command_list(peer_id)
-						elif message.split()[0].lower() == 'статистика':
-							self.send_statistic(id, peer_id, message)
-						elif ' '.join(message.split()[:3]).lower() == 'пожать руку пользователю':
-							self.shake_hands_with_the_user(id, peer_id, message)
-					else:
-						if message.lower() == 'мут-чата':
-							self.send_mute_chat_time(id)
+					try:
+						message = ''.join(list(message)[1:len(list(message)) + 1])
+						if peer_id - 2000000000 > 0:
+							if message.lower() == 'список команд':
+								self.send_command_list(peer_id)
+							elif message.split()[0].lower() == 'статистика':
+								self.send_statistic(id, peer_id, message)
+							elif ' '.join(message.split()[:3]).lower() == 'пожать руку пользователю':
+								self.shake_hands_with_the_user(id, peer_id, message)
+						else:
+							if message.lower() == 'мут-чата':
+								self.send_mute_chat_time(id)
+					except:
+						self._sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), вы неправильно ввели команду!")
 
 	def run(self):
 		for event in self.longpoll.listen():
