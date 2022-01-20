@@ -338,7 +338,7 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 					background-color: #62c400;
 				}
 			""")
-			self.bot.quit()
+			self.bot.longpoll.bot_run = False
 
 	def save_bot_settings(self):
 		with open('Bot-Settings.json', 'w') as file:
@@ -442,7 +442,8 @@ class Server:
 
 class MyBotLongPool(VkBotLongPoll):
 	def listen(self):
-		while True:
+		self.bot_run = True
+		while self.bot_run:
 			try:
 				for event in self.check():
 					yield event
@@ -601,7 +602,7 @@ PS: Для того, чтобы использовать "Команды для 
 				if user[1] in Config.RANKS and Config.RANKS[user[1]] != user[4]:
 					Server.edit_database(f"UPDATE Users SET rank = '{Config.RANKS[user[1]]}' WHERE id = '{id}'")
 					self._sender.send_message(peer_id, f"Пользователь @id{id} ({user_data['first_name']} {user_data['last_name']}) получает новый ранг \"{Config.RANKS[user[1]]}\"!")
-			
+
 			if len(list(message.strip())) > 1:
 				if list(message.strip())[0] == '!':
 					message = ''.join(list(message)[1:len(list(message)) + 1])
