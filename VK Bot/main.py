@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # VK_API
+from re import S
+from signal import signal
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
@@ -8,6 +10,8 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
+import MessageBox.message_box as message_box
+import Bot_Panel.Settings_Panel.settings_panel as settings_panel
 import Bot_Panel.bot_panel as bot_panel
 import Authorization.auth as auth
 import Registration.reg as reg
@@ -20,8 +24,14 @@ import time
 import sys
 import os
 
-# Функция для поиска файлов
-def find_file(find_name, path = None):
+# Обычные функции для глобального применения
+# ==================================================================
+def get_bot_settings(): # Функция возврата настроек бота
+	with open('Bot-Settings.json') as file:
+		bot_settings = json.loads(file.read())
+	return bot_settings
+
+def find_file(find_name, path = None): # Функция для поиска файлов
 	file_find = False
 	if path == None:
 		listdir = os.listdir()
@@ -31,6 +41,18 @@ def find_file(find_name, path = None):
 		if file == find_name:
 			file_find = True
 	return file_find
+# ==================================================================
+
+# Создание файла "Bot-Settings.json" для работы бота
+if find_file('Bot-Settings.json') == False:
+	with open('Bot-Settings.json', 'a') as file:
+		data = {
+			'Automati_Authorizaton': False,
+			'User_Commands': False,
+			'VK_Token': '',
+			'Group_ID': ''
+		}
+		file.write(json.dumps(data, ensure_ascii = False))
 
 # Настройки бота
 class Config:
@@ -48,32 +70,84 @@ class Config:
 
 # Графический интерфейс программы
 # ==================================================================
-class MessageBox: # Всплывающее окно
-	@staticmethod
-	def error(text = '', details = None): # Всплывающее окно о ошибке
-		error = QtWidgets.QMessageBox()
-		error.setWindowTitle('VK Bot')
-		error.setText(text)
-		error.setIcon(QtWidgets.QMessageBox.Warning)
-		error.setStandardButtons(QtWidgets.QMessageBox.Ok)
+class MessageBox(QtWidgets.QMainWindow): # Всплывающее окно
+	signalButton = QtCore.pyqtSignal(str)
 
-		if details != None:
-			error.setDetailedText(details)
+	def __init__(self, parent = None, font_size = 10, text = '', button_1 = '', button_2 = ''):
+		super().__init__(parent, QtCore.Qt.Window)
+		_translate = QtCore.QCoreApplication.translate
+		self.ui = message_box.Ui_Form()
+		self.ui.setupUi(self)
+		self.setWindowModality(2)
 
-		error.exec_()
+		# Отключаем стандартные границы окна программы
+		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+		self.center()
 
-	@staticmethod
-	def success(text = '', details = None): # Всплывающее окно о выполнением действие
-		success = QtWidgets.QMessageBox()
-		success.setWindowTitle('VK Bot')
-		success.setText(text)
-		success.setIcon(QtWidgets.QMessageBox.Information)
-		success.setStandardButtons(QtWidgets.QMessageBox.Ok)
+		self.ui.Label.setText(text)
 
-		if details != None:
-			success.setDetailedText(details)
+		font = QtGui.QFont()
+		font.setPointSize(11)
+		font.setBold(True)
+		font.setWeight(75)
+		style = """
+QPushButton{
+	color: white;
+	border-radius: 8px;
+	background-color: #595F76;
+}
 
-		success.exec_()
+QPushButton:hover{
+	background-color: #50566E;
+}
+
+QPushButton:pressed{
+	background-color: #434965;
+}
+"""
+		if button_1 != '':
+			self.Button_1 = QtWidgets.QPushButton(self.ui.Window)
+			self.Button_1.setGeometry(QtCore.QRect(20, 70, 171, 41))
+			self.Button_1.setFont(font)
+			self.Button_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+			self.Button_1.setStyleSheet(style)
+			self.Button_1.setText(_translate('Form', button_1))
+			self.Button_1.clicked.connect(lambda: self.signalButton.emit(button_1))
+		if button_2 != '':
+			self.Button_2 = QtWidgets.QPushButton(self.ui.Window)
+			self.Button_2.setGeometry(QtCore.QRect(210, 70, 171, 41))
+			self.Button_2.setFont(font)
+			self.Button_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+			self.Button_2.setStyleSheet(style)
+			self.Button_2.setText(_translate('Form', button_2))
+			self.Button_2.clicked.connect(lambda: self.signalButton.emit(button_2))
+
+		font.setPointSize(font_size)
+		self.ui.Label.setFont(font)
+
+		# Обработчики кнопок с панели
+		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
+		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
+
+	# Перетаскивание безрамочного окна
+	# ==================================================================
+	def center(self):
+		qr = self.frameGeometry()
+		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
+		qr.moveCenter(cp)
+		self.move(qr.topLeft())
+
+	def mousePressEvent(self, event):
+		self.oldPos = event.globalPos()
+
+	def mouseMoveEvent(self, event):
+		try:
+			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
+			self.move(self.x() + delta.x(), self.y() + delta.y())
+			self.oldPos = event.globalPos()
+		except AttributeError:
+			pass
 
 class Registration(QtWidgets.QMainWindow): # Окно регистрации
 	def __init__(self, parent = None):
@@ -139,12 +213,16 @@ class Registration(QtWidgets.QMainWindow): # Окно регистрации
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
-			MessageBox.success(text = server_answer_text['Answer'])
+			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+			message_box.signalButton.connect(lambda: message_box.close())
+			message_box.show()
 			auth = Authorization()
 			self.close()
 			auth.show()
 		else:
-			MessageBox.error(text = server_answer_text['Answer'])
+			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+			message_box.signalButton.connect(lambda: message_box.close())
+			message_box.show()
 
 	def authorization_window(self):
 		auth = Authorization()
@@ -156,6 +234,7 @@ class Authorization(QtWidgets.QMainWindow): # Окно авторизации
 		QtWidgets.QWidget.__init__(self, parent)
 		self.ui = auth.Ui_MainWindow()
 		self.ui.setupUi(self)
+		self.setWindowModality(2)
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -215,35 +294,179 @@ class Authorization(QtWidgets.QMainWindow): # Окно авторизации
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
-			MessageBox.success(text = server_answer_text['Answer'])
+			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+			message_box.signalButton.connect(lambda: message_box.close())
+			message_box.show()
 			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
-			bot_panel = BotPanel()
+			bot_panel = BotPanel(self.ui.LoginLineEdit.text(), self.ui.PasswordLineEdit.text())
 			self.close()
 			bot_panel.show()
 		else:
-			MessageBox.error(text = server_answer_text['Answer'])
+			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+			message_box.signalButton.connect(lambda: message_box.close())
+			message_box.show()
 
 	def registration_window(self):
 		reg = Registration()
 		self.close()
 		reg.show()
 
-class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
-	def __init__(self, parent = None):
-		QtWidgets.QWidget.__init__(self, parent)
-		self.ui = bot_panel.Ui_MainWindow()
+class SettingsPanel(QtWidgets.QMainWindow): # Окно настроек бота
+	signalUpdateBotSettings = QtCore.pyqtSignal()
+
+	def __init__(self, login, password, parent = None):
+		super().__init__(parent, QtCore.Qt.Window)
+		self.ui = settings_panel.Ui_Form()
 		self.ui.setupUi(self)
+		self.setWindowModality(2)
+
+		self.login = login
+		self.password = password
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
-		if find_file('Bot-Settings.json') == True:
-			with open('Bot-Settings.json', 'r') as file:
-				content = json.loads(file.read())
-				self.ui.VKTokenLineEdit.setText(content['VK_Token'])
-				self.ui.IDBotLineEdit.setText(content['Group_ID'])
+		self.bot_settings = get_bot_settings()
+		self.user_commands_button_status = False
+		self.automati_authorizaton_button_status = False
+		self.ui.VKTokenLineEdit.setText(self.bot_settings['VK_Token'])
+		self.ui.IDBotLineEdit.setText(self.bot_settings['Group_ID'])
+		if self.bot_settings['User_Commands'] == True:
+			self.user_commands_button_status = True
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.UserCommandsButton.setIcon(icon)
+		if self.bot_settings['Automati_Authorizaton'] == True:
+			self.automati_authorizaton_button_status = True
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.AutomatiAuthorizatonButton.setIcon(icon)
+
+		# Обработчики основных кнопок
+		self.ui.AutomatiAuthorizatonButton.clicked.connect(self.automati_authorizaton_button)
+		self.ui.UserCommandsButton.clicked.connect(self.user_commands_button)
+		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token)
+		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings)
+
+		# Обработчики кнопок с панели
+		self.ui.CloseWindowButton.clicked.connect(self.close_window)
+		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
+
+		# Перетаскивание безрамочного окна
+	# ==================================================================
+	def center(self):
+		qr = self.frameGeometry()
+		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
+		qr.moveCenter(cp)
+		self.move(qr.topLeft())
+
+	def mousePressEvent(self, event):
+		self.oldPos = event.globalPos()
+
+	def mouseMoveEvent(self, event):
+		try:
+			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
+			self.move(self.x() + delta.x(), self.y() + delta.y())
+			self.oldPos = event.globalPos()
+		except AttributeError:
+			pass
+	# ==================================================================
+
+	def automati_authorizaton_button(self):
+		if self.automati_authorizaton_button_status == True:
+			self.automati_authorizaton_button_status = False
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.AutomatiAuthorizatonButton.setIcon(icon)
+		else:
+			self.automati_authorizaton_button_status = True
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.AutomatiAuthorizatonButton.setIcon(icon)
+
+	def user_commands_button(self):
+		if self.user_commands_button_status == True:
+			self.user_commands_button_status = False
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.UserCommandsButton.setIcon(icon)
+		else:
+			self.user_commands_button_status = True
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.UserCommandsButton.setIcon(icon)
+
+	def signalButton(self, button):
+		if button == 'Да':
+			self.save_bot_settings()
+		self.message_box.close()
+
+	def close_window(self):
+		different_settings = False
+		if self.bot_settings['Automati_Authorizaton'] != self.automati_authorizaton_button_status:
+			different_settings = True
+		elif self.bot_settings['User_Commands'] != self.user_commands_button_status:
+			different_settings = True
+		elif self.bot_settings['VK_Token'] != self.ui.VKTokenLineEdit.text():
+			different_settings = True
+		elif self.bot_settings['Group_ID'] != self.ui.IDBotLineEdit.text():
+			different_settings = True
+
+		if different_settings == True:
+			self.message_box = MessageBox(text = 'Вы изменили настройки, хотите их сохранить?', button_1 = 'Да', button_2 = 'нет')
+			self.message_box.signalButton.connect(self.signalButton)
+			self.message_box.show()
+
+		self.close()
+
+	def show_vk_token(self):
+		if self.ui.VKTokenLineEdit.echoMode() == 2:
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.ShowVKTokenButton.setIcon(icon)
+			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
+		else:
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.ui.ShowVKTokenButton.setIcon(icon)
+			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+
+	def save_bot_settings(self):
+		with open('Bot-Settings.json', 'w') as file:
+			data = {
+				'Automati_Authorizaton': self.automati_authorizaton_button_status,
+				'User_Commands': self.user_commands_button_status,
+				'VK_Token': self.ui.VKTokenLineEdit.text(),
+				'Group_ID': self.ui.IDBotLineEdit.text()
+			}
+			if self.automati_authorizaton_button_status == True:
+				data.update(
+					{
+						'Login': self.login,
+						'Password': self.password
+					}
+				)
+			file.write(json.dumps(data, ensure_ascii = False))
+		message_box = MessageBox(text = 'Успешное сохранение настроек бота', button_2 = 'Окей')
+		message_box.signalButton.connect(lambda: message_box.close())
+		message_box.show()
+
+class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
+	def __init__(self, login, password, parent = None):
+		QtWidgets.QWidget.__init__(self, parent)
+		self.ui = bot_panel.Ui_MainWindow()
+		self.ui.setupUi(self)
+
+		self.login = login
+		self.password = password
+
+		# Отключаем стандартные границы окна программы
+		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+		self.center()
+
 		if find_file('Logs.txt') == True:
 			with open('Logs.txt', 'r') as file:
 				logs = file.read().split('\n')
@@ -257,12 +480,13 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 						item.setText(f'{text[0]}:\n{text[1]}')
 						self.ui.LogListWidget.addItem(item)
 
+		self.bot_settings = get_bot_settings()
+
 		# Обработчики основных кнопок
-		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token)
 		self.ui.SaveLogButton.clicked.connect(self.save_logs)
 		self.ui.ClearLogButton.clicked.connect(self.clear_logs)
+		self.ui.BotSettingsButton.clicked.connect(self.bot_settings_panel)
 		self.ui.StartBotButton.clicked.connect(self.start_bot)
-		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings)
 
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
@@ -290,18 +514,6 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 
 	# Логика основных кнопок
 	# ==================================================================
-	def show_vk_token(self):
-		if self.ui.VKTokenLineEdit.echoMode() == 2:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowVKTokenButton.setIcon(icon)
-			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
-		else:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowVKTokenButton.setIcon(icon)
-			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
-
 	def save_logs(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
@@ -322,54 +534,61 @@ class BotPanel(QtWidgets.QMainWindow): # Окно панель бота
 		if find_file('Logs.txt') == True:
 			os.remove('Logs.txt')
 
+	def bot_settings_panel(self):
+		settings_panel = SettingsPanel(self.login, self.password)
+		settings_panel.signalUpdateBotSettings.connect(self.update_bot_settings)
+		settings_panel.show()
+
 	def start_bot(self):
-		if self.ui.StartBotButton.text() == 'Запустить бота':
-			self.ui.StartBotButton.setText('Выключить бота')
-			self.ui.StartBotButton.setStyleSheet("""\
-				QPushButton{
-					border-radius: 8px;
-					background-color: #ed3a2d;
-				}
+		if self.bot_settings['VK_Token'] != '' or self.bot_settings['Group_ID'] != '':
+			if self.ui.StartBotButton.text() == 'Запустить бота':
+				self.ui.StartBotButton.setText('Выключить бота')
+				self.ui.StartBotButton.setStyleSheet("""\
+					QPushButton{
+						border-radius: 8px;
+						background-color: #ed3a2d;
+					}
 
-				QPushButton:hover{
-					background-color: #c7382e;
-				}
+					QPushButton:hover{
+						background-color: #c7382e;
+					}
 
-				QPushButton:pressed{
-					background-color: #b5382f;
-				}
-			""")
-			self.muteTime = MuteTime()
-			self.bot = Bot(self.ui.VKTokenLineEdit.text(), self.ui.IDBotLineEdit.text())
-			self.bot.signalMuteTime.connect(self.muteTime.start)
-			self.bot.signalPrintUserMessage.connect(self.print_user_messgae)
-			self.bot.start()
+					QPushButton:pressed{
+						background-color: #b5382f;
+					}
+				""")
+				self.muteTime = MuteTime()
+				self.bot = Bot(self.bot_settings['VK_Token'], self.bot_settings['Group_ID'])
+				self.bot.signalMuteTime.connect(self.muteTime.start)
+				self.bot.signalPrintUserMessage.connect(self.print_user_messgae)
+				self.bot.start()
+			else:
+				self.ui.StartBotButton.setText('Запустить бота')
+				self.ui.StartBotButton.setStyleSheet("""\
+					QPushButton{
+						border-radius: 8px;
+						background-color: #75ea00;
+					}
+
+					QPushButton:hover{
+						background-color: #6fdd00;
+					}
+
+					QPushButton:pressed{
+						background-color: #62c400;
+					}
+				""")
+				self.bot.longpoll.bot_run = False
 		else:
-			self.ui.StartBotButton.setText('Запустить бота')
-			self.ui.StartBotButton.setStyleSheet("""\
-				QPushButton{
-					border-radius: 8px;
-					background-color: #75ea00;
-				}
+			message_box = MessageBox(text = 'Отсутствует "VK Token" или "ID Group" в настройках!', button_2 = 'Окей')
+			message_box.signalButton.connect(lambda: message_box.close())
+			message_box.show()
+	# ==================================================================
 
-				QPushButton:hover{
-					background-color: #6fdd00;
-				}
-
-				QPushButton:pressed{
-					background-color: #62c400;
-				}
-			""")
-			self.bot.longpoll.bot_run = False
-
-	def save_bot_settings(self):
-		with open('Bot-Settings.json', 'w') as file:
-			data = {
-				'VK_Token': self.ui.VKTokenLineEdit.text(),
-				'Group_ID': self.ui.IDBotLineEdit.text()
-			}
-			file.write(json.dumps(data, ensure_ascii = False))
-		MessageBox.success('Успешное сохранение настроек бота в файл "Bot-Settings.json"')
+	# Обычные функции
+	# ==================================================================
+	def update_bot_settings(self):
+		self.bot_settings = get_bot_settings()
 	# ==================================================================
 
 	# Сигналы QtCore.pyqtSignal
@@ -424,9 +643,13 @@ class Server:
 			return server_answer_text['Result']
 		else:
 			if 'Details' in server_answer_text:
-				MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
+				message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				message_box.signalButton.connect(lambda: message_box.close())
+				message_box.show()
 			else:
-				MessageBox.error(text = server_answer_text['Answer'])
+				message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				message_box.signalButton.connect(lambda: message_box.close())
+				message_box.show()
 
 	@staticmethod
 	def find_all(sqlite3_command):
@@ -440,9 +663,13 @@ class Server:
 			return server_answer_text['Result']
 		else:
 			if 'Details' in server_answer_text:
-				MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
+				message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				message_box.signalButton.connect(lambda: message_box.close())
+				message_box.show()
 			else:
-				MessageBox.error(text = server_answer_text['Answer'])
+				message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				message_box.signalButton.connect(lambda: message_box.close())
+				message_box.show()
 
 	@staticmethod
 	def edit_database(sqlite3_command, values = ()):
@@ -458,9 +685,13 @@ class Server:
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 400:
 			if 'Details' in server_answer_text:
-				MessageBox.error(text = server_answer_text['Answer'], details = server_answer_text['Details'])
+				message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				message_box.signalButton.connect(lambda: message_box.close())
+				message_box.show()
 			else:
-				MessageBox.error(text = server_answer_text['Answer'])
+				message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				message_box.signalButton.connect(lambda: message_box.close())
+				message_box.show()
 
 class MyBotLongPool(VkBotLongPoll):
 	def listen(self):
@@ -677,6 +908,29 @@ PS: Для того, чтобы использовать "Команды для 
 
 if __name__ == '__main__':
 	app = QtWidgets.QApplication(sys.argv)
-	myapp = Authorization()
+	bot_settings = get_bot_settings()
+	if bot_settings['Automati_Authorizaton'] == True:
+		data = {
+			'Login': bot_settings['Login'],
+			'Password': bot_settings['Password']
+		}
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
+		server_answer_text = json.loads(server_answer.text)
+		if server_answer.status_code == 200:
+			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
+			myapp = BotPanel(bot_settings['Login'], bot_settings['Password'])
+		else:
+			bot_settings.update(
+				{
+					'Automati_Authorizaton': False
+				}
+			)
+			for item in ['Login', 'Password']:
+				bot_settings.pop(item)
+			with open('Bot-Settings.json', 'w') as file: 
+				file.write(json.dumps(bot_settings, ensure_ascii = False))
+			myapp = Authorization()
+	else:
+		myapp = Authorization()
 	myapp.show()
 	sys.exit(app.exec_())

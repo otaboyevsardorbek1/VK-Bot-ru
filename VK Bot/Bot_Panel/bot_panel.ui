@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>432</width>
-    <height>442</height>
+    <height>343</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>411</width>
-      <height>421</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -139,94 +139,11 @@ QPushButton:pressed{
       </property>
      </widget>
     </widget>
-    <widget class="QLineEdit" name="VKTokenLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>331</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLineEdit{
-	border-bottom-left-radius: 12px;
-	border-top-left-radius: 12px;
-}</string>
-     </property>
-     <property name="inputMethodHints">
-      <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
-     </property>
-     <property name="inputMask">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="frame">
-      <bool>false</bool>
-     </property>
-     <property name="echoMode">
-      <enum>QLineEdit::Password</enum>
-     </property>
-     <property name="placeholderText">
-      <string>Введите VK Token бота</string>
-     </property>
-     <property name="cursorMoveStyle">
-      <enum>Qt::LogicalMoveStyle</enum>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="IDBotLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>100</y>
-       <width>371</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLineEdit{
-	border-radius: 12px;
-}</string>
-     </property>
-     <property name="inputMask">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="frame">
-      <bool>false</bool>
-     </property>
-     <property name="echoMode">
-      <enum>QLineEdit::Normal</enum>
-     </property>
-     <property name="dragEnabled">
-      <bool>false</bool>
-     </property>
-     <property name="readOnly">
-      <bool>false</bool>
-     </property>
-     <property name="placeholderText">
-      <string>Введите ID бота</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="StartBotButton">
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>360</y>
+       <y>260</y>
        <width>181</width>
        <height>41</height>
       </rect>
@@ -259,11 +176,11 @@ QPushButton:pressed{
       <string>Запустить бота</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="SaveBotSettingsButton">
+    <widget class="QPushButton" name="BotSettingsButton">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>360</y>
+       <y>260</y>
        <width>181</width>
        <height>41</height>
       </rect>
@@ -294,67 +211,14 @@ QPushButton:pressed{
 }</string>
      </property>
      <property name="text">
-      <string>Сохраниить настройки</string>
+      <string>Настройки</string>
      </property>
-    </widget>
-    <widget class="QFrame" name="frame">
-     <property name="geometry">
-      <rect>
-       <x>350</x>
-       <y>50</y>
-       <width>41</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QFrame{
-	border-bottom-right-radius: 12px;
-	border-top-right-radius: 12px;
-	border-bottom-left-radius: 0px;
-	border-top-left-radius: 0px;
-	background-color: white;
-}</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QPushButton" name="ShowVKTokenButton">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>41</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-	border: none;
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../../Icons/eyeOn.png</normaloff>../../Icons/eyeOn.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-     </widget>
     </widget>
     <widget class="QListWidget" name="LogListWidget">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>150</y>
+       <y>50</y>
        <width>371</width>
        <height>151</height>
       </rect>
@@ -452,7 +316,7 @@ background-color: #2C313C;
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>310</y>
+       <y>210</y>
        <width>181</width>
        <height>41</height>
       </rect>
@@ -490,7 +354,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>310</y>
+       <y>210</y>
        <width>181</width>
        <height>41</height>
       </rect>

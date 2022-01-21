@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(432, 442)
+        MainWindow.resize(432, 343)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 421))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 321))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -83,39 +83,8 @@ class Ui_MainWindow(object):
 "}")
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
-        self.VKTokenLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.VKTokenLineEdit.setGeometry(QtCore.QRect(20, 50, 331, 41))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.VKTokenLineEdit.setFont(font)
-        self.VKTokenLineEdit.setStyleSheet("QLineEdit{\n"
-"    border-bottom-left-radius: 12px;\n"
-"    border-top-left-radius: 12px;\n"
-"}")
-        self.VKTokenLineEdit.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText|QtCore.Qt.ImhSensitiveData)
-        self.VKTokenLineEdit.setInputMask("")
-        self.VKTokenLineEdit.setText("")
-        self.VKTokenLineEdit.setFrame(False)
-        self.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.VKTokenLineEdit.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
-        self.VKTokenLineEdit.setObjectName("VKTokenLineEdit")
-        self.IDBotLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.IDBotLineEdit.setGeometry(QtCore.QRect(20, 100, 371, 41))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.IDBotLineEdit.setFont(font)
-        self.IDBotLineEdit.setStyleSheet("QLineEdit{\n"
-"    border-radius: 12px;\n"
-"}")
-        self.IDBotLineEdit.setInputMask("")
-        self.IDBotLineEdit.setText("")
-        self.IDBotLineEdit.setFrame(False)
-        self.IDBotLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
-        self.IDBotLineEdit.setDragEnabled(False)
-        self.IDBotLineEdit.setReadOnly(False)
-        self.IDBotLineEdit.setObjectName("IDBotLineEdit")
         self.StartBotButton = QtWidgets.QPushButton(self.Window)
-        self.StartBotButton.setGeometry(QtCore.QRect(210, 360, 181, 41))
+        self.StartBotButton.setGeometry(QtCore.QRect(210, 260, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -135,15 +104,15 @@ class Ui_MainWindow(object):
 "    background-color: #04b309;\n"
 "}")
         self.StartBotButton.setObjectName("StartBotButton")
-        self.SaveBotSettingsButton = QtWidgets.QPushButton(self.Window)
-        self.SaveBotSettingsButton.setGeometry(QtCore.QRect(20, 360, 181, 41))
+        self.BotSettingsButton = QtWidgets.QPushButton(self.Window)
+        self.BotSettingsButton.setGeometry(QtCore.QRect(20, 260, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
         font.setWeight(75)
-        self.SaveBotSettingsButton.setFont(font)
-        self.SaveBotSettingsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.SaveBotSettingsButton.setStyleSheet("QPushButton{\n"
+        self.BotSettingsButton.setFont(font)
+        self.BotSettingsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.BotSettingsButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
 "    border-radius: 8px;\n"
 "    background-color: #595F76;\n"
@@ -156,32 +125,9 @@ class Ui_MainWindow(object):
 "QPushButton:pressed{\n"
 "    background-color: #434965;\n"
 "}")
-        self.SaveBotSettingsButton.setObjectName("SaveBotSettingsButton")
-        self.frame = QtWidgets.QFrame(self.Window)
-        self.frame.setGeometry(QtCore.QRect(350, 50, 41, 41))
-        self.frame.setStyleSheet("QFrame{\n"
-"    border-bottom-right-radius: 12px;\n"
-"    border-top-right-radius: 12px;\n"
-"    border-bottom-left-radius: 0px;\n"
-"    border-top-left-radius: 0px;\n"
-"    background-color: white;\n"
-"}")
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.ShowVKTokenButton = QtWidgets.QPushButton(self.frame)
-        self.ShowVKTokenButton.setGeometry(QtCore.QRect(0, 0, 41, 41))
-        self.ShowVKTokenButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
-"}")
-        self.ShowVKTokenButton.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ShowVKTokenButton.setIcon(icon)
-        self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
-        self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
+        self.BotSettingsButton.setObjectName("BotSettingsButton")
         self.LogListWidget = QtWidgets.QListWidget(self.Window)
-        self.LogListWidget.setGeometry(QtCore.QRect(20, 150, 371, 151))
+        self.LogListWidget.setGeometry(QtCore.QRect(20, 50, 371, 151))
         font = QtGui.QFont()
         font.setPointSize(8)
         font.setBold(True)
@@ -217,7 +163,7 @@ class Ui_MainWindow(object):
         self.LogListWidget.setSelectionRectVisible(False)
         self.LogListWidget.setObjectName("LogListWidget")
         self.SaveLogButton = QtWidgets.QPushButton(self.Window)
-        self.SaveLogButton.setGeometry(QtCore.QRect(20, 310, 181, 41))
+        self.SaveLogButton.setGeometry(QtCore.QRect(20, 210, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -239,7 +185,7 @@ class Ui_MainWindow(object):
 "}")
         self.SaveLogButton.setObjectName("SaveLogButton")
         self.ClearLogButton = QtWidgets.QPushButton(self.Window)
-        self.ClearLogButton.setGeometry(QtCore.QRect(210, 310, 181, 41))
+        self.ClearLogButton.setGeometry(QtCore.QRect(210, 210, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -270,10 +216,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.CloseWindowButton.setText(_translate("MainWindow", "X"))
         self.MinimizeWindowButton.setText(_translate("MainWindow", "_"))
-        self.VKTokenLineEdit.setPlaceholderText(_translate("MainWindow", "Введите VK Token бота"))
-        self.IDBotLineEdit.setPlaceholderText(_translate("MainWindow", "Введите ID бота"))
         self.StartBotButton.setText(_translate("MainWindow", "Запустить бота"))
-        self.SaveBotSettingsButton.setText(_translate("MainWindow", "Сохраниить настройки"))
+        self.BotSettingsButton.setText(_translate("MainWindow", "Настройки"))
         self.LogListWidget.setSortingEnabled(False)
         self.SaveLogButton.setText(_translate("MainWindow", "Сохранить логи"))
         self.ClearLogButton.setText(_translate("MainWindow", "Очистить логи"))
