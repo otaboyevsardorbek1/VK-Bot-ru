@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # VK_API
-from re import S
-from signal import signal
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
@@ -106,17 +104,35 @@ QPushButton:pressed{
 	background-color: #434965;
 }
 """
-		if button_1 != '':
+		if button_1 != '' and button_2 != '':
 			self.Button_1 = QtWidgets.QPushButton(self.ui.Window)
 			self.Button_1.setGeometry(QtCore.QRect(20, 70, 171, 41))
 			self.Button_1.setFont(font)
 			self.Button_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 			self.Button_1.setStyleSheet(style)
-			self.Button_1.setText(_translate('Form', button_1))
-			self.Button_1.clicked.connect(lambda: self.signalButton.emit(button_1))
-		if button_2 != '':
+
 			self.Button_2 = QtWidgets.QPushButton(self.ui.Window)
 			self.Button_2.setGeometry(QtCore.QRect(210, 70, 171, 41))
+			self.Button_2.setFont(font)
+			self.Button_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+			self.Button_2.setStyleSheet(style)
+
+			self.Button_1.setText(_translate('Form', button_1))
+			self.Button_2.setText(_translate('Form', button_2))
+
+			self.Button_1.clicked.connect(lambda: self.signalButton.emit(button_1))
+			self.Button_2.clicked.connect(lambda: self.signalButton.emit(button_2))
+		elif button_1 != '':
+			self.Button_1 = QtWidgets.QPushButton(self.ui.Window)
+			self.Button_1.setGeometry(QtCore.QRect(120, 70, 161, 41))
+			self.Button_1.setFont(font)
+			self.Button_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+			self.Button_1.setStyleSheet(style)
+			self.Button_1.setText(_translate('Form', button_1))
+			self.Button_1.clicked.connect(lambda: self.signalButton.emit(button_1))
+		elif button_2 != '':
+			self.Button_2 = QtWidgets.QPushButton(self.ui.Window)
+			self.Button_2.setGeometry(QtCore.QRect(120, 70, 161, 41))
 			self.Button_2.setFont(font)
 			self.Button_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 			self.Button_2.setStyleSheet(style)

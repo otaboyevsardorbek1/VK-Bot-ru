@@ -144,7 +144,7 @@ QPushButton:pressed{
       <x>20</x>
       <y>40</y>
       <width>361</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="sizePolicy">

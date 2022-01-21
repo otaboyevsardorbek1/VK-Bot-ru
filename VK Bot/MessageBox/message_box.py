@@ -82,7 +82,7 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
         self.Label = QtWidgets.QLabel(self.Window)
-        self.Label.setGeometry(QtCore.QRect(20, 40, 361, 16))
+        self.Label.setGeometry(QtCore.QRect(20, 40, 361, 21))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
