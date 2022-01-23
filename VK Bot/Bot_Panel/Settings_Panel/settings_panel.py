@@ -14,12 +14,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(761, 181)
+        Form.resize(761, 332)
         self.Window = QtWidgets.QFrame(Form)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 741, 161))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 741, 311))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"    color: white;\n"
 "}")
         self.Window.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Window.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -159,18 +163,16 @@ class Ui_Form(object):
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
         self.label = QtWidgets.QLabel(self.Window)
-        self.label.setGeometry(QtCore.QRect(400, 50, 301, 21))
+        self.label.setGeometry(QtCore.QRect(400, 47, 301, 21))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.label.setFont(font)
-        self.label.setStyleSheet("QLabel{\n"
-"    color: white;\n"
-"}")
+        self.label.setStyleSheet("")
         self.label.setObjectName("label")
         self.AutomatiAuthorizatonButton = QtWidgets.QPushButton(self.Window)
-        self.AutomatiAuthorizatonButton.setGeometry(QtCore.QRect(702, 52, 20, 21))
+        self.AutomatiAuthorizatonButton.setGeometry(QtCore.QRect(700, 50, 20, 21))
         self.AutomatiAuthorizatonButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AutomatiAuthorizatonButton.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
@@ -182,18 +184,16 @@ class Ui_Form(object):
         self.AutomatiAuthorizatonButton.setIconSize(QtCore.QSize(16, 16))
         self.AutomatiAuthorizatonButton.setObjectName("AutomatiAuthorizatonButton")
         self.label_2 = QtWidgets.QLabel(self.Window)
-        self.label_2.setGeometry(QtCore.QRect(400, 70, 291, 21))
+        self.label_2.setGeometry(QtCore.QRect(400, 87, 291, 21))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.label_2.setFont(font)
-        self.label_2.setStyleSheet("QLabel{\n"
-"    color: white;\n"
-"}")
+        self.label_2.setStyleSheet("")
         self.label_2.setObjectName("label_2")
         self.UserCommandsButton = QtWidgets.QPushButton(self.Window)
-        self.UserCommandsButton.setGeometry(QtCore.QRect(685, 73, 20, 21))
+        self.UserCommandsButton.setGeometry(QtCore.QRect(684, 90, 20, 21))
         self.UserCommandsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.UserCommandsButton.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
@@ -203,7 +203,7 @@ class Ui_Form(object):
         self.UserCommandsButton.setIconSize(QtCore.QSize(16, 16))
         self.UserCommandsButton.setObjectName("UserCommandsButton")
         self.AddUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.AddUserCommandButton.setGeometry(QtCore.QRect(400, 100, 321, 41))
+        self.AddUserCommandButton.setGeometry(QtCore.QRect(400, 150, 321, 41))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -224,6 +224,105 @@ class Ui_Form(object):
 "    background-color: #434965;\n"
 "}")
         self.AddUserCommandButton.setObjectName("AddUserCommandButton")
+        self.UserCommandsListWidget = QtWidgets.QListWidget(self.Window)
+        self.UserCommandsListWidget.setGeometry(QtCore.QRect(20, 150, 371, 141))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.UserCommandsListWidget.setFont(font)
+        self.UserCommandsListWidget.setTabletTracking(False)
+        self.UserCommandsListWidget.setAutoFillBackground(False)
+        self.UserCommandsListWidget.setStyleSheet("color: white;\n"
+"border-radius: 7px;\n"
+"background-color: #2C313C;\n"
+"")
+        self.UserCommandsListWidget.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.UserCommandsListWidget.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.UserCommandsListWidget.setLineWidth(1)
+        self.UserCommandsListWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.UserCommandsListWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.UserCommandsListWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.UserCommandsListWidget.setAutoScroll(True)
+        self.UserCommandsListWidget.setTabKeyNavigation(False)
+        self.UserCommandsListWidget.setProperty("showDropIndicator", True)
+        self.UserCommandsListWidget.setDragDropOverwriteMode(False)
+        self.UserCommandsListWidget.setAlternatingRowColors(False)
+        self.UserCommandsListWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
+        self.UserCommandsListWidget.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
+        self.UserCommandsListWidget.setMovement(QtWidgets.QListView.Static)
+        self.UserCommandsListWidget.setFlow(QtWidgets.QListView.TopToBottom)
+        self.UserCommandsListWidget.setProperty("isWrapping", False)
+        self.UserCommandsListWidget.setResizeMode(QtWidgets.QListView.Fixed)
+        self.UserCommandsListWidget.setLayoutMode(QtWidgets.QListView.SinglePass)
+        self.UserCommandsListWidget.setViewMode(QtWidgets.QListView.ListMode)
+        self.UserCommandsListWidget.setUniformItemSizes(False)
+        self.UserCommandsListWidget.setWordWrap(False)
+        self.UserCommandsListWidget.setSelectionRectVisible(False)
+        self.UserCommandsListWidget.setObjectName("UserCommandsListWidget")
+        self.DeleteUserCommandButton = QtWidgets.QPushButton(self.Window)
+        self.DeleteUserCommandButton.setGeometry(QtCore.QRect(400, 250, 321, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.DeleteUserCommandButton.setFont(font)
+        self.DeleteUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.DeleteUserCommandButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.DeleteUserCommandButton.setObjectName("DeleteUserCommandButton")
+        self.EditUserCommandButton = QtWidgets.QPushButton(self.Window)
+        self.EditUserCommandButton.setGeometry(QtCore.QRect(400, 200, 321, 41))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.EditUserCommandButton.setFont(font)
+        self.EditUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.EditUserCommandButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.EditUserCommandButton.setObjectName("EditUserCommandButton")
+        self.label_3 = QtWidgets.QLabel(self.Window)
+        self.label_3.setGeometry(QtCore.QRect(400, 67, 281, 20))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
+        self.label_3.setStyleSheet("")
+        self.label_3.setObjectName("label_3")
+        self.AutomatiSaveLogButton = QtWidgets.QPushButton(self.Window)
+        self.AutomatiSaveLogButton.setGeometry(QtCore.QRect(678, 70, 20, 21))
+        self.AutomatiSaveLogButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.AutomatiSaveLogButton.setStyleSheet("QPushButton{\n"
+"    border: none;\n"
+"}")
+        self.AutomatiSaveLogButton.setText("")
+        self.AutomatiSaveLogButton.setIcon(icon2)
+        self.AutomatiSaveLogButton.setIconSize(QtCore.QSize(16, 16))
+        self.AutomatiSaveLogButton.setObjectName("AutomatiSaveLogButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -238,3 +337,7 @@ class Ui_Form(object):
         self.label.setText(_translate("Form", "Автоматическая авторизация:"))
         self.label_2.setText(_translate("Form", "Пользовательские команды:"))
         self.AddUserCommandButton.setText(_translate("Form", "Добавить команду"))
+        self.UserCommandsListWidget.setSortingEnabled(False)
+        self.DeleteUserCommandButton.setText(_translate("Form", "Удалить команду"))
+        self.EditUserCommandButton.setText(_translate("Form", "Изменить команду"))
+        self.label_3.setText(_translate("Form", "Автомат. сохранение логов:"))
