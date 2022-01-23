@@ -24,7 +24,7 @@ if find_file('User-Commands.json') == False:
 
 # Создание файла "Bot-Settings.json" для работы бота
 if find_file('Bot-Settings.json') == False:
-	with open('Bot-Settings.json', 'a') as file:
+	with open('Bot-Settings.json', 'ab') as file:
 		data = {
 			'Automati_Authorizaton': False,
 			'Automati_Save_Log': False,
