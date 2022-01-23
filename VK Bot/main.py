@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # PyQt5
-from marshal import dumps
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
