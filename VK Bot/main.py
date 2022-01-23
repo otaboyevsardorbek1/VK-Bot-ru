@@ -10,9 +10,9 @@ import Authorization.auth as auth
 import Registration.reg as reg
 
 # Другие
+import config as Config
 from methods import *
 import requests
-import Config
 import json
 import sys
 

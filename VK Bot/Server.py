@@ -4,8 +4,8 @@
 from message_box import MessageBox
 
 # Другие
+import config as Config
 import requests
-import Config
 import json
 
 def find(sqlite3_command):

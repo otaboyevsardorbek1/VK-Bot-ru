@@ -4,8 +4,8 @@
 from PyQt5 import QtCore
 
 # Другие
+import server as Server
 import datetime
-import Server
 import json
 import time
 

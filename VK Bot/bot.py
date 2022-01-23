@@ -9,10 +9,10 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from PyQt5 import QtCore
 
 # Другие
+import server as Server
+import config as Config
 from methods import *
 import datetime
-import Server
-import Config
 import json
 
 class Sender:
