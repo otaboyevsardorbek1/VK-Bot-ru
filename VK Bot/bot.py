@@ -244,7 +244,7 @@ PS: Для того, чтобы использовать "Команды для 
 								if self.warning == 3:
 									self.warning = 0
 									now_time = datetime.datetime.now()
-									Server.update_record(f"UPDATE Users SET mute = '{json.dumps({'Value': True, 'Time': f'{now_time.day}:{now_time.hour}:{now_time.minute}:{now_time.second}', 'Time Left': 120}, ensure_ascii = False)}' WHERE id = '{id}'")
+									Server.edit_database(f"UPDATE Users SET mute = '{json.dumps({'Value': True, 'Time': f'{now_time.day}:{now_time.hour}:{now_time.minute}:{now_time.second}', 'Time Left': 120}, ensure_ascii = False)}' WHERE id = '{id}'")
 									self._sender.send_message(peer_id, f"""\
 @id{id} ({user_data['first_name']} {user_data['last_name']}), вы получаете мут-чата на 2 часа за флуд!
 Время мута вы можете отслеживать в личных сообщениях у бота, через команду \"!Мут-чата\".
