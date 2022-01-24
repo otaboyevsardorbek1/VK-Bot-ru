@@ -6,14 +6,14 @@ import os
 
 # Функция возврата настроек бота
 def get_bot_settings():
-	with open('Bot-Settings.json', 'rb') as file:
-		bot_settings = json.loads(file.read().decode('UTF-8'))
+	with open('Bot-Settings.json', 'r') as file:
+		bot_settings = json.loads(file.read())
 	return bot_settings
 
 # Функция возврата пользоватский команд для бота
 def get_user_commands():
-	with open('User-Commands.json', 'rb') as file:
-		user_commands = json.loads(file.read().decode('UTF-8'))
+	with open('User-Commands.json', 'r') as file:
+		user_commands = json.loads(file.read())
 	return user_commands
 
 # Функция для поиска файлов

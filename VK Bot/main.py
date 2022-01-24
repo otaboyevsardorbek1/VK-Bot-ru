@@ -18,12 +18,12 @@ import sys
 
 # Создание файла "User-Commands.json" для работы бота
 if find_file('User-Commands.json') == False:
-	with open('User-Commands.json', 'ab') as file:
-		file.write(json.dumps([], ensure_ascii = False, indent = 2).encode('UTF-8'))
+	with open('User-Commands.json', 'a') as file:
+		file.write(json.dumps([], ensure_ascii = False, indent = 2))
 
 # Создание файла "Bot-Settings.json" для работы бота
 if find_file('Bot-Settings.json') == False:
-	with open('Bot-Settings.json', 'ab') as file:
+	with open('Bot-Settings.json', 'a') as file:
 		data = {
 			'Automati_Authorizaton': False,
 			'Automati_Save_Log': False,
@@ -31,7 +31,7 @@ if find_file('Bot-Settings.json') == False:
 			'VK_Token': '',
 			'Group_ID': ''
 		}
-		file.write(json.dumps(data, ensure_ascii = False, indent = 2).encode('UTF-8'))
+		file.write(json.dumps(data, ensure_ascii = False, indent = 2))
 
 # Графический интерфейс программы
 # ==================================================================
@@ -120,7 +120,6 @@ class Authorization(QtWidgets.QMainWindow): # Окно авторизации
 		QtWidgets.QWidget.__init__(self, parent)
 		self.ui = auth.Ui_MainWindow()
 		self.ui.setupUi(self)
-		self.setWindowModality(2)
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)

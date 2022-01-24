@@ -105,14 +105,14 @@ class UserCommandPanel(QtWidgets.QMainWindow):
 
 		if find_command_name == False and find_command == False:
 			if self.button_text == 'Создать команду':
-				with open('User-Commands.json', 'wb') as file:
+				with open('User-Commands.json', 'w') as file:
 					data = {
 						'Command_Name': command_name,
 						'Command': command,
 						'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
 					}
 					self.user_commands.append(data)
-					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2).encode('UTF-8'))
+					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2))
 
 				message_box = MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
 				message_box.signalButton.connect(lambda: message_box.close())
@@ -122,13 +122,13 @@ class UserCommandPanel(QtWidgets.QMainWindow):
 
 				self.close()
 			elif self.button_text == 'Редактировать команду':
-				with open('User-Commands.json', 'wb') as file:
+				with open('User-Commands.json', 'w') as file:
 					self.user_commands[self.user_command_value] = {
 						'Command_Name': command_name,
 						'Command': command,
 						'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
 					}
-					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2).encode('UTF-8'))
+					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2))
 
 				message_box = MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
 				message_box.signalButton.connect(lambda: message_box.close())

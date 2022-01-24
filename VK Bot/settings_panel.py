@@ -165,8 +165,8 @@ class SettingsPanel(QtWidgets.QMainWindow):
 				user_command_value += 1
 			del user_commands[user_command_value]
 
-			with open('User-Commands.json', 'wb') as file:
-				file.write(json.dumps(user_commands, ensure_ascii = False, indent = 2).encode('UTF-8'))
+			with open('User-Commands.json', 'w') as file:
+				file.write(json.dumps(user_commands, ensure_ascii = False, indent = 2))
 
 			self.ui.UserCommandsListWidget.takeItem(self.ui.UserCommandsListWidget.row(item))
 
@@ -182,6 +182,8 @@ class SettingsPanel(QtWidgets.QMainWindow):
 	def close_window(self):
 		different_settings = False
 		if self.bot_settings['Automati_Authorizaton'] != self.automati_authorizaton_button_status:
+			different_settings = True
+		if self.bot_settings['Automati_Save_Log'] != self.automati_save_log_button_status:
 			different_settings = True
 		elif self.bot_settings['User_Commands'] != self.user_commands_button_status:
 			different_settings = True
@@ -210,7 +212,7 @@ class SettingsPanel(QtWidgets.QMainWindow):
 			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
 
 	def save_bot_settings(self):
-		with open('Bot-Settings.json', 'wb') as file:
+		with open('Bot-Settings.json', 'w') as file:
 			self.bot_settings = {
 				'Automati_Authorizaton': self.automati_authorizaton_button_status,
 				'Automati_Save_Log': self.automati_save_log_button_status,
@@ -225,7 +227,7 @@ class SettingsPanel(QtWidgets.QMainWindow):
 						'Password': self.password
 					}
 				)
-			file.write(json.dumps(self.bot_settings, ensure_ascii = False, indent = 2).encode('UTF-8'))
+			file.write(json.dumps(self.bot_settings, ensure_ascii = False, indent = 2))
 
 		message_box = MessageBox(text = 'Успешное сохранение настроек бота', button_2 = 'Окей')
 		message_box.signalButton.connect(lambda: message_box.close())
