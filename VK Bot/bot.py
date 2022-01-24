@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # VK_API
-from ast import get_source_segment
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
