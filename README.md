@@ -28,10 +28,10 @@ python main.py (Для Linux: python3 main.py)
 
 # Демонстрация ПО
 ## Окно авторизации
-![software_authorization_window](icons/authorization_window.png)
+![software_authorization_window](Icons/authorization_window.png)
 ## Окно регистрации
-![software_registration_window](icons/registration_window.png)
+![software_registration_window](Icons/registration_window.png)
 ## Главное окно
-![software_main_window](icons/main_window.png)
+![software_main_window](Icons/main_window.png)
 ## Окно настроек
-![software_settings_window](icons/settings_window.png)
+![software_settings_window](Icons/settings_window.png)
