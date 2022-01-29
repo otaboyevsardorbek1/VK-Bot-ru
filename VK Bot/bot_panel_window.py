@@ -4,9 +4,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Bot_Panel.bot_panel as bot_panel
+import Bot_Panel_Window.bot_panel_window as bot_panel_window
 from message_box import MessageBox
-from settings_panel import SettingsPanel
+from settings_panel_widnow import SettingsPanelWindow
 
 # Другие
 from mute_time import MuteTime
@@ -15,10 +15,10 @@ from bot import Bot
 import os
 
 # Окно панель бота
-class BotPanel(QtWidgets.QMainWindow):
+class BotPanelWindow(QtWidgets.QMainWindow):
 	def __init__(self, login, password, parent = None):
 		QtWidgets.QWidget.__init__(self, parent)
-		self.ui = bot_panel.Ui_MainWindow()
+		self.ui = bot_panel_window.Ui_MainWindow()
 		self.ui.setupUi(self)
 
 		self.login = login
@@ -95,7 +95,7 @@ class BotPanel(QtWidgets.QMainWindow):
 			os.remove('Logs.txt')
 
 	def bot_settings_panel(self):
-		bot_settings_panel = SettingsPanel(self.login, self.password)
+		bot_settings_panel = SettingsPanelWindow(self.login, self.password)
 		bot_settings_panel.show()
 
 	def start_bot(self):
@@ -140,9 +140,7 @@ class BotPanel(QtWidgets.QMainWindow):
 				""")
 				self.bot.longpoll.bot_run = False
 		else:
-			message_box = MessageBox(text = 'Отсутствует "VK Token" или "ID Group" в настройках!', button_2 = 'Окей')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = 'Отсутствует "VK Token" или "ID Group" в настройках!', button_2 = 'Окей')
 	# ==================================================================
 
 	# Сигналы QtCore.pyqtSignal

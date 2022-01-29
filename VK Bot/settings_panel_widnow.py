@@ -4,8 +4,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Bot_Panel.Settings_Panel.settings_panel as settings_panel
-from user_command_panel import UserCommandPanel
+import Bot_Panel_Window.Settings_Panel_Window.settings_panel_widnow as settings_panel_widnow
+from user_command_panel_window import UserCommandPanelWindow
 from message_box import MessageBox
 
 # Другое
@@ -13,10 +13,10 @@ from methods import *
 import json
 
 # Окно настроек бота
-class SettingsPanel(QtWidgets.QMainWindow):
+class SettingsPanelWindow(QtWidgets.QMainWindow):
 	def __init__(self, login, password, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
-		self.ui = settings_panel.Ui_Form()
+		self.ui = settings_panel_widnow.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
 
@@ -131,27 +131,23 @@ class SettingsPanel(QtWidgets.QMainWindow):
 			self.ui.UserCommandsButton.setIcon(icon)
 
 	def add_new_user_command_panel(self):
-		add_user_command_panel = UserCommandPanel(button_text = 'Создать команду')
+		add_user_command_panel = UserCommandPanelWindow(button_text = 'Создать команду')
 		add_user_command_panel.signalAddNewUserCommand.connect(self.add_new_user_command)
 		add_user_command_panel.show()
 
 	def edit_user_command_panel(self):
 		item = self.ui.UserCommandsListWidget.selectedItems()
 		if len(item) == 0:
-			message_box = MessageBox(text = 'Вы не выбрали команду, которую хотите изменить!', button_1 = 'Щас исправлю...')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = 'Вы не выбрали команду, которую хотите изменить!', button_1 = 'Щас исправлю...')
 		elif len(item) == 1:
 			item = item[0]
-			edit_user_command_panel = UserCommandPanel(button_text = 'Редактировать команду', item = item)
+			edit_user_command_panel = UserCommandPanelWindow(button_text = 'Редактировать команду', item = item)
 			edit_user_command_panel.show()
 
 	def remove_user_command(self):
 		item = self.ui.UserCommandsListWidget.selectedItems()
 		if len(item) == 0:
-			message_box = MessageBox(text = 'Вы не выбрали команду, которую хотите удалить!', button_1 = 'Щас исправлю...')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = 'Вы не выбрали команду, которую хотите удалить!', button_1 = 'Щас исправлю...')
 		elif len(item) == 1:
 			item = item[0]
 
@@ -170,14 +166,12 @@ class SettingsPanel(QtWidgets.QMainWindow):
 
 			self.ui.UserCommandsListWidget.takeItem(self.ui.UserCommandsListWidget.row(item))
 
-			message_box = MessageBox(text = 'Вы успешно удалили пользоватскую команду.', button_1 = 'Окей')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = 'Вы успешно удалили пользоватскую команду.', button_1 = 'Окей')
 
-	def signalButton(self, button):
-		if button == 'Да':
+	def signalButton(self, message_box, text):
+		message_box.close()
+		if text == 'Да':
 			self.save_bot_settings()
-		self.message_box.close()
 
 	def close_window(self):
 		different_settings = False
@@ -193,9 +187,8 @@ class SettingsPanel(QtWidgets.QMainWindow):
 			different_settings = True
 
 		if different_settings == True:
-			self.message_box = MessageBox(text = 'Вы изменили настройки, хотите их сохранить?', button_1 = 'Да', button_2 = 'нет')
-			self.message_box.signalButton.connect(self.signalButton)
-			self.message_box.show()
+			message_box = MessageBox(text = 'Вы изменили настройки, хотите их сохранить?', button_1 = 'Да', button_2 = 'нет')
+			message_box.message_box.signalButton.connect(lambda text: self.signalButton(message_box, text))
 
 		self.close()
 
@@ -229,9 +222,7 @@ class SettingsPanel(QtWidgets.QMainWindow):
 				)
 			file.write(json.dumps(self.bot_settings, ensure_ascii = False, indent = 2))
 
-		message_box = MessageBox(text = 'Успешное сохранение настроек бота', button_2 = 'Окей')
-		message_box.signalButton.connect(lambda: message_box.close())
-		message_box.show()
+		MessageBox(text = 'Успешное сохранение настроек бота', button_2 = 'Окей')
 	# ==================================================================
 
 	# Сигналы QtCore.pyqtSignal
@@ -241,4 +232,4 @@ class SettingsPanel(QtWidgets.QMainWindow):
 		item.setTextAlignment(QtCore.Qt.AlignLeft)
 		item.setText(new_command['Command_Name'])
 		self.ui.UserCommandsListWidget.addItem(item)
-    # ==================================================================
+	# ==================================================================

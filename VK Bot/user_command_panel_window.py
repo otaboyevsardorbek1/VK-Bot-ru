@@ -4,19 +4,19 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Bot_Panel.Settings_Panel.User_Command_Panel.user_command_panel as user_command_panel
+import Bot_Panel_Window.Settings_Panel_Window.User_Command_Panel_Widnow.user_command_panel_window as user_command_panel_window
 from message_box import MessageBox
 
 # Другое
 from methods import *
 import json
 
-class UserCommandPanel(QtWidgets.QMainWindow):
+class UserCommandPanelWindow(QtWidgets.QMainWindow):
 	signalAddNewUserCommand = QtCore.pyqtSignal(dict)
 
 	def __init__(self, button_text, item = None, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
-		self.ui = user_command_panel.Ui_Form()
+		self.ui = user_command_panel_window.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
 
@@ -114,9 +114,7 @@ class UserCommandPanel(QtWidgets.QMainWindow):
 					self.user_commands.append(data)
 					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2))
 
-				message_box = MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
-				message_box.signalButton.connect(lambda: message_box.close())
-				message_box.show()
+				MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
 
 				self.signalAddNewUserCommand.emit(data)
 
@@ -130,9 +128,7 @@ class UserCommandPanel(QtWidgets.QMainWindow):
 					}
 					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2))
 
-				message_box = MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
-				message_box.signalButton.connect(lambda: message_box.close())
-				message_box.show()
+				MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
 
 				self.item.setText(f'Команда: {command_name}')
 
@@ -145,7 +141,5 @@ class UserCommandPanel(QtWidgets.QMainWindow):
 			elif find_command == True:
 				text = f'Команда "{command}" уже существует!'
 
-			message_box = MessageBox(text = text, button_1 = 'Щас исправлю...')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = text, button_1 = 'Щас исправлю...')
 	# ==================================================================
