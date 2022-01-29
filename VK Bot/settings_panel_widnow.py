@@ -188,7 +188,7 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 
 		if different_settings == True:
 			message_box = MessageBox(text = 'Вы изменили настройки, хотите их сохранить?', button_1 = 'Да', button_2 = 'нет')
-			message_box.message_box.signalButton.connect(lambda text: self.signalButton(message_box, text))
+			message_box.message_box.signalButton.connect(lambda text: self.signalButton(message_box.message_box, text))
 
 		self.close()
 

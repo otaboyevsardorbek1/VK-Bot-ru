@@ -99,7 +99,6 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
-			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 			auth = AuthorizationWindow()
 			self.close()
 			auth.show()
