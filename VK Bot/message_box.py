@@ -7,10 +7,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import MessageBox.message_box as message_box
 
 # Всплывающее окно
-class MessageBox(QtWidgets.QMainWindow):
+class MyMessageBox(QtWidgets.QMainWindow):
 	signalButton = QtCore.pyqtSignal(str)
 
-	def __init__(self, parent = None, font_size = 10, text = '', button_1 = '', button_2 = ''):
+	def __init__(self, text, button_1, button_2, font_size, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
 		_translate = QtCore.QCoreApplication.translate
 		self.ui = message_box.Ui_Form()
@@ -104,3 +104,9 @@ QPushButton:pressed{
 		except AttributeError:
 			pass
 	# ==================================================================
+
+class MessageBox:
+	def __init__(self, text = '', button_1 = '', button_2 = '', font_size = 10):
+		self.message_box = MyMessageBox(text, button_1, button_2, font_size)
+		self.message_box.signalButton.connect(lambda: self.message_box.close())
+		self.message_box.show()

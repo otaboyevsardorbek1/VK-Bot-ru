@@ -4,10 +4,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
+import Authorization_Window.authorization_window as authorization_window
+import Registration_Window.registration_window as registration_window
+from bot_panel_window import BotPanelWindow
 from message_box import MessageBox
-from bot_panel import BotPanel
-import Authorization.auth as auth
-import Registration.reg as reg
 
 # Другие
 import config as Config
@@ -35,10 +35,10 @@ if find_file('Bot-Settings.json') == False:
 
 # Графический интерфейс программы
 # ==================================================================
-class Registration(QtWidgets.QMainWindow): # Окно регистрации
+class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистрации
 	def __init__(self, parent = None):
 		QtWidgets.QWidget.__init__(self, parent)
-		self.ui = reg.Ui_MainWindow()
+		self.ui = registration_window.Ui_MainWindow()
 		self.ui.setupUi(self)
 
 		# Отключаем стандартные границы окна программы
@@ -99,26 +99,22 @@ class Registration(QtWidgets.QMainWindow): # Окно регистрации
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
-			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
-			auth = Authorization()
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+			auth = AuthorizationWindow()
 			self.close()
 			auth.show()
 		else:
-			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 
 	def authorization_window(self):
-		auth = Authorization()
+		auth = AuthorizationWindow()
 		self.close()
 		auth.show()
 
-class Authorization(QtWidgets.QMainWindow): # Окно авторизации
+class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизации
 	def __init__(self, parent = None):
 		QtWidgets.QWidget.__init__(self, parent)
-		self.ui = auth.Ui_MainWindow()
+		self.ui = authorization_window.Ui_MainWindow()
 		self.ui.setupUi(self)
 
 		# Отключаем стандартные границы окна программы
@@ -179,20 +175,16 @@ class Authorization(QtWidgets.QMainWindow): # Окно авторизации
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
-			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
-			bot_panel = BotPanel(self.ui.LoginLineEdit.text(), self.ui.PasswordLineEdit.text())
+			bot_panel = BotPanelWindow(self.ui.LoginLineEdit.text(), self.ui.PasswordLineEdit.text())
 			self.close()
 			bot_panel.show()
 		else:
-			message_box = MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-			message_box.signalButton.connect(lambda: message_box.close())
-			message_box.show()
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 
 	def registration_window(self):
-		reg = Registration()
+		reg = RegistrationWindow()
 		self.close()
 		reg.show()
 # ==================================================================
@@ -209,7 +201,7 @@ if __name__ == '__main__':
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
 			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
-			myapp = BotPanel(bot_settings['Login'], bot_settings['Password'])
+			myapp = BotPanelWindow(bot_settings['Login'], bot_settings['Password'])
 		else:
 			bot_settings.update(
 				{
@@ -220,8 +212,8 @@ if __name__ == '__main__':
 				bot_settings.pop(item)
 			with open('Bot-Settings.json', 'wb') as file: 
 				file.write(json.dumps(bot_settings, ensure_ascii = False, indent = 2).encode('UTF-8'))
-			myapp = Authorization()
+			myapp = AuthorizationWindow()
 	else:
-		myapp = Authorization()
+		myapp = AuthorizationWindow()
 	myapp.show()
 	sys.exit(app.exec_())
