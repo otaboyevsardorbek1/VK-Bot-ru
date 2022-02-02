@@ -19,7 +19,7 @@ class MuteTime(QtCore.QThread):
 				mute = json.loads(user[5])
 				if mute['Value'] == True:
 					now = datetime.datetime.now()
-					now = f'{now.day - 1}:{now.hour}:{now.minute}:{now.second}'
+					now = f'{now.day}:{now.hour}:{now.minute}:{now.second}'
 					now_time = datetime.datetime.strptime(now, '%d:%H:%M:%S')
 					mute_time = datetime.datetime.strptime(mute['Time'], '%d:%H:%M:%S')
 					result_time = now_time - mute_time
