@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'auth.ui'
+# Form implementation generated from reading ui file 'authorization_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -217,4 +217,4 @@ class Ui_MainWindow(object):
         self.LoginLineEdit.setPlaceholderText(_translate("MainWindow", "Login"))
         self.PasswordLineEdit.setPlaceholderText(_translate("MainWindow", "Password"))
         self.AuthorizationButton.setText(_translate("MainWindow", "Вход"))
-        self.AskButton.setText(_translate("MainWindow", "Eщё нету аккаунта?"))
+        self.AskButton.setText(_translate("MainWindow", "Eщё нет аккаунта?"))
