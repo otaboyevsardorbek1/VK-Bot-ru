@@ -10,7 +10,6 @@ from PyQt5 import QtCore
 # Другие
 import server as Server
 import config as Config
-from methods import *
 import datetime
 import json
 
@@ -101,7 +100,7 @@ PS: Для того, чтобы использовать "Команды для 
 				if other_id == chat_member['member_id']:
 					other_user_find_in_chat_members = True
 			other_user_data = self.vk_session.method('users.get',{'user_ids': other_id, 'fields': 'verified'})[0]
-			other_user = Server.find(f"SELECT * FROM Users WHERE id = '{other_id}'")
+			other_user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{other_id}'")
 			if other_user != None:
 				if other_user_find_in_chat_members == True:
 					self._sender.send_message(peer_id, f"""\
@@ -116,7 +115,7 @@ PS: Для того, чтобы использовать "Команды для 
 			else:
 				self._sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), пользователя @id{other_id} ({other_user_data['first_name']} {other_user_data['last_name']}) нету в базе данных бота, попробуйте в другой раз!")
 		else:
-			user = Server.find(f"SELECT * FROM Users WHERE id = '{id}'")
+			user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{id}'")
 			self._sender.send_message(peer_id, f"""\
 Вас зовут: @id{id} ({user_data['first_name']} {user_data['last_name']})
 Ваш ранг: {user[4]}
@@ -127,7 +126,7 @@ PS: Для того, чтобы использовать "Команды для 
 
 	def send_mute_chat_time(self, id):
 		user_data = self.vk_session.method('users.get',{'user_ids': id, 'fields': 'verified'})[0]
-		user = Server.find(f"SELECT * FROM Users WHERE id = '{id}'")
+		user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{id}'")
 		mute = json.loads(user[5])
 		if mute['Value'] == True:
 			self._sender.send_message(id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), вам осталось подождать {mute['Time Left']} мин.")
@@ -157,14 +156,14 @@ PS: Для того, чтобы использовать "Команды для 
 		user_data = self.vk_session.method('users.get', {'user_ids': id, 'fields': 'verified'})[0]
 		self.signalPrintUserMessage.emit(f"{user_data['first_name']} {user_data['last_name']}", message)
 
-		user = Server.find(f"SELECT * FROM Users WHERE id = '{id}'")
+		user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{id}'")
 		if user == None:
 			self._sender.send_message(peer_id, f"""\
 Добро пожаловать @id{id} ({user_data['first_name']} {user_data['last_name']})!
 Так как я тебя раньше не видел, попрошу тебя ознакомится с списком команд через команду "!Список команд".
 """)
 			Server.edit_database("INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?)", values = (id, 1, 0, 0, 'Посвящённый', json.dumps({'Value': False, 'Time': None, 'Time Left': None}, ensure_ascii = False)))
-		user = Server.find(f"SELECT * FROM Users WHERE id = '{id}'")
+		user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{id}'")
 
 		mute = json.loads(user[5])
 		if mute['Value'] == True:
@@ -175,7 +174,7 @@ PS: Для того, чтобы использовать "Команды для 
 				if user[3] + 1 >= user[1] * 20:
 					Server.edit_database(f"UPDATE Users SET level = '{user[1] + 1}' WHERE id = '{id}'")
 					self._sender.send_message(peer_id, f"Пользователь @id{id} ({user_data['first_name']} {user_data['last_name']}) получил новый уровень!")
-					user = Server.find(f"SELECT * FROM Users WHERE id = '{id}'")
+					user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{id}'")
 				if user[1] in Config.RANKS and Config.RANKS[user[1]] != user[4]:
 					Server.edit_database(f"UPDATE Users SET rank = '{Config.RANKS[user[1]]}' WHERE id = '{id}'")
 					self._sender.send_message(peer_id, f"Пользователь @id{id} ({user_data['first_name']} {user_data['last_name']}) получает новый ранг \"{Config.RANKS[user[1]]}\"!")
@@ -201,12 +200,12 @@ PS: Для того, чтобы использовать "Команды для 
 								self.send_mute_chat_time(id)
 
 						if find_command == False:
-							bot_settings = get_bot_settings()
+							bot_settings = Server.get_bot_settings()
 							if bot_settings['User_Commands'] == True:
-								user_commands = get_user_commands()
+								user_commands = Server.get_user_commands()
 								for user_command in user_commands:
 									if message.lower() == user_command['Command'].lower():
-										user = Server.find(f"SELECT * FROM Users WHERE id = '{id}'")
+										user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{id}'")
 
 										if user_command['Command_Answer'].find('{user}') != -1:
 											user_command['Command_Answer'] = f"@id{id} ({user_data['first_name']} {user_data['last_name']})".join(user_command['Command_Answer'].split('{user}'))

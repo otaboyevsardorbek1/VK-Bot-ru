@@ -4,47 +4,42 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Bot_Panel_Window.bot_panel_window as bot_panel_window
+import Main_Window.main_window as main_window
 from message_box import MessageBox
 from settings_panel_widnow import SettingsPanelWindow
 
 # Другие
 from mute_time import MuteTime
-from methods import *
+import server as Server
 from bot import Bot
-import os
 
 # Окно панель бота
-class BotPanelWindow(QtWidgets.QMainWindow):
-	def __init__(self, login, password, parent = None):
+class MainWindow(QtWidgets.QMainWindow):
+	def __init__(self, parent = None):
 		QtWidgets.QWidget.__init__(self, parent)
-		self.ui = bot_panel_window.Ui_MainWindow()
+		self.ui = main_window.Ui_MainWindow()
 		self.ui.setupUi(self)
-
-		self.login = login
-		self.password = password
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
-		if find_file('Logs.txt') == True:
-			with open('Logs.txt', 'rb') as file:
-				logs = file.read().decode('UTF-8').split('\n')
-				for text in logs:
-					if text != '':
-						text = text.split(': ')
-						item = QtWidgets.QListWidgetItem()
-						self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
-						item.setIcon(QtGui.QIcon('../Icons/user.png'))
-						item.setTextAlignment(QtCore.Qt.AlignLeft)
-						item.setText(f'{text[0]}:\n{text[1]}')
-						self.ui.LogListWidget.addItem(item)
+		log = Server.get_log()
+		if log != []:
+			for text in log:
+				if text != '':
+					text = text.split(': ')
+					item = QtWidgets.QListWidgetItem()
+					self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
+					item.setIcon(QtGui.QIcon('../Icons/user.png'))
+					item.setTextAlignment(QtCore.Qt.AlignLeft)
+					item.setText(f'{text[0]}:\n{text[1]}')
+					self.ui.LogListWidget.addItem(item)
 
 		# Обработчики основных кнопок
-		self.ui.SaveLogButton.clicked.connect(self.save_logs)
-		self.ui.ClearLogButton.clicked.connect(self.clear_logs)
+		self.ui.SaveLogButton.clicked.connect(self.save_log)
+		self.ui.ClearLogButton.clicked.connect(self.clear_log)
 		self.ui.BotSettingsButton.clicked.connect(self.bot_settings_panel)
 		self.ui.StartBotButton.clicked.connect(self.start_bot)
 
@@ -74,47 +69,46 @@ class BotPanelWindow(QtWidgets.QMainWindow):
 
 	# Логика основных кнопок
 	# ==================================================================
-	def save_logs(self):
+	def save_log(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
 			items.append(self.ui.LogListWidget.item(num))
-		logs = ''
+		log = []
 		for item in items:
 			text = ' '.join(item.text().split('\n'))
-			logs += f'{text}\n'
-		with open('Logs.txt', 'wb') as file:
-			file.write(logs.encode('UTF-8'))
+			log.append(text)
 
-	def clear_logs(self):
+		Server.update_log(log)
+
+	def clear_log(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
 			items.append(self.ui.LogListWidget.item(num))
 		for item in items:
 			self.ui.LogListWidget.takeItem(self.ui.LogListWidget.row(item))
-		if find_file('Logs.txt') == True:
-			os.remove('Logs.txt')
+		Server.update_log([])
 
 	def bot_settings_panel(self):
-		bot_settings_panel = SettingsPanelWindow(self.login, self.password)
+		bot_settings_panel = SettingsPanelWindow()
 		bot_settings_panel.show()
 
 	def start_bot(self):
-		bot_settings = get_bot_settings()
+		bot_settings = Server.get_bot_settings()
 		if bot_settings['VK_Token'] != '' or bot_settings['Group_ID'] != '':
 			if self.ui.StartBotButton.text() == 'Запустить бота':
 				self.ui.StartBotButton.setText('Выключить бота')
 				self.ui.StartBotButton.setStyleSheet("""\
 					QPushButton{
 						border-radius: 8px;
-						background-color: #ed3a2d;
+						background-color: #EA4100;
 					}
 
 					QPushButton:hover{
-						background-color: #c7382e;
+						background-color: #DF3E00;
 					}
 
 					QPushButton:pressed{
-						background-color: #b5382f;
+						background-color: #CA3700;
 					}
 				""")
 				self.muteTime = MuteTime()
@@ -127,15 +121,15 @@ class BotPanelWindow(QtWidgets.QMainWindow):
 				self.ui.StartBotButton.setStyleSheet("""\
 					QPushButton{
 						border-radius: 8px;
-						background-color: #75ea00;
+						background-color: #92E604;
 					}
 
 					QPushButton:hover{
-						background-color: #6fdd00;
+						background-color: #8BDC03;
 					}
 
 					QPushButton:pressed{
-						background-color: #62c400;
+						background-color: #7DC802;
 					}
 				""")
 				self.bot.longpoll.bot_run = False
@@ -153,7 +147,7 @@ class BotPanelWindow(QtWidgets.QMainWindow):
 		item.setText(f'{user}:\n{message}')
 		self.ui.LogListWidget.addItem(item)
 
-		bot_settings = get_bot_settings()
+		bot_settings = Server.get_bot_settings()
 		if bot_settings['Automati_Save_Log'] == True:
-			self.save_logs()
+			self.save_log()
     # ==================================================================

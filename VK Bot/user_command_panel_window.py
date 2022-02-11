@@ -4,11 +4,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Bot_Panel_Window.Settings_Panel_Window.User_Command_Panel_Widnow.user_command_panel_window as user_command_panel_window
+import Main_Window.Settings_Panel_Window.User_Command_Panel_Widnow.user_command_panel_window as user_command_panel_window
 from message_box import MessageBox
 
 # Другое
-from methods import *
+import server as Server
 import json
 
 class UserCommandPanelWindow(QtWidgets.QMainWindow):
@@ -20,7 +20,7 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
 
-		self.user_commands = get_user_commands()
+		self.user_commands = Server.get_user_commands()
 		self.button_text = button_text
 
 		# Отключаем стандартные границы окна программы
@@ -80,13 +80,6 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 		command_name = self.ui.CommandNameLineEdit.text()
 		command = self.ui.CommandlineEdit.text()
 
-		if command_name == '' and command == '':
-			pass
-		elif command_name == '':
-			pass
-		elif command == '':
-			pass
-
 		find_command_name = False
 		find_command = False
 
@@ -105,14 +98,13 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 
 		if find_command_name == False and find_command == False:
 			if self.button_text == 'Создать команду':
-				with open('User-Commands.json', 'w') as file:
-					data = {
-						'Command_Name': command_name,
-						'Command': command,
-						'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
-					}
-					self.user_commands.append(data)
-					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2))
+				data = {
+					'Command_Name': command_name,
+					'Command': command,
+					'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
+				}
+				self.user_commands.append(data)
+				Server.update_user_commands(self.user_commands)
 
 				MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
 
@@ -120,13 +112,12 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 
 				self.close()
 			elif self.button_text == 'Редактировать команду':
-				with open('User-Commands.json', 'w') as file:
-					self.user_commands[self.user_command_value] = {
-						'Command_Name': command_name,
-						'Command': command,
-						'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
-					}
-					file.write(json.dumps(self.user_commands, ensure_ascii = False, indent = 2))
+				self.user_commands[self.user_command_value] = {
+					'Command_Name': command_name,
+					'Command': command,
+					'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
+				}
+				Server.update_user_commands(self.user_commands)
 
 				MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
 

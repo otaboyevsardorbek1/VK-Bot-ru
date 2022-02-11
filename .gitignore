@@ -1,11 +1,8 @@
-Admin Panel/
 VK Bot/__pycache__/
 VK Bot/MessageBox/__pycache__/
+VK Bot/Warning_Window/__pycache__
 VK Bot/Authorization_Window/__pycache__/
 VK Bot/Registration_Window/__pycache__/
 VK Bot/Bot_Panel_Window/__pycache__/
 VK Bot/Bot_Panel_Window/Settings_Panel_Window/__pycache__/
 VK Bot/Bot_Panel_Window/Settings_Panel_Window/User_Command_Panel_Widnow/__pycache__/
-VK Bot/Bot-Settings.json
-VK Bot/User-Commands.json
-VK Bot/Logs.txt

@@ -4,34 +4,32 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Authorization_Window.authorization_window as authorization_window
 import Registration_Window.registration_window as registration_window
-from bot_panel_window import BotPanelWindow
+import Authorization_Window.authorization_window as authorization_window
+import Warning_Window.warning_window as warning_window
+from main_window import MainWindow
 from message_box import MessageBox
 
 # Другие
 import config as Config
-from methods import *
 import requests
 import json
 import sys
 
-# Создание файла "User-Commands.json" для работы бота
-if find_file('User-Commands.json') == False:
-	with open('User-Commands.json', 'a') as file:
-		file.write(json.dumps([], ensure_ascii = False, indent = 2))
-
-# Создание файла "Bot-Settings.json" для работы бота
-if find_file('Bot-Settings.json') == False:
-	with open('Bot-Settings.json', 'a') as file:
-		data = {
-			'Automati_Authorizaton': False,
-			'Automati_Save_Log': False,
-			'User_Commands': False,
-			'VK_Token': '',
-			'Group_ID': ''
-		}
-		file.write(json.dumps(data, ensure_ascii = False, indent = 2))
+# Глобальные функции
+# ==================================================================
+def show_password(self): # Функция для показа пароля в текстовом поле для пароля
+	if self.ui.PasswordLineEdit.echoMode() == 2:
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.ui.ShowPasswordButton.setIcon(icon)
+		self.ui.PasswordLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
+	else:
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.ui.ShowPasswordButton.setIcon(icon)
+		self.ui.PasswordLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+# ==================================================================
 
 # Графический интерфейс программы
 # ==================================================================
@@ -47,7 +45,7 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 		self.center()
 
 		# Обработчики основных кнопок
-		self.ui.ShowPasswordButton.clicked.connect(self.show_password)
+		self.ui.ShowPasswordButton.clicked.connect(lambda: show_password(self))
 		self.ui.CreateAccountButton.clicked.connect(self.create_account)
 		self.ui.LoginLineEdit.returnPressed.connect(self.create_account)
 		self.ui.PasswordLineEdit.returnPressed.connect(self.create_account)
@@ -79,18 +77,6 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 
 	# Логика основных кнопок
 	# ==================================================================
-	def show_password(self):
-		if self.ui.PasswordLineEdit.echoMode() == 2:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowPasswordButton.setIcon(icon)
-			self.ui.PasswordLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
-		else:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowPasswordButton.setIcon(icon)
-			self.ui.PasswordLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
-
 	def create_account(self):
 		data = {
 			'Login': self.ui.LoginLineEdit.text(),
@@ -99,6 +85,8 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+
 			auth = AuthorizationWindow()
 			self.close()
 			auth.show()
@@ -109,6 +97,7 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 		auth = AuthorizationWindow()
 		self.close()
 		auth.show()
+	# ==================================================================
 
 class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизации
 	def __init__(self, parent = None):
@@ -122,7 +111,7 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 		self.center()
 
 		# Обработчики основных кнопок
-		self.ui.ShowPasswordButton.clicked.connect(self.show_password)
+		self.ui.ShowPasswordButton.clicked.connect(lambda: show_password(self))
 		self.ui.AuthorizationButton.clicked.connect(self.authorization)
 		self.ui.LoginLineEdit.returnPressed.connect(self.authorization)
 		self.ui.PasswordLineEdit.returnPressed.connect(self.authorization)
@@ -154,18 +143,6 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 
 	# Логика основных кнопок
 	# ==================================================================
-	def show_password(self):
-		if self.ui.PasswordLineEdit.echoMode() == 2:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowPasswordButton.setIcon(icon)
-			self.ui.PasswordLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
-		else:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowPasswordButton.setIcon(icon)
-			self.ui.PasswordLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
-
 	def authorization(self):
 		data = {
 			'Login': self.ui.LoginLineEdit.text(),
@@ -176,7 +153,7 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 		if server_answer.status_code == 200:
 			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
-			bot_panel = BotPanelWindow(self.ui.LoginLineEdit.text(), self.ui.PasswordLineEdit.text())
+			bot_panel = MainWindow()
 			self.close()
 			bot_panel.show()
 		else:
@@ -186,33 +163,58 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 		reg = RegistrationWindow()
 		self.close()
 		reg.show()
+	# ==================================================================
+
+class WarningWindow(QtWidgets.QMainWindow): # Окно предупреждения
+	def __init__(self, parent = None):
+		QtWidgets.QWidget.__init__(self, parent)
+		self.ui = warning_window.Ui_MainWindow()
+		self.ui.setupUi(self)
+
+		# Отключаем стандартные границы окна программы
+		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+		self.center()
+
+		# Обработчики основных кнопок
+		self.ui.YesButton.clicked.connect(self.yes_button)
+		self.ui.NoButton.clicked.connect(lambda: self.close())
+
+		# Обработчики кнопок с панели
+		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
+		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
+
+	# Перетаскивание безрамочного окна
+	# ==================================================================
+	def center(self):
+		qr = self.frameGeometry()
+		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
+		qr.moveCenter(cp)
+		self.move(qr.topLeft())
+
+	def mousePressEvent(self, event):
+		self.oldPos = event.globalPos()
+
+	def mouseMoveEvent(self, event):
+		try:
+			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
+			self.move(self.x() + delta.x(), self.y() + delta.y())
+			self.oldPos = event.globalPos()
+		except AttributeError:
+			pass
+	# ==================================================================
+
+	# Логика основных кнопок
+	# ==================================================================
+	def yes_button(self):
+		authorization_window = AuthorizationWindow()
+		self.close()
+		authorization_window.show()
+	# ==================================================================
 # ==================================================================
 
 if __name__ == '__main__':
 	app = QtWidgets.QApplication(sys.argv)
-	bot_settings = get_bot_settings()
-	if bot_settings['Automati_Authorizaton'] == True:
-		data = {
-			'Login': bot_settings['Login'],
-			'Password': bot_settings['Password']
-		}
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
-		server_answer_text = json.loads(server_answer.text)
-		if server_answer.status_code == 200:
-			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
-			myapp = BotPanelWindow(bot_settings['Login'], bot_settings['Password'])
-		else:
-			bot_settings.update(
-				{
-					'Automati_Authorizaton': False
-				}
-			)
-			for item in ['Login', 'Password']:
-				bot_settings.pop(item)
-			with open('Bot-Settings.json', 'wb') as file: 
-				file.write(json.dumps(bot_settings, ensure_ascii = False, indent = 2).encode('UTF-8'))
-			myapp = AuthorizationWindow()
-	else:
-		myapp = AuthorizationWindow()
+	myapp = WarningWindow()
 	myapp.show()
 	sys.exit(app.exec_())

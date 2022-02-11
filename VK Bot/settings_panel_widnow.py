@@ -4,35 +4,31 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Bot_Panel_Window.Settings_Panel_Window.settings_panel_widnow as settings_panel_widnow
+import Main_Window.Settings_Panel_Window.settings_panel_widnow as settings_panel_widnow
 from user_command_panel_window import UserCommandPanelWindow
 from message_box import MessageBox
 
 # Другое
-from methods import *
+import server as Server
 import json
 
 # Окно настроек бота
 class SettingsPanelWindow(QtWidgets.QMainWindow):
-	def __init__(self, login, password, parent = None):
+	def __init__(self, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
 		self.ui = settings_panel_widnow.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
-
-		self.login = login
-		self.password = password
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
-		self.automati_authorizaton_button_status = False
 		self.automati_save_log_button_status = False
 		self.user_commands_button_status = False
 
-		self.bot_settings = get_bot_settings()
+		self.bot_settings = Server.get_bot_settings()
 		self.ui.VKTokenLineEdit.setText(self.bot_settings['VK_Token'])
 		self.ui.IDBotLineEdit.setText(self.bot_settings['Group_ID'])
 		if self.bot_settings['User_Commands'] == True:
@@ -40,18 +36,13 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			icon = QtGui.QIcon()
 			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserCommandsButton.setIcon(icon)
-		if self.bot_settings['Automati_Authorizaton'] == True:
-			self.automati_authorizaton_button_status = True
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.AutomatiAuthorizatonButton.setIcon(icon)
 		if self.bot_settings['Automati_Save_Log'] == True:
 			self.automati_save_log_button_status = True
 			icon = QtGui.QIcon()
 			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.AutomatiSaveLogButton.setIcon(icon)
 
-		user_commands = get_user_commands()
+		user_commands = Server.get_user_commands()
 		for user_command in user_commands:
 			item = QtWidgets.QListWidgetItem()
 			item.setTextAlignment(QtCore.Qt.AlignLeft)
@@ -59,7 +50,6 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			self.ui.UserCommandsListWidget.addItem(item)
 
 		# Обработчики основных кнопок
-		self.ui.AutomatiAuthorizatonButton.clicked.connect(self.automati_authorizaton)
 		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log)
 		self.ui.UserCommandsButton.clicked.connect(self.user_commands)
 		self.ui.AddUserCommandButton.clicked.connect(self.add_new_user_command_panel)
@@ -94,26 +84,16 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 
 	# Логика основных кнопок
 	# ==================================================================
-	def automati_authorizaton(self):
-		if self.automati_authorizaton_button_status == True:
-			self.automati_authorizaton_button_status = False
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.AutomatiAuthorizatonButton.setIcon(icon)
-		else:
-			self.automati_authorizaton_button_status = True
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.AutomatiAuthorizatonButton.setIcon(icon)
-
 	def automati_save_log(self):
 		if self.automati_save_log_button_status == True:
 			self.automati_save_log_button_status = False
+
 			icon = QtGui.QIcon()
 			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.AutomatiSaveLogButton.setIcon(icon)
 		else:
 			self.automati_save_log_button_status = True
+
 			icon = QtGui.QIcon()
 			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.AutomatiSaveLogButton.setIcon(icon)
@@ -121,11 +101,13 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 	def user_commands(self):
 		if self.user_commands_button_status == True:
 			self.user_commands_button_status = False
+
 			icon = QtGui.QIcon()
 			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserCommandsButton.setIcon(icon)
 		else:
 			self.user_commands_button_status = True
+
 			icon = QtGui.QIcon()
 			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserCommandsButton.setIcon(icon)
@@ -152,8 +134,8 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			item = item[0]
 
 			old_user_command = item.text().replace('Команда: ', '').strip()
-			user_commands = get_user_commands()
-	
+			user_commands = Server.get_user_commands()
+
 			user_command_value = 0
 			for user_command in user_commands:
 				if user_command['Command_Name'] == old_user_command: 
@@ -161,8 +143,7 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 				user_command_value += 1
 			del user_commands[user_command_value]
 
-			with open('User-Commands.json', 'w') as file:
-				file.write(json.dumps(user_commands, ensure_ascii = False, indent = 2))
+			Server.update_user_commands(user_commands)
 
 			self.ui.UserCommandsListWidget.takeItem(self.ui.UserCommandsListWidget.row(item))
 
@@ -175,8 +156,6 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 
 	def close_window(self):
 		different_settings = False
-		if self.bot_settings['Automati_Authorizaton'] != self.automati_authorizaton_button_status:
-			different_settings = True
 		if self.bot_settings['Automati_Save_Log'] != self.automati_save_log_button_status:
 			different_settings = True
 		elif self.bot_settings['User_Commands'] != self.user_commands_button_status:
@@ -205,22 +184,13 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
 
 	def save_bot_settings(self):
-		with open('Bot-Settings.json', 'w') as file:
-			self.bot_settings = {
-				'Automati_Authorizaton': self.automati_authorizaton_button_status,
-				'Automati_Save_Log': self.automati_save_log_button_status,
-				'User_Commands': self.user_commands_button_status,
-				'VK_Token': self.ui.VKTokenLineEdit.text(),
-				'Group_ID': self.ui.IDBotLineEdit.text()
-			}
-			if self.automati_authorizaton_button_status == True:
-				self.bot_settings.update(
-					{
-						'Login': self.login,
-						'Password': self.password
-					}
-				)
-			file.write(json.dumps(self.bot_settings, ensure_ascii = False, indent = 2))
+		self.bot_settings = {
+			'Automati_Save_Log': self.automati_save_log_button_status,
+			'User_Commands': self.user_commands_button_status,
+			'VK_Token': self.ui.VKTokenLineEdit.text(),
+			'Group_ID': self.ui.IDBotLineEdit.text()
+		}
+		Server.update_bot_settings(self.bot_settings)
 
 		MessageBox(text = 'Успешное сохранение настроек бота', button_2 = 'Окей')
 	# ==================================================================
@@ -230,6 +200,6 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 	def add_new_user_command(self, new_command):
 		item = QtWidgets.QListWidgetItem()
 		item.setTextAlignment(QtCore.Qt.AlignLeft)
-		item.setText(new_command['Command_Name'])
+		item.setText(f"Команда: {new_command['Command_Name']}")
 		self.ui.UserCommandsListWidget.addItem(item)
 	# ==================================================================

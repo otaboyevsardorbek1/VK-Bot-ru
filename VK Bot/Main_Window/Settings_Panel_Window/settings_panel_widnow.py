@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'settings_panel.ui'
+# Form implementation generated from reading ui file 'settings_panel_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(761, 332)
+        Form.resize(762, 332)
         self.Window = QtWidgets.QFrame(Form)
         self.Window.setGeometry(QtCore.QRect(10, 10, 741, 311))
         self.Window.setStyleSheet("QFrame{\n"
@@ -162,29 +162,8 @@ class Ui_Form(object):
         self.ShowVKTokenButton.setIcon(icon1)
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
-        self.label = QtWidgets.QLabel(self.Window)
-        self.label.setGeometry(QtCore.QRect(400, 47, 301, 21))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setStyleSheet("")
-        self.label.setObjectName("label")
-        self.AutomatiAuthorizatonButton = QtWidgets.QPushButton(self.Window)
-        self.AutomatiAuthorizatonButton.setGeometry(QtCore.QRect(700, 50, 20, 21))
-        self.AutomatiAuthorizatonButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.AutomatiAuthorizatonButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
-"}")
-        self.AutomatiAuthorizatonButton.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.AutomatiAuthorizatonButton.setIcon(icon2)
-        self.AutomatiAuthorizatonButton.setIconSize(QtCore.QSize(16, 16))
-        self.AutomatiAuthorizatonButton.setObjectName("AutomatiAuthorizatonButton")
         self.label_2 = QtWidgets.QLabel(self.Window)
-        self.label_2.setGeometry(QtCore.QRect(400, 87, 291, 21))
+        self.label_2.setGeometry(QtCore.QRect(400, 97, 291, 21))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
@@ -193,12 +172,14 @@ class Ui_Form(object):
         self.label_2.setStyleSheet("")
         self.label_2.setObjectName("label_2")
         self.UserCommandsButton = QtWidgets.QPushButton(self.Window)
-        self.UserCommandsButton.setGeometry(QtCore.QRect(684, 90, 20, 21))
+        self.UserCommandsButton.setGeometry(QtCore.QRect(684, 100, 20, 21))
         self.UserCommandsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.UserCommandsButton.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
 "}")
         self.UserCommandsButton.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.UserCommandsButton.setIcon(icon2)
         self.UserCommandsButton.setIconSize(QtCore.QSize(16, 16))
         self.UserCommandsButton.setObjectName("UserCommandsButton")
@@ -334,7 +315,6 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setText(_translate("Form", "_"))
         self.VKTokenLineEdit.setPlaceholderText(_translate("Form", "Введите VK Token бота"))
         self.IDBotLineEdit.setPlaceholderText(_translate("Form", "Введите ID бота"))
-        self.label.setText(_translate("Form", "Автоматическая авторизация:"))
         self.label_2.setText(_translate("Form", "Пользовательские команды:"))
         self.AddUserCommandButton.setText(_translate("Form", "Добавить команду"))
         self.UserCommandsListWidget.setSortingEnabled(False)

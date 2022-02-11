@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'bot_panel.ui'
+# Form implementation generated from reading ui file 'main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -93,15 +93,15 @@ class Ui_MainWindow(object):
         self.StartBotButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.StartBotButton.setStyleSheet("QPushButton{\n"
 "    border-radius: 8px;\n"
-"    background-color: #02d609;\n"
+"    background-color: #92E604;\n"
 "}\n"
 "\n"
 "QPushButton:hover{\n"
-"    background-color: #02c709;\n"
+"    background-color: #8BDC03;\n"
 "}\n"
 "\n"
 "QPushButton:pressed{\n"
-"    background-color: #04b309;\n"
+"    background-color: #7DC802;\n"
 "}")
         self.StartBotButton.setObjectName("StartBotButton")
         self.BotSettingsButton = QtWidgets.QPushButton(self.Window)

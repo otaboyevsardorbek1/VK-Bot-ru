@@ -29,6 +29,8 @@ python main.py (Для Linux: python3 main.py)
 12. Наслаждаемся ботом! :D
 
 # Демонстрация ПО
+## Окно предупреждения:
+![software_warning_window](Icons/warning_window.png)
 ## Окно авторизации:
 ![software_authorization_window](Icons/authorization_window.png)
 ## Окно регистрации:
