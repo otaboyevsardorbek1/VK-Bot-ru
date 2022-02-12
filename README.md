@@ -15,7 +15,7 @@ pip3 install -r requirements.txt
 ```
 3. Запускаем проект через команду:
 ```sh
-cd VK Bot
+cd VK_Bot
 python main.py (Для Linux: python3 main.py)
 ```
 4. Регистрируем аккаунт и заходим в него;
