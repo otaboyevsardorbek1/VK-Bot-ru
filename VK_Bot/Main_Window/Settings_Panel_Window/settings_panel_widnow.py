@@ -112,8 +112,8 @@ class Ui_Form(object):
         self.VKTokenLineEdit.setGeometry(QtCore.QRect(20, 50, 331, 31))
         font = QtGui.QFont()
         font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
+        font.setBold(False)
+        font.setWeight(50)
         self.VKTokenLineEdit.setFont(font)
         self.VKTokenLineEdit.setStyleSheet("QLineEdit{\n"
 "    border-bottom-left-radius: 12px;\n"
@@ -130,8 +130,8 @@ class Ui_Form(object):
         self.IDBotLineEdit.setGeometry(QtCore.QRect(20, 90, 371, 31))
         font = QtGui.QFont()
         font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
+        font.setBold(False)
+        font.setWeight(50)
         self.IDBotLineEdit.setFont(font)
         self.IDBotLineEdit.setStyleSheet("QLineEdit{\n"
 "    border-radius: 12px;\n"
