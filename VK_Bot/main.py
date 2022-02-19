@@ -10,7 +10,7 @@ import Warning_Window.warning_window as warning_window
 from main_window import MainWindow
 from message_box import MessageBox
 
-# Другие
+# Другое
 import config as Config
 import requests
 import json

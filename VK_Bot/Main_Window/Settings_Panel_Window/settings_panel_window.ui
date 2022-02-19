@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>762</width>
-    <height>332</height>
+    <width>433</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>741</width>
-     <height>311</height>
+     <width>411</width>
+     <height>481</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -43,7 +43,7 @@ QLabel{
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>741</width>
+      <width>411</width>
       <height>31</height>
      </rect>
     </property>
@@ -63,7 +63,7 @@ QLabel{
     <widget class="QPushButton" name="CloseWindowButton">
      <property name="geometry">
       <rect>
-       <x>701</x>
+       <x>370</x>
        <y>0</y>
        <width>41</width>
        <height>31</height>
@@ -102,7 +102,7 @@ QPushButton:pressed{
     <widget class="QPushButton" name="MinimizeWindowButton">
      <property name="geometry">
       <rect>
-       <x>660</x>
+       <x>329</x>
        <y>0</y>
        <width>41</width>
        <height>31</height>
@@ -144,7 +144,7 @@ QPushButton:pressed{
     <widget class="QPushButton" name="SaveBotSettingsButton">
      <property name="geometry">
       <rect>
-       <x>629</x>
+       <x>298</x>
        <y>0</y>
        <width>31</width>
        <height>31</height>
@@ -192,12 +192,14 @@ QPushButton:hover{
       <x>20</x>
       <y>50</y>
       <width>331</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -232,14 +234,16 @@ QPushButton:hover{
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
+      <y>90</y>
       <width>371</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -275,7 +279,7 @@ QPushButton:hover{
       <x>350</x>
       <y>50</y>
       <width>41</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -299,7 +303,7 @@ QPushButton:hover{
        <x>0</x>
        <y>0</y>
        <width>41</width>
-       <height>41</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -325,9 +329,9 @@ QPushButton:hover{
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>97</y>
-      <width>291</width>
+      <x>20</x>
+      <y>143</y>
+      <width>286</width>
       <height>21</height>
      </rect>
     </property>
@@ -348,8 +352,8 @@ QPushButton:hover{
    <widget class="QPushButton" name="UserCommandsButton">
     <property name="geometry">
      <rect>
-      <x>684</x>
-      <y>100</y>
+      <x>304</x>
+      <y>146</y>
       <width>20</width>
       <height>21</height>
      </rect>
@@ -379,15 +383,15 @@ QPushButton:hover{
    <widget class="QPushButton" name="AddUserCommandButton">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>150</y>
-      <width>321</width>
+      <x>20</x>
+      <y>320</y>
+      <width>371</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
+      <pointsize>12</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -418,7 +422,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>150</y>
+      <y>170</y>
       <width>371</width>
       <height>141</height>
      </rect>
@@ -515,15 +519,15 @@ background-color: #2C313C;
    <widget class="QPushButton" name="DeleteUserCommandButton">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>250</y>
-      <width>321</width>
+      <x>20</x>
+      <y>420</y>
+      <width>371</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
+      <pointsize>12</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -553,15 +557,15 @@ QPushButton:pressed{
    <widget class="QPushButton" name="EditUserCommandButton">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>200</y>
-      <width>321</width>
+      <x>20</x>
+      <y>370</y>
+      <width>371</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
+      <pointsize>12</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -585,14 +589,14 @@ QPushButton:pressed{
 }</string>
     </property>
     <property name="text">
-     <string>Изменить команду</string>
+     <string>Редактировать команду</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>67</y>
+      <x>20</x>
+      <y>123</y>
       <width>281</width>
       <height>20</height>
      </rect>
@@ -614,8 +618,8 @@ QPushButton:pressed{
    <widget class="QPushButton" name="AutomatiSaveLogButton">
     <property name="geometry">
      <rect>
-      <x>678</x>
-      <y>70</y>
+      <x>298</x>
+      <y>126</y>
       <width>20</width>
       <height>21</height>
      </rect>
@@ -642,6 +646,18 @@ QPushButton:pressed{
      </size>
     </property>
    </widget>
+   <zorder>frame</zorder>
+   <zorder>WindowFrame</zorder>
+   <zorder>VKTokenLineEdit</zorder>
+   <zorder>IDBotLineEdit</zorder>
+   <zorder>label_2</zorder>
+   <zorder>UserCommandsButton</zorder>
+   <zorder>AddUserCommandButton</zorder>
+   <zorder>UserCommandsListWidget</zorder>
+   <zorder>DeleteUserCommandButton</zorder>
+   <zorder>EditUserCommandButton</zorder>
+   <zorder>label_3</zorder>
+   <zorder>AutomatiSaveLogButton</zorder>
   </widget>
  </widget>
  <resources/>
