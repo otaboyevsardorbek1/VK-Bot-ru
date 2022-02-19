@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'user_command_panel.ui'
+# Form implementation generated from reading ui file 'user_command_panel_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -133,7 +133,7 @@ class Ui_Form(object):
         self.UserCommandButton = QtWidgets.QPushButton(self.Window)
         self.UserCommandButton.setGeometry(QtCore.QRect(20, 240, 301, 41))
         font = QtGui.QFont()
-        font.setPointSize(11)
+        font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
         self.UserCommandButton.setFont(font)

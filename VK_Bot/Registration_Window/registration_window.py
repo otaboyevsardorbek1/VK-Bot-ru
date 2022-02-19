@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'reg.ui'
+# Form implementation generated from reading ui file 'registration_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -138,7 +138,7 @@ class Ui_MainWindow(object):
         self.CreateAccountButton = QtWidgets.QPushButton(self.Window)
         self.CreateAccountButton.setGeometry(QtCore.QRect(210, 220, 171, 41))
         font = QtGui.QFont()
-        font.setPointSize(11)
+        font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
         self.CreateAccountButton.setFont(font)
@@ -160,7 +160,7 @@ class Ui_MainWindow(object):
         self.AskButton = QtWidgets.QPushButton(self.Window)
         self.AskButton.setGeometry(QtCore.QRect(40, 230, 141, 21))
         font = QtGui.QFont()
-        font.setPointSize(11)
+        font.setPointSize(12)
         font.setBold(False)
         font.setUnderline(False)
         font.setWeight(50)

@@ -78,20 +78,23 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 	# Логика основных кнопок
 	# ==================================================================
 	def create_account(self):
-		data = {
-			'Login': self.ui.LoginLineEdit.text(),
-			'Password': self.ui.PasswordLineEdit.text()
-		}
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
-		server_answer_text = json.loads(server_answer.text)
-		if server_answer.status_code == 200:
-			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+		try:
+			data = {
+				'Login': self.ui.LoginLineEdit.text(),
+				'Password': self.ui.PasswordLineEdit.text()
+			}
+			server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
+			server_answer_text = json.loads(server_answer.text)
+			if server_answer.status_code == 200:
+				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 
-			auth = AuthorizationWindow()
-			self.close()
-			auth.show()
-		else:
-			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				auth = AuthorizationWindow()
+				self.close()
+				auth.show()
+			else:
+				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+		except requests.exceptions.ConnectionError:
+			MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
 	def authorization_window(self):
 		auth = AuthorizationWindow()
@@ -144,20 +147,23 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 	# Логика основных кнопок
 	# ==================================================================
 	def authorization(self):
-		data = {
-			'Login': self.ui.LoginLineEdit.text(),
-			'Password': self.ui.PasswordLineEdit.text()
-		}
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
-		server_answer_text = json.loads(server_answer.text)
-		if server_answer.status_code == 200:
-			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
-			bot_panel = MainWindow()
-			self.close()
-			bot_panel.show()
-		else:
-			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+		try:
+			data = {
+				'Login': self.ui.LoginLineEdit.text(),
+				'Password': self.ui.PasswordLineEdit.text()
+			}
+			server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
+			server_answer_text = json.loads(server_answer.text)
+			if server_answer.status_code == 200:
+				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+				Config.UNIQUE_KEY = server_answer_text['Unique_Key']
+				bot_panel = MainWindow()
+				self.close()
+				bot_panel.show()
+			else:
+				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+		except requests.exceptions.ConnectionError:
+			MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
 	def registration_window(self):
 		reg = RegistrationWindow()
