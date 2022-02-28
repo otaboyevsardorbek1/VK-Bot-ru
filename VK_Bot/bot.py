@@ -78,17 +78,24 @@ class Bot(QtCore.QThread):
 		self.signalMuteTime.emit()
 
 	def send_command_list(self, peer_id):
-		self._sender.send_message(peer_id,  """\
+		message = """\
 Команды для беседы:
 •  !Cписок команд
 •  !Статистика [ID пользователя (По умолчанию ваш ID)]
 •  !Пожать руку пользователю [ID пользователя]
+"""
 
+		user_commands = Server.get_user_commands()
+		for user_command in user_commands:
+			message += f"•  !{user_command['Command']}\n"
+
+		message += """
 Команды для личных сообщений:
 •  !Мут-чата
 
 PS: Для того, чтобы использовать "Команды для личных сообщений", напишите боту в личные сообщения команду, которую вы хотите использовать.
-""")
+"""
+		self._sender.send_message(peer_id, message)
 
 	def send_statistic(self, id, peer_id, message):
 		user_data = self.vk_session.method('users.get',{'user_ids': id, 'fields': 'verified'})[0]
@@ -207,16 +214,17 @@ PS: Для того, чтобы использовать "Команды для 
 									if message.lower() == user_command['Command'].lower():
 										user = Server.find_in_database(f"SELECT * FROM Users WHERE id = '{id}'")
 
-										if user_command['Command_Answer'].find('{user}') != -1:
-											user_command['Command_Answer'] = f"@id{id} ({user_data['first_name']} {user_data['last_name']})".join(user_command['Command_Answer'].split('{user}'))
-										if user_command['Command_Answer'].find('{db[1]}') != -1:
-											user_command['Command_Answer'] = f'{user[1]}'.join(user_command['Command_Answer'].split('{db[1]}'))
-										if user_command['Command_Answer'].find('{db[2]}') != -1:
-											user_command['Command_Answer'] = f'{user[2]}'.join(user_command['Command_Answer'].split('{db[2]}'))
-										if user_command['Command_Answer'].find('{db[3]}') != -1:
-											user_command['Command_Answer'] = f'{user[3]}/{user[1] * 20}'.join(user_command['Command_Answer'].split('{db[3]}'))
+										command_answer = user_command['Command_Answer']
+										if command_answer.find('{user}') != -1:
+											command_answer = f"@id{id} ({user_data['first_name']} {user_data['last_name']})".join(command_answer.split('{user}'))
+										if command_answer.find('{db[1]}') != -1:
+											command_answer = f'{user[1]}'.join(command_answer.split('{db[1]}'))
+										if command_answer.find('{db[2]}') != -1:
+											command_answer = f'{user[2]}'.join(command_answer.split('{db[2]}'))
+										if command_answer.find('{db[3]}') != -1:
+											command_answer = f'{user[3]}/{user[1] * 20}'.join(command_answer.split('{db[3]}'))
 
-										self._sender.send_message(peer_id, user_command['Command_Answer'])
+										self._sender.send_message(peer_id, command_answer)
 							else:
 								self._sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), команды \"{message}\" не существует!")
 					except:

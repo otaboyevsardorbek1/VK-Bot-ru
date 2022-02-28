@@ -8,22 +8,10 @@ import config as Config
 import requests
 import json
 
-def update_bot_settings(bot_settings):
-	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/bot_settings/update', json = {
-				'Bot_Settings': bot_settings,
-				'Unique_Key': Config.UNIQUE_KEY
-			}
-		)
-		if server_answer.status_code == 400:
-			server_answer_text = json.loads(server_answer.text)
-			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-	except requests.exceptions.ConnectionError:
-		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
-
 def get_bot_settings():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/bot_settings/get', json = {
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)
@@ -35,10 +23,11 @@ def get_bot_settings():
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
-def update_user_commands(user_commands):
+def update_bot_settings(bot_settings):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/user_commands/update', json = {
-				'User_Commands': user_commands,
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/bot_settings/update', json = {
+				'Bot_Settings': bot_settings,
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)
@@ -51,6 +40,7 @@ def update_user_commands(user_commands):
 def get_user_commands():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/user_commands/get', json = {
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)
@@ -62,10 +52,11 @@ def get_user_commands():
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
-def update_log(log):
+def update_user_commands(user_commands):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/log/update', json = {
-				'Log': log,
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/user_commands/update', json = {
+				'User_Commands': user_commands,
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)
@@ -78,6 +69,7 @@ def update_log(log):
 def get_log():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/log/get', json = {
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)
@@ -89,10 +81,25 @@ def get_log():
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+def update_log(log):
+	try:
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/log/update', json = {
+				'Log': log,
+				'Password': Config.PASSWORD,
+				'Unique_Key': Config.UNIQUE_KEY
+			}
+		)
+		if server_answer.status_code == 400:
+			server_answer_text = json.loads(server_answer.text)
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+	except requests.exceptions.ConnectionError:
+		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
+
 def find_in_database(sqlite3_command):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/find', json = {
 				'SQLite3_Command': sqlite3_command,
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)
@@ -108,6 +115,7 @@ def find_all_in_database(sqlite3_command):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/find_all', json = {
 				'SQLite3_Command': sqlite3_command,
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)
@@ -123,10 +131,12 @@ def edit_database(sqlite3_command, values = ()):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/edit_database', json = {
 				'SQLite3_Command': sqlite3_command,
-				'Unique_Key': Config.UNIQUE_KEY,
-				'Values': values
+				'Values': values,
+				'Password': Config.PASSWORD,
+				'Unique_Key': Config.UNIQUE_KEY
 			} if values != () else {
 				'SQLite3_Command': sqlite3_command,
+				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
 		)

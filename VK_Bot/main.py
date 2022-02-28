@@ -6,7 +6,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 # GUI
 import Registration_Window.registration_window as registration_window
 import Authorization_Window.authorization_window as authorization_window
-import Warning_Window.warning_window as warning_window
 from main_window import MainWindow
 from message_box import MessageBox
 
@@ -157,6 +156,7 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 			if server_answer.status_code == 200:
 				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 				Config.UNIQUE_KEY = server_answer_text['Unique_Key']
+				Config.PASSWORD = self.ui.PasswordLineEdit.text()
 				bot_panel = MainWindow()
 				self.close()
 				bot_panel.show()
@@ -171,56 +171,8 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 		reg.show()
 	# ==================================================================
 
-class WarningWindow(QtWidgets.QMainWindow): # Окно предупреждения
-	def __init__(self, parent = None):
-		QtWidgets.QWidget.__init__(self, parent)
-		self.ui = warning_window.Ui_MainWindow()
-		self.ui.setupUi(self)
-
-		# Отключаем стандартные границы окна программы
-		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		self.center()
-
-		# Обработчики основных кнопок
-		self.ui.YesButton.clicked.connect(self.yes_button)
-		self.ui.NoButton.clicked.connect(lambda: self.close())
-
-		# Обработчики кнопок с панели
-		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
-		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
-
-	# Перетаскивание безрамочного окна
-	# ==================================================================
-	def center(self):
-		qr = self.frameGeometry()
-		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
-		qr.moveCenter(cp)
-		self.move(qr.topLeft())
-
-	def mousePressEvent(self, event):
-		self.oldPos = event.globalPos()
-
-	def mouseMoveEvent(self, event):
-		try:
-			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-			self.move(self.x() + delta.x(), self.y() + delta.y())
-			self.oldPos = event.globalPos()
-		except AttributeError:
-			pass
-	# ==================================================================
-
-	# Логика основных кнопок
-	# ==================================================================
-	def yes_button(self):
-		authorization_window = AuthorizationWindow()
-		self.close()
-		authorization_window.show()
-	# ==================================================================
-# ==================================================================
-
 if __name__ == '__main__':
 	app = QtWidgets.QApplication(sys.argv)
-	myapp = WarningWindow()
+	myapp = AuthorizationWindow()
 	myapp.show()
 	sys.exit(app.exec_())
