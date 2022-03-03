@@ -17,7 +17,7 @@ import sys
 
 # Глобальные функции
 # ==================================================================
-def show_password(self): # Функция для показа пароля в текстовом поле для пароля
+def show_password(self):
 	if self.ui.PasswordLineEdit.echoMode() == 2:
 		icon = QtGui.QIcon()
 		icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -97,8 +97,9 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 
 	def authorization_window(self):
 		auth = AuthorizationWindow()
-		self.close()
 		auth.show()
+
+		self.close()
 	# ==================================================================
 
 class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизации
@@ -157,9 +158,11 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 				Config.UNIQUE_KEY = server_answer_text['Unique_Key']
 				Config.PASSWORD = self.ui.PasswordLineEdit.text()
+
 				bot_panel = MainWindow()
-				self.close()
 				bot_panel.show()
+
+				self.close()
 			else:
 				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 		except requests.exceptions.ConnectionError:
@@ -167,8 +170,9 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 
 	def registration_window(self):
 		reg = RegistrationWindow()
-		self.close()
 		reg.show()
+
+		self.close()
 	# ==================================================================
 
 if __name__ == '__main__':

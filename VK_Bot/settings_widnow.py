@@ -4,19 +4,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Main_Window.Settings_Panel_Window.settings_panel_widnow as settings_panel_widnow
-from user_command_panel_window import UserCommandPanelWindow
+import Main_Window.Settings_Window.settings_widnow as settings_widnow
+from user_command_window import UserCommandWindow
 from message_box import MessageBox
 
 # Другое
 import server as Server
-import json
 
 # Окно настроек бота
-class SettingsPanelWindow(QtWidgets.QMainWindow):
+class SettingsWindow(QtWidgets.QMainWindow):
 	def __init__(self, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
-		self.ui = settings_panel_widnow.Ui_Form()
+		self.ui = settings_widnow.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
 
@@ -25,9 +24,11 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
+		# Все нужные переменные
 		self.automati_save_log_button_status = False
 		self.user_commands_button_status = False
 
+		# Настройка виджетов
 		self.bot_settings = Server.get_bot_settings()
 		self.ui.VKTokenLineEdit.setText(self.bot_settings['VK_Token'])
 		self.ui.IDBotLineEdit.setText(self.bot_settings['Group_ID'])
@@ -50,16 +51,16 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			self.ui.UserCommandsListWidget.addItem(item)
 
 		# Обработчики основных кнопок
-		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log)
-		self.ui.UserCommandsButton.clicked.connect(self.user_commands)
-		self.ui.AddUserCommandButton.clicked.connect(self.add_new_user_command_panel)
-		self.ui.EditUserCommandButton.clicked.connect(self.edit_user_command_panel)
-		self.ui.DeleteUserCommandButton.clicked.connect(self.remove_user_command)
-		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token)
-		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings)
+		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log_button)
+		self.ui.UserCommandsButton.clicked.connect(self.user_commands_button)
+		self.ui.AddUserCommandButton.clicked.connect(self.add_new_user_command_window_button)
+		self.ui.EditUserCommandButton.clicked.connect(self.edit_user_command_window_button)
+		self.ui.DeleteUserCommandButton.clicked.connect(self.remove_user_command_button)
+		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token_button)
+		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings_button)
 
 		# Обработчики кнопок с панели
-		self.ui.CloseWindowButton.clicked.connect(self.close_window)
+		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 
 		# Перетаскивание безрамочного окна
@@ -84,7 +85,7 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 
 	# Логика основных кнопок
 	# ==================================================================
-	def automati_save_log(self):
+	def automati_save_log_button(self):
 		if self.automati_save_log_button_status == True:
 			self.automati_save_log_button_status = False
 
@@ -98,7 +99,7 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.AutomatiSaveLogButton.setIcon(icon)
 
-	def user_commands(self):
+	def user_commands_button(self):
 		if self.user_commands_button_status == True:
 			self.user_commands_button_status = False
 
@@ -112,21 +113,21 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserCommandsButton.setIcon(icon)
 
-	def add_new_user_command_panel(self):
-		add_user_command_panel = UserCommandPanelWindow(button_text = 'Создать команду')
-		add_user_command_panel.signalAddNewUserCommand.connect(self.add_new_user_command)
-		add_user_command_panel.show()
+	def add_new_user_command_window_button(self):
+		add_new_user_command_window = UserCommandWindow(button_text = 'Создать команду')
+		add_new_user_command_window.signalAddNewUserCommand.connect(self.add_new_user_command)
+		add_new_user_command_window.show()
 
-	def edit_user_command_panel(self):
+	def edit_user_command_window_button(self):
 		item = self.ui.UserCommandsListWidget.selectedItems()
 		if len(item) == 0:
 			MessageBox(text = 'Вы не выбрали команду, которую хотите изменить!', button_1 = 'Щас исправлю...')
 		elif len(item) == 1:
 			item = item[0]
-			edit_user_command_panel = UserCommandPanelWindow(button_text = 'Редактировать команду', item = item)
-			edit_user_command_panel.show()
+			edit_user_command_window = UserCommandWindow(button_text = 'Редактировать команду', item = item)
+			edit_user_command_window.show()
 
-	def remove_user_command(self):
+	def remove_user_command_button(self):
 		item = self.ui.UserCommandsListWidget.selectedItems()
 		if len(item) == 0:
 			MessageBox(text = 'Вы не выбрали команду, которую хотите удалить!', button_1 = 'Щас исправлю...')
@@ -154,7 +155,7 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 		if text == 'Да':
 			self.save_bot_settings()
 
-	def close_window(self):
+	def close_window_button(self):
 		different_settings = False
 		if self.bot_settings['Automati_Save_Log'] != self.automati_save_log_button_status:
 			different_settings = True
@@ -171,7 +172,7 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 
 		self.close()
 
-	def show_vk_token(self):
+	def show_vk_token_button(self):
 		if self.ui.VKTokenLineEdit.echoMode() == 2:
 			icon = QtGui.QIcon()
 			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -183,7 +184,7 @@ class SettingsPanelWindow(QtWidgets.QMainWindow):
 			self.ui.ShowVKTokenButton.setIcon(icon)
 			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
 
-	def save_bot_settings(self):
+	def save_bot_settings_button(self):
 		self.bot_settings = {
 			'Automati_Save_Log': self.automati_save_log_button_status,
 			'User_Commands': self.user_commands_button_status,

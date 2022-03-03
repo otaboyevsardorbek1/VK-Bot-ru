@@ -2,16 +2,17 @@
 
 # PyQt5
 from PyQt5 import QtCore, QtGui, QtWidgets
+from flask import Config
 
 # GUI
 import Main_Window.main_window as main_window
 from message_box import MessageBox
-from settings_panel_widnow import SettingsPanelWindow
+from settings_widnow import SettingsWindow
 
 # Другие
-from mute_time import MuteTime
 import server as Server
-from bot import Bot
+import config as Config
+from bot import Bot, MuteTime
 
 # Окно панель бота
 class MainWindow(QtWidgets.QMainWindow):
@@ -25,6 +26,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
+		# Вывод логов в "self.ui.LogListWidget"
 		log = Server.get_log()
 		if log != []:
 			for text in log:
@@ -38,10 +40,10 @@ class MainWindow(QtWidgets.QMainWindow):
 					self.ui.LogListWidget.addItem(item)
 
 		# Обработчики основных кнопок
-		self.ui.SaveLogButton.clicked.connect(self.save_log)
-		self.ui.ClearLogButton.clicked.connect(self.clear_log)
-		self.ui.BotSettingsButton.clicked.connect(self.bot_settings_panel)
-		self.ui.StartBotButton.clicked.connect(self.start_bot)
+		self.ui.SaveLogButton.clicked.connect(lambda: self.save_log())
+		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)
+		self.ui.SettingsWindowButton.clicked.connect(self.settings_window_button)
+		self.ui.OnOrOffBotButton.clicked.connect(self.on_or_off_bot_button)
 
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
@@ -69,77 +71,59 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Логика основных кнопок
 	# ==================================================================
-	def save_log(self):
+	def clear_log_button(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
 			items.append(self.ui.LogListWidget.item(num))
-		log = []
-		for item in items:
-			text = ' '.join(item.text().split('\n'))
-			log.append(text)
 
-		Server.update_log(log)
-
-	def clear_log(self):
-		items = []
-		for num in range(self.ui.LogListWidget.count()):
-			items.append(self.ui.LogListWidget.item(num))
 		for item in items:
 			self.ui.LogListWidget.takeItem(self.ui.LogListWidget.row(item))
 		Server.update_log([])
 
-	def bot_settings_panel(self):
-		bot_settings_panel = SettingsPanelWindow()
-		bot_settings_panel.show()
+	def settings_window_button(self):
+		settings_window = SettingsWindow()
+		settings_window.show()
 
-	def start_bot(self):
+	def on_or_off_bot_button(self):
 		bot_settings = Server.get_bot_settings()
 		if bot_settings['VK_Token'] != '' or bot_settings['Group_ID'] != '':
-			if self.ui.StartBotButton.text() == 'Запустить бота':
-				self.ui.StartBotButton.setText('Выключить бота')
-				self.ui.StartBotButton.setStyleSheet("""\
-					QPushButton{
-						border-radius: 8px;
-						background-color: #EA4100;
-					}
+			if self.ui.OnOrOffBotButton.text() == 'Запустить бота':
+				self.ui.OnOrOffBotButton.setText('Выключить бота')
+				self.ui.OnOrOffBotButton.setStyleSheet(Config.ON_BUTTON)
 
-					QPushButton:hover{
-						background-color: #DF3E00;
-					}
+				self.mute_time = MuteTime()
+				self.mute_time.start()
 
-					QPushButton:pressed{
-						background-color: #CA3700;
-					}
-				""")
-				self.muteTime = MuteTime()
 				self.bot = Bot(bot_settings['VK_Token'], bot_settings['Group_ID'])
-				self.bot.signalMuteTime.connect(self.muteTime.start)
-				self.bot.signalPrintUserMessage.connect(self.print_user_messgae)
+				self.bot.signalPrintUserMessage.connect(self.print_user_message)
 				self.bot.start()
 			else:
-				self.ui.StartBotButton.setText('Запустить бота')
-				self.ui.StartBotButton.setStyleSheet("""\
-					QPushButton{
-						border-radius: 8px;
-						background-color: #92E604;
-					}
+				self.ui.OnOrOffBotButton.setText('Запустить бота')
+				self.ui.OnOrOffBotButton.setStyleSheet(Config.OFF_BUTTON)
 
-					QPushButton:hover{
-						background-color: #8BDC03;
-					}
-
-					QPushButton:pressed{
-						background-color: #7DC802;
-					}
-				""")
-				self.bot.longpoll.bot_run = False
+				self.mute_time.mute_time_theard_run = False
+				self.bot.longpoll.bot_theard_run = False
 		else:
 			MessageBox(text = 'Отсутствует "VK Token" или "ID Group" в настройках!', button_2 = 'Окей')
 	# ==================================================================
 
+	# Обычные функции
+	# ==================================================================
+	def save_log(self):
+		items = []
+		for num in range(self.ui.LogListWidget.count()):
+			items.append(self.ui.LogListWidget.item(num))
+
+		log = []
+		for item in items:
+			text = ' '.join(item.text().split('\n'))
+			log.append(text)
+		Server.update_log(log)
+	# ==================================================================
+
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
-	def print_user_messgae(self, user, message):
+	def print_user_message(self, user, message):
 		item = QtWidgets.QListWidgetItem()
 		self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
 		item.setIcon(QtGui.QIcon('../Icons/user.png'))

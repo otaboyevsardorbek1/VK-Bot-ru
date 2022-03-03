@@ -1,8 +1,1 @@
-VK_Bot/__pycache__/
-VK_Bot/MessageBox/__pycache__/
-VK_Bot/Warning_Window/__pycache__
-VK_Bot/Authorization_Window/__pycache__/
-VK_Bot/Registration_Window/__pycache__/
-VK_Bot/Main_Window/__pycache__/
-VK_Bot/Main_Window/Settings_Panel_Window/__pycache__/
-VK_Bot/Main_Window/Settings_Panel_Window/User_Command_Panel_Widnow/__pycache__/
+__pycache__/

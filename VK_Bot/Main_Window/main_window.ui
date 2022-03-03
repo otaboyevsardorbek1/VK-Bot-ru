@@ -139,7 +139,7 @@ QPushButton:pressed{
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="StartBotButton">
+    <widget class="QPushButton" name="OnOrOffBotButton">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -176,7 +176,7 @@ QPushButton:pressed{
       <string>Запустить бота</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="BotSettingsButton">
+    <widget class="QPushButton" name="SettingsWindowButton">
      <property name="geometry">
       <rect>
        <x>20</x>

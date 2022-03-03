@@ -83,15 +83,15 @@ class Ui_MainWindow(object):
 "}")
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
-        self.StartBotButton = QtWidgets.QPushButton(self.Window)
-        self.StartBotButton.setGeometry(QtCore.QRect(210, 260, 181, 41))
+        self.OnOrOffBotButton = QtWidgets.QPushButton(self.Window)
+        self.OnOrOffBotButton.setGeometry(QtCore.QRect(210, 260, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.StartBotButton.setFont(font)
-        self.StartBotButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.StartBotButton.setStyleSheet("QPushButton{\n"
+        self.OnOrOffBotButton.setFont(font)
+        self.OnOrOffBotButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.OnOrOffBotButton.setStyleSheet("QPushButton{\n"
 "    border-radius: 8px;\n"
 "    background-color: #92E604;\n"
 "}\n"
@@ -103,16 +103,16 @@ class Ui_MainWindow(object):
 "QPushButton:pressed{\n"
 "    background-color: #7DC802;\n"
 "}")
-        self.StartBotButton.setObjectName("StartBotButton")
-        self.BotSettingsButton = QtWidgets.QPushButton(self.Window)
-        self.BotSettingsButton.setGeometry(QtCore.QRect(20, 260, 181, 41))
+        self.OnOrOffBotButton.setObjectName("OnOrOffBotButton")
+        self.SettingsWindowButton = QtWidgets.QPushButton(self.Window)
+        self.SettingsWindowButton.setGeometry(QtCore.QRect(20, 260, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.BotSettingsButton.setFont(font)
-        self.BotSettingsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.BotSettingsButton.setStyleSheet("QPushButton{\n"
+        self.SettingsWindowButton.setFont(font)
+        self.SettingsWindowButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.SettingsWindowButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
 "    border-radius: 8px;\n"
 "    background-color: #595F76;\n"
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
 "QPushButton:pressed{\n"
 "    background-color: #434965;\n"
 "}")
-        self.BotSettingsButton.setObjectName("BotSettingsButton")
+        self.SettingsWindowButton.setObjectName("SettingsWindowButton")
         self.LogListWidget = QtWidgets.QListWidget(self.Window)
         self.LogListWidget.setGeometry(QtCore.QRect(20, 50, 371, 151))
         font = QtGui.QFont()
@@ -216,8 +216,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.CloseWindowButton.setText(_translate("MainWindow", "X"))
         self.MinimizeWindowButton.setText(_translate("MainWindow", "_"))
-        self.StartBotButton.setText(_translate("MainWindow", "Запустить бота"))
-        self.BotSettingsButton.setText(_translate("MainWindow", "Настройки"))
+        self.OnOrOffBotButton.setText(_translate("MainWindow", "Запустить бота"))
+        self.SettingsWindowButton.setText(_translate("MainWindow", "Настройки"))
         self.LogListWidget.setSortingEnabled(False)
         self.SaveLogButton.setText(_translate("MainWindow", "Сохранить логи"))
         self.ClearLogButton.setText(_translate("MainWindow", "Очистить логи"))

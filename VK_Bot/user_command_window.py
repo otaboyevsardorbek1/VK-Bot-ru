@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 
 # PyQt5
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 # GUI
-import Main_Window.Settings_Panel_Window.User_Command_Panel_Widnow.user_command_panel_window as user_command_panel_window
+import Main_Window.Settings_Window.User_Command_Widnow.user_command_window as user_commandl_window
 from message_box import MessageBox
 
 # Другое
 import server as Server
-import json
 
-class UserCommandPanelWindow(QtWidgets.QMainWindow):
+class UserCommandWindow(QtWidgets.QMainWindow):
 	signalAddNewUserCommand = QtCore.pyqtSignal(dict)
 
 	def __init__(self, button_text, item = None, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
-		self.ui = user_command_panel_window.Ui_Form()
+		self.ui = user_commandl_window.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
 
@@ -31,7 +30,7 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 		# Обработчик основной кнопки
 		if self.button_text == 'Создать команду':
 			self.ui.UserCommandButton.setText(self.button_text)
-			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command)
+			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
 		if self.button_text == 'Редактировать команду':
 			self.item = item
 
@@ -48,7 +47,7 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 			self.ui.CommandAnsweTextEdit.setText(self.user_commands[self.user_command_value]['Command_Answer'])
 
 			self.ui.UserCommandButton.setText(self.button_text)
-			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command)
+			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
 
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
@@ -76,9 +75,10 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 
 	# Логика основной кнопки
 	# ==================================================================
-	def create_new_or_edit_user_command(self):
+	def create_new_or_edit_user_command_button(self):
 		command_name = self.ui.CommandNameLineEdit.text()
 		command = self.ui.CommandlineEdit.text()
+		command_answer = self.ui.CommandAnsweTextEdit.toPlainText()
 
 		find_command_name = False
 		find_command = False
@@ -87,41 +87,43 @@ class UserCommandPanelWindow(QtWidgets.QMainWindow):
 			for user_command in self.user_commands:
 				if user_command['Command_Name'] == command_name:
 					find_command_name = True
+					break
 				elif user_command['Command'] == command:
 					find_command = True
+					break
 		elif self.button_text == 'Редактировать команду':
 			for user_command in self.user_commands:
 				if user_command['Command_Name'] == command_name and self.user_commands[self.user_command_value]['Command_Name'] != user_command['Command_Name']:
 					find_command_name = True
+					break
 				elif user_command['Command'] == command and self.user_commands[self.user_command_value]['Command'] != user_command['Command']:
 					find_command = True
+					break
 
 		if find_command_name == False and find_command == False:
 			if self.button_text == 'Создать команду':
 				data = {
 					'Command_Name': command_name,
 					'Command': command,
-					'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
+					'Command_Answer': command_answer
 				}
 				self.user_commands.append(data)
 				Server.update_user_commands(self.user_commands)
 
-				MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
-
 				self.signalAddNewUserCommand.emit(data)
+				MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
 
 				self.close()
 			elif self.button_text == 'Редактировать команду':
 				self.user_commands[self.user_command_value] = {
 					'Command_Name': command_name,
 					'Command': command,
-					'Command_Answer': self.ui.CommandAnsweTextEdit.toPlainText()
+					'Command_Answer': command_answer
 				}
 				Server.update_user_commands(self.user_commands)
 
-				MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
-
 				self.item.setText(f'Команда: {command_name}')
+				MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
 
 				self.close()
 		else:
