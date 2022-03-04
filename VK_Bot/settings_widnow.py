@@ -26,17 +26,12 @@ class SettingsWindow(QtWidgets.QMainWindow):
 
 		# Все нужные переменные
 		self.automati_save_log_button_status = False
-		self.user_commands_button_status = False
 
 		# Настройка виджетов
 		self.bot_settings = Server.get_bot_settings()
 		self.ui.VKTokenLineEdit.setText(self.bot_settings['VK_Token'])
 		self.ui.IDBotLineEdit.setText(self.bot_settings['Group_ID'])
-		if self.bot_settings['User_Commands'] == True:
-			self.user_commands_button_status = True
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserCommandsButton.setIcon(icon)
+
 		if self.bot_settings['Automati_Save_Log'] == True:
 			self.automati_save_log_button_status = True
 			icon = QtGui.QIcon()
@@ -47,12 +42,11 @@ class SettingsWindow(QtWidgets.QMainWindow):
 		for user_command in user_commands:
 			item = QtWidgets.QListWidgetItem()
 			item.setTextAlignment(QtCore.Qt.AlignLeft)
-			item.setText(f"Команда: {user_command['Command_Name']}")
+			item.setText(user_command['Command_Name'])
 			self.ui.UserCommandsListWidget.addItem(item)
 
 		# Обработчики основных кнопок
 		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log_button)
-		self.ui.UserCommandsButton.clicked.connect(self.user_commands_button)
 		self.ui.AddUserCommandButton.clicked.connect(self.add_new_user_command_window_button)
 		self.ui.EditUserCommandButton.clicked.connect(self.edit_user_command_window_button)
 		self.ui.DeleteUserCommandButton.clicked.connect(self.remove_user_command_button)
@@ -99,24 +93,10 @@ class SettingsWindow(QtWidgets.QMainWindow):
 			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.AutomatiSaveLogButton.setIcon(icon)
 
-	def user_commands_button(self):
-		if self.user_commands_button_status == True:
-			self.user_commands_button_status = False
-
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserCommandsButton.setIcon(icon)
-		else:
-			self.user_commands_button_status = True
-
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserCommandsButton.setIcon(icon)
-
 	def add_new_user_command_window_button(self):
-		add_new_user_command_window = UserCommandWindow(button_text = 'Создать команду')
-		add_new_user_command_window.signalAddNewUserCommand.connect(self.add_new_user_command)
-		add_new_user_command_window.show()
+		self.add_new_user_command_window = UserCommandWindow(button_text = 'Создать команду')
+		self.add_new_user_command_window.signalAddNewUserCommand.connect(self.add_new_user_command)
+		self.add_new_user_command_window.show()
 
 	def edit_user_command_window_button(self):
 		item = self.ui.UserCommandsListWidget.selectedItems()
@@ -124,8 +104,8 @@ class SettingsWindow(QtWidgets.QMainWindow):
 			MessageBox(text = 'Вы не выбрали команду, которую хотите изменить!', button_1 = 'Щас исправлю...')
 		elif len(item) == 1:
 			item = item[0]
-			edit_user_command_window = UserCommandWindow(button_text = 'Редактировать команду', item = item)
-			edit_user_command_window.show()
+			self.edit_user_command_window = UserCommandWindow(button_text = 'Редактировать команду', item = item)
+			self.edit_user_command_window.show()
 
 	def remove_user_command_button(self):
 		item = self.ui.UserCommandsListWidget.selectedItems()
@@ -159,8 +139,6 @@ class SettingsWindow(QtWidgets.QMainWindow):
 		different_settings = False
 		if self.bot_settings['Automati_Save_Log'] != self.automati_save_log_button_status:
 			different_settings = True
-		elif self.bot_settings['User_Commands'] != self.user_commands_button_status:
-			different_settings = True
 		elif self.bot_settings['VK_Token'] != self.ui.VKTokenLineEdit.text():
 			different_settings = True
 		elif self.bot_settings['Group_ID'] != self.ui.IDBotLineEdit.text():
@@ -187,7 +165,6 @@ class SettingsWindow(QtWidgets.QMainWindow):
 	def save_bot_settings_button(self):
 		self.bot_settings = {
 			'Automati_Save_Log': self.automati_save_log_button_status,
-			'User_Commands': self.user_commands_button_status,
 			'VK_Token': self.ui.VKTokenLineEdit.text(),
 			'Group_ID': self.ui.IDBotLineEdit.text()
 		}
@@ -201,6 +178,6 @@ class SettingsWindow(QtWidgets.QMainWindow):
 	def add_new_user_command(self, new_command):
 		item = QtWidgets.QListWidgetItem()
 		item.setTextAlignment(QtCore.Qt.AlignLeft)
-		item.setText(f"Команда: {new_command['Command_Name']}")
+		item.setText(new_command['Command_Name'])
 		self.ui.UserCommandsListWidget.addItem(item)
 	# ==================================================================

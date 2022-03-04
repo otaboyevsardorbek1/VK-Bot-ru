@@ -37,3 +37,7 @@ python main.py (Для Linux: python3 main.py)
 ![software_main_window](Icons/main_window.png)
 ## Окно настроек:
 ![software_settings_window](Icons/settings_window.png)
+## Окно добавление новой команды:
+![software_settings_window](Icons/add_new_user_command_window.png)
+## Окно редактирование команды:
+![software_settings_window](Icons/edit_user_command_window.png)

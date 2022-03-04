@@ -4,28 +4,31 @@
 from PyQt5 import QtCore, QtWidgets
 
 # GUI
-import Main_Window.Settings_Window.User_Command_Widnow.user_command_window as user_commandl_window
+import Main_Window.Settings_Window.User_Command_Widnow.user_command_window as user_command_window
+from db_variable_window import DBVariableWindow
 from message_box import MessageBox
 
 # Другое
 import server as Server
 
+# Окно для пользоватских команд
 class UserCommandWindow(QtWidgets.QMainWindow):
 	signalAddNewUserCommand = QtCore.pyqtSignal(dict)
 
 	def __init__(self, button_text, item = None, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
-		self.ui = user_commandl_window.Ui_Form()
+		self.ui = user_command_window.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
-
-		self.user_commands = Server.get_user_commands()
-		self.button_text = button_text
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
+
+		# Все нужные переменные
+		self.user_commands = Server.get_user_commands()
+		self.button_text = button_text
 
 		# Обработчик основной кнопки
 		if self.button_text == 'Создать команду':
@@ -49,11 +52,18 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 			self.ui.UserCommandButton.setText(self.button_text)
 			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
 
+		self.ui.UserVariableButton.clicked.connect(self.user_variable_button)
+		self.ui.OtherUserVariable.clicked.connect(self.other_user_variable_button)
+		self.ui.DBVariableButton.clicked.connect(self.db_variable_button)
+		self.ui.OtherDBVariableButton.clicked.connect(self.other_db_variable_button)
+		self.ui.AllCommandsVariableButton.clicked.connect(self.all_commands_variable_button)
+		self.ui.TakeUserIDVariableButton.clicked.connect(self.take_user_id_variable_button)
+
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 
-		# Перетаскивание безрамочного окна
+	# Перетаскивание безрамочного окна
 	# ==================================================================
 	def center(self):
 		qr = self.frameGeometry()
@@ -122,7 +132,7 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 				}
 				Server.update_user_commands(self.user_commands)
 
-				self.item.setText(f'Команда: {command_name}')
+				self.item.setText(command_name)
 				MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
 
 				self.close()
@@ -135,4 +145,56 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 				text = f'Команда "{command}" уже существует!'
 
 			MessageBox(text = text, button_1 = 'Щас исправлю...')
+
+	def user_variable_button(self):
+		command_answer = self.ui.CommandAnsweTextEdit.toPlainText()
+		command_answer += '{user}'
+		self.ui.CommandAnsweTextEdit.setText(command_answer)
+
+	def other_user_variable_button(self):
+		command = self.ui.CommandlineEdit.text()
+		if command.find('{take_user_id}') == -1:
+			command += '{take_user_id}'
+			self.ui.CommandlineEdit.setText(command)
+
+		command_answer = self.ui.CommandAnsweTextEdit.toPlainText()
+		command_answer += '{other_user}'
+		self.ui.CommandAnsweTextEdit.setText(command_answer)
+
+	def db_variable_button(self):
+		self.db_variable_window = DBVariableWindow('db')
+		self.db_variable_window.signalReturnDBVariable.connect(self.db_or_other_db_variable)
+		self.db_variable_window.show()
+
+	def other_db_variable_button(self):
+		self.db_variable_window = DBVariableWindow('other_db')
+		self.db_variable_window.signalReturnDBVariable.connect(self.db_or_other_db_variable)
+		self.db_variable_window.show()
+
+	def all_commands_variable_button(self):
+		command_answer = self.ui.CommandAnsweTextEdit.toPlainText()
+		command_answer += 'Список команд:\n{all_commands}'
+		self.ui.CommandAnsweTextEdit.setText(command_answer)
+
+	def take_user_id_variable_button(self):
+		command = self.ui.CommandlineEdit.text()
+		if command.find('{take_user_id}') == -1:
+			command += '{take_user_id}'
+			self.ui.CommandlineEdit.setText(command)
+		else:
+			MessageBox(text = '{take_user_id} можно использовать только один раз!', button_1 = 'Окей')
+	# ==================================================================
+
+	# Сигналы QtCore.pyqtSignal
+	# ==================================================================
+	def db_or_other_db_variable(self, text):
+		command = self.ui.CommandAnsweTextEdit.toPlainText()
+		command += text
+		self.ui.CommandAnsweTextEdit.setText(command)
+
+		if text.find('other_db') != -1:
+			command = self.ui.CommandlineEdit.text()
+			if command.find('{take_user_id}') == -1:
+				command += '{take_user_id}'
+				self.ui.CommandlineEdit.setText(command)
 	# ==================================================================

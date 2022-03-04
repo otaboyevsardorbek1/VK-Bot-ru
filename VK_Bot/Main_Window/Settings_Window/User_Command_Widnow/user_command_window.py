@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'user_command_panel_window.ui'
+# Form implementation generated from reading ui file 'user_command_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(752, 322)
+        Form.resize(601, 391)
         self.Window = QtWidgets.QFrame(Form)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 731, 301))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 581, 371))
         font = QtGui.QFont()
         font.setPointSize(8)
         self.Window.setFont(font)
@@ -36,12 +36,68 @@ class Ui_Form(object):
 "QTextEdit{\n"
 "    background-color: white;\n"
 "    border-radius: 12px;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical{\n"
+"    border: none;\n"
+"    background: #595F76;\n"
+"    width: 15px;\n"
+"    margin: 15px 0 15px 0;\n"
+"    border-radius: 0px;\n"
+" }\n"
+"\n"
+"QScrollBar::handle:vertical{    \n"
+"    background-color: #494E61;\n"
+"    min-height: 30px;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical{\n"
+"    border: none;\n"
+"    background-color: #3A3F50;\n"
+"    height: 15px;\n"
+"    border-top-right-radius: 7px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical{\n"
+"    border: none;\n"
+"    background-color: #3A3F50;\n"
+"    height: 15px;\n"
+"    border-bottom-right-radius: 7px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::add-line:vertical:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical{\n"
+"    background: none;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{\n"
+"    background: none;\n"
 "}")
         self.Window.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Window.setFrameShadow(QtWidgets.QFrame.Raised)
         self.Window.setObjectName("Window")
         self.WindowFrame = QtWidgets.QFrame(self.Window)
-        self.WindowFrame.setGeometry(QtCore.QRect(0, 0, 731, 31))
+        self.WindowFrame.setGeometry(QtCore.QRect(0, 0, 581, 31))
         self.WindowFrame.setStyleSheet("QFrame{\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -51,7 +107,7 @@ class Ui_Form(object):
         self.WindowFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.WindowFrame.setObjectName("WindowFrame")
         self.CloseWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.CloseWindowButton.setGeometry(QtCore.QRect(690, 0, 41, 31))
+        self.CloseWindowButton.setGeometry(QtCore.QRect(540, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -74,7 +130,7 @@ class Ui_Form(object):
 "}")
         self.CloseWindowButton.setObjectName("CloseWindowButton")
         self.MinimizeWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.MinimizeWindowButton.setGeometry(QtCore.QRect(649, 0, 41, 31))
+        self.MinimizeWindowButton.setGeometry(QtCore.QRect(499, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -98,7 +154,7 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
         self.CommandNameLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.CommandNameLineEdit.setGeometry(QtCore.QRect(20, 50, 301, 41))
+        self.CommandNameLineEdit.setGeometry(QtCore.QRect(20, 50, 361, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
@@ -107,7 +163,7 @@ class Ui_Form(object):
         self.CommandNameLineEdit.setInputMask("")
         self.CommandNameLineEdit.setObjectName("CommandNameLineEdit")
         self.CommandlineEdit = QtWidgets.QLineEdit(self.Window)
-        self.CommandlineEdit.setGeometry(QtCore.QRect(20, 100, 301, 41))
+        self.CommandlineEdit.setGeometry(QtCore.QRect(20, 100, 361, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
@@ -116,22 +172,15 @@ class Ui_Form(object):
         self.CommandlineEdit.setInputMask("")
         self.CommandlineEdit.setObjectName("CommandlineEdit")
         self.CommandAnsweTextEdit = QtWidgets.QTextEdit(self.Window)
-        self.CommandAnsweTextEdit.setGeometry(QtCore.QRect(20, 150, 301, 81))
+        self.CommandAnsweTextEdit.setGeometry(QtCore.QRect(20, 150, 361, 151))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
         font.setWeight(50)
         self.CommandAnsweTextEdit.setFont(font)
         self.CommandAnsweTextEdit.setObjectName("CommandAnsweTextEdit")
-        self.TextEdit = QtWidgets.QTextEdit(self.Window)
-        self.TextEdit.setGeometry(QtCore.QRect(330, 50, 381, 231))
-        self.TextEdit.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
-        self.TextEdit.setReadOnly(True)
-        self.TextEdit.setOverwriteMode(False)
-        self.TextEdit.setAcceptRichText(True)
-        self.TextEdit.setObjectName("TextEdit")
         self.UserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.UserCommandButton.setGeometry(QtCore.QRect(20, 240, 301, 41))
+        self.UserCommandButton.setGeometry(QtCore.QRect(20, 310, 361, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -153,6 +202,83 @@ class Ui_Form(object):
 "}")
         self.UserCommandButton.setText("")
         self.UserCommandButton.setObjectName("UserCommandButton")
+        self.Variable = QtWidgets.QFrame(self.Window)
+        self.Variable.setGeometry(QtCore.QRect(390, 50, 171, 301))
+        self.Variable.setStyleSheet("QFrame{\n"
+"    border-radius: 12px;\n"
+"    background-color: #2C313C;\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.Variable.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.Variable.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.Variable.setObjectName("Variable")
+        self.AllCommandsVariableButton = QtWidgets.QPushButton(self.Variable)
+        self.AllCommandsVariableButton.setGeometry(QtCore.QRect(10, 70, 111, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.AllCommandsVariableButton.setFont(font)
+        self.AllCommandsVariableButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.AllCommandsVariableButton.setObjectName("AllCommandsVariableButton")
+        self.DBVariableButton = QtWidgets.QPushButton(self.Variable)
+        self.DBVariableButton.setGeometry(QtCore.QRect(10, 40, 41, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.DBVariableButton.setFont(font)
+        self.DBVariableButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.DBVariableButton.setObjectName("DBVariableButton")
+        self.UserVariableButton = QtWidgets.QPushButton(self.Variable)
+        self.UserVariableButton.setGeometry(QtCore.QRect(10, 10, 51, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.UserVariableButton.setFont(font)
+        self.UserVariableButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.UserVariableButton.setObjectName("UserVariableButton")
+        self.OtherUserVariable = QtWidgets.QPushButton(self.Variable)
+        self.OtherUserVariable.setGeometry(QtCore.QRect(70, 10, 91, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.OtherUserVariable.setFont(font)
+        self.OtherUserVariable.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.OtherUserVariable.setObjectName("OtherUserVariable")
+        self.OtherDBVariableButton = QtWidgets.QPushButton(self.Variable)
+        self.OtherDBVariableButton.setGeometry(QtCore.QRect(60, 40, 81, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.OtherDBVariableButton.setFont(font)
+        self.OtherDBVariableButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.OtherDBVariableButton.setObjectName("OtherDBVariableButton")
+        self.TakeUserIDVariableButton = QtWidgets.QPushButton(self.Variable)
+        self.TakeUserIDVariableButton.setGeometry(QtCore.QRect(10, 100, 111, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.TakeUserIDVariableButton.setFont(font)
+        self.TakeUserIDVariableButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.TakeUserIDVariableButton.setObjectName("TakeUserIDVariableButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -164,17 +290,15 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setText(_translate("Form", "_"))
         self.CommandNameLineEdit.setPlaceholderText(_translate("Form", "Придумайте имя команде"))
         self.CommandlineEdit.setPlaceholderText(_translate("Form", "Введите команду"))
-        self.CommandAnsweTextEdit.setPlaceholderText(_translate("Form", "Что должен ответить бот?"))
-        self.TextEdit.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.CommandAnsweTextEdit.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">Переменные и их значения</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. {user} - @id{ID пользователя, который вызвал эту команду}</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2. {db[</span><span style=\" font-size:9pt; color:#0000ff;\">Значение</span><span style=\" font-size:9pt;\">]} - у этой переменой есть 3</span><span style=\" font-size:9pt; color:#000000;\"> значений</span><span style=\" font-size:9pt;\">:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  </span><span style=\" font-size:9pt; color:#0000ff;\">1</span><span style=\" font-size:9pt;\"> - Уровень пользователя</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  </span><span style=\" font-size:9pt; color:#0000ff;\">2</span><span style=\" font-size:9pt;\"> - Баланс пользователя</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  </span><span style=\" font-size:9pt; color:#0000ff;\">3</span><span style=\" font-size:9pt;\"> - Опыт пользователя</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">Важно!</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Вызов команды всегда через &quot;!&quot;, так что в текстовом поле &quot;Введите команду&quot; не нужно водить &quot;!&quot;.</span></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.CommandAnsweTextEdit.setPlaceholderText(_translate("Form", "Что должен ответить бот?"))
+        self.AllCommandsVariableButton.setText(_translate("Form", "{all_commands}"))
+        self.DBVariableButton.setText(_translate("Form", "{db}"))
+        self.UserVariableButton.setText(_translate("Form", "{user}"))
+        self.OtherUserVariable.setText(_translate("Form", "{other_user}"))
+        self.OtherDBVariableButton.setText(_translate("Form", "{other_db}"))
+        self.TakeUserIDVariableButton.setText(_translate("Form", "{take_user_id}"))

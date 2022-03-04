@@ -37,12 +37,3 @@ OFF_BUTTON = """\
 		background-color: #7DC802;
 	}
 """
-
-# РАНГИ
-RANKS = {
-	1: 'Посвящённый',
-	4: 'Junior',
-	12: 'Middle',
-	16: 'Senior',
-	20: 'Бог программирования'
-}

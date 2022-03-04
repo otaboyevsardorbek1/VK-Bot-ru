@@ -12,7 +12,7 @@ from settings_widnow import SettingsWindow
 # Другие
 import server as Server
 import config as Config
-from bot import Bot, MuteTime
+from bot import Bot
 
 # Окно панель бота
 class MainWindow(QtWidgets.QMainWindow):
@@ -81,8 +81,8 @@ class MainWindow(QtWidgets.QMainWindow):
 		Server.update_log([])
 
 	def settings_window_button(self):
-		settings_window = SettingsWindow()
-		settings_window.show()
+		self.settings_window = SettingsWindow()
+		self.settings_window.show()
 
 	def on_or_off_bot_button(self):
 		bot_settings = Server.get_bot_settings()
@@ -91,9 +91,6 @@ class MainWindow(QtWidgets.QMainWindow):
 				self.ui.OnOrOffBotButton.setText('Выключить бота')
 				self.ui.OnOrOffBotButton.setStyleSheet(Config.ON_BUTTON)
 
-				self.mute_time = MuteTime()
-				self.mute_time.start()
-
 				self.bot = Bot(bot_settings['VK_Token'], bot_settings['Group_ID'])
 				self.bot.signalPrintUserMessage.connect(self.print_user_message)
 				self.bot.start()
@@ -101,7 +98,6 @@ class MainWindow(QtWidgets.QMainWindow):
 				self.ui.OnOrOffBotButton.setText('Запустить бота')
 				self.ui.OnOrOffBotButton.setStyleSheet(Config.OFF_BUTTON)
 
-				self.mute_time.mute_time_theard_run = False
 				self.bot.longpoll.bot_theard_run = False
 		else:
 			MessageBox(text = 'Отсутствует "VK Token" или "ID Group" в настройках!', button_2 = 'Окей')

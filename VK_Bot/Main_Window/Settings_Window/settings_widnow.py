@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'settings_panel_window.ui'
+# Form implementation generated from reading ui file 'settings_widnow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(433, 503)
+        Form.resize(433, 483)
         self.Window = QtWidgets.QFrame(Form)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 481))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 461))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -24,6 +24,122 @@ class Ui_Form(object):
 "\n"
 "QLabel{\n"
 "    color: white;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical{\n"
+"    border: none;\n"
+"    background: #595F76;\n"
+"    width: 15px;\n"
+"    margin: 15px 0 15px 0;\n"
+"    border-radius: 0px;\n"
+" }\n"
+"\n"
+"QScrollBar::handle:vertical{    \n"
+"    background-color: #494E61;\n"
+"    min-height: 30px;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical{\n"
+"    border: none;\n"
+"    background-color: #3A3F50;\n"
+"    height: 15px;\n"
+"    border-top-left-radius: 7px;\n"
+"    border-top-right-radius: 7px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical{\n"
+"    border: none;\n"
+"    background-color: #3A3F50;\n"
+"    height: 15px;\n"
+"    border-bottom-left-radius: 7px;\n"
+"    border-bottom-right-radius: 7px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::add-line:vertical:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical{\n"
+"    background: none;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"QScrollBar:horizontal{\n"
+"    border: none;\n"
+"    background: #595F76;\n"
+"    height: 15px;\n"
+"    margin: 0px 15 0px 15;\n"
+"    border-radius: opx;\n"
+" }\n"
+"\n"
+"QScrollBar::handle:horizontal{    \n"
+"    background-color: #494E61;\n"
+"    min-width: 30px;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::handle:horizontal:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal{\n"
+"    border: none;\n"
+"    background-color: #3A3F50;\n"
+"    width: 15px;\n"
+"    border-top-left-radius: 7px;\n"
+"    border-bottom-left-radius: 7px;\n"
+"    subcontrol-position: left;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:horizontal:hover{    \n"
+"    background-color:#D5006A;\n"
+"}\n"
+"QScrollBar::sub-line:horizontal:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal{\n"
+"    border: none;\n"
+"    background-color: #3A3F50;\n"
+"    width: 15px;\n"
+"    border-top-right-radius: 7px;\n"
+"    border-bottom-right-radius: 7px;\n"
+"    subcontrol-position: right;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:horizontal:hover{    \n"
+"    background-color: #D5006A;\n"
+"}\n"
+"QScrollBar::add-line:horizontal:pressed{    \n"
+"    background-color: #B9005C;\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal{\n"
+"    background: none;\n"
+"}\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal{\n"
+"    background: none;\n"
 "}")
         self.Window.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Window.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -166,29 +282,8 @@ class Ui_Form(object):
         self.ShowVKTokenButton.setIcon(icon1)
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
-        self.label_2 = QtWidgets.QLabel(self.Window)
-        self.label_2.setGeometry(QtCore.QRect(20, 143, 286, 21))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setStyleSheet("")
-        self.label_2.setObjectName("label_2")
-        self.UserCommandsButton = QtWidgets.QPushButton(self.Window)
-        self.UserCommandsButton.setGeometry(QtCore.QRect(304, 146, 20, 21))
-        self.UserCommandsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.UserCommandsButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
-"}")
-        self.UserCommandsButton.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.UserCommandsButton.setIcon(icon2)
-        self.UserCommandsButton.setIconSize(QtCore.QSize(16, 16))
-        self.UserCommandsButton.setObjectName("UserCommandsButton")
         self.AddUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.AddUserCommandButton.setGeometry(QtCore.QRect(20, 320, 371, 41))
+        self.AddUserCommandButton.setGeometry(QtCore.QRect(20, 300, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -210,9 +305,9 @@ class Ui_Form(object):
 "}")
         self.AddUserCommandButton.setObjectName("AddUserCommandButton")
         self.UserCommandsListWidget = QtWidgets.QListWidget(self.Window)
-        self.UserCommandsListWidget.setGeometry(QtCore.QRect(20, 170, 371, 141))
+        self.UserCommandsListWidget.setGeometry(QtCore.QRect(20, 150, 371, 141))
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(13)
         font.setBold(True)
         font.setWeight(75)
         self.UserCommandsListWidget.setFont(font)
@@ -246,7 +341,7 @@ class Ui_Form(object):
         self.UserCommandsListWidget.setSelectionRectVisible(False)
         self.UserCommandsListWidget.setObjectName("UserCommandsListWidget")
         self.DeleteUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.DeleteUserCommandButton.setGeometry(QtCore.QRect(20, 420, 371, 41))
+        self.DeleteUserCommandButton.setGeometry(QtCore.QRect(20, 400, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -268,7 +363,7 @@ class Ui_Form(object):
 "}")
         self.DeleteUserCommandButton.setObjectName("DeleteUserCommandButton")
         self.EditUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.EditUserCommandButton.setGeometry(QtCore.QRect(20, 370, 371, 41))
+        self.EditUserCommandButton.setGeometry(QtCore.QRect(20, 350, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -305,6 +400,8 @@ class Ui_Form(object):
 "    border: none;\n"
 "}")
         self.AutomatiSaveLogButton.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.AutomatiSaveLogButton.setIcon(icon2)
         self.AutomatiSaveLogButton.setIconSize(QtCore.QSize(16, 16))
         self.AutomatiSaveLogButton.setObjectName("AutomatiSaveLogButton")
@@ -312,8 +409,6 @@ class Ui_Form(object):
         self.WindowFrame.raise_()
         self.VKTokenLineEdit.raise_()
         self.IDBotLineEdit.raise_()
-        self.label_2.raise_()
-        self.UserCommandsButton.raise_()
         self.AddUserCommandButton.raise_()
         self.UserCommandsListWidget.raise_()
         self.DeleteUserCommandButton.raise_()
@@ -331,7 +426,6 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setText(_translate("Form", "_"))
         self.VKTokenLineEdit.setPlaceholderText(_translate("Form", "Введите VK Token бота"))
         self.IDBotLineEdit.setPlaceholderText(_translate("Form", "Введите ID бота"))
-        self.label_2.setText(_translate("Form", "Пользовательские команды:"))
         self.AddUserCommandButton.setText(_translate("Form", "Добавить команду"))
         self.UserCommandsListWidget.setSortingEnabled(False)
         self.DeleteUserCommandButton.setText(_translate("Form", "Удалить команду"))

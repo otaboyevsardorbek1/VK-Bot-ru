@@ -96,8 +96,8 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 			MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
 	def authorization_window(self):
-		auth = AuthorizationWindow()
-		auth.show()
+		self.auth = AuthorizationWindow()
+		self.auth.show()
 
 		self.close()
 	# ==================================================================
@@ -159,8 +159,8 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 				Config.UNIQUE_KEY = server_answer_text['Unique_Key']
 				Config.PASSWORD = self.ui.PasswordLineEdit.text()
 
-				bot_panel = MainWindow()
-				bot_panel.show()
+				self.bot_panel = MainWindow()
+				self.bot_panel.show()
 
 				self.close()
 			else:
@@ -169,8 +169,8 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 			MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
 	def registration_window(self):
-		reg = RegistrationWindow()
-		reg.show()
+		self.reg = RegistrationWindow()
+		self.reg.show()
 
 		self.close()
 	# ==================================================================
