@@ -174,6 +174,7 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 
 		self.close()
 	# ==================================================================
+# ==================================================================
 
 if __name__ == '__main__':
 	app = QtWidgets.QApplication(sys.argv)

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # VK_API
-from codeop import compile_command
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
