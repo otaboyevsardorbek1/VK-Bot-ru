@@ -8,6 +8,43 @@ import config as Config
 import requests
 import json
 
+# Функция для создания аккаунта на сервере
+def create_new_account(login, password):
+	try:
+		data = {
+			'Login': login,
+			'Password': password
+		}
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
+		server_answer_text = json.loads(server_answer.text)
+		if server_answer.status_code == 200:
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+		else:
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+		return server_answer.status_code
+	except requests.exceptions.ConnectionError:
+			MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
+
+# Функция для авторизации аккаунта на сервере
+def authorization_in_account(login, password):
+	try:
+		data = {
+			'Login': login,
+			'Password': password
+		}
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
+		server_answer_text = json.loads(server_answer.text)
+		if server_answer.status_code == 200:
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
+			Config.PASSWORD = password
+		else:
+			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+		return server_answer.status_code
+	except requests.exceptions.ConnectionError:
+		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
+
+# Функция для получения настроек бота от сервере
 def get_bot_settings():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/bot_settings/get', json = {
@@ -23,6 +60,7 @@ def get_bot_settings():
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для обновления настроек бота на сервере
 def update_bot_settings(bot_settings):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/bot_settings/update', json = {
@@ -37,6 +75,7 @@ def update_bot_settings(bot_settings):
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для получения пользоватских команд от сервере
 def get_user_commands():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/user_commands/get', json = {
@@ -52,6 +91,7 @@ def get_user_commands():
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для обновления пользоватских команд на сервере
 def update_user_commands(user_commands):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/user_commands/update', json = {
@@ -66,6 +106,7 @@ def update_user_commands(user_commands):
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для получения логов от сервере
 def get_log():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/log/get', json = {
@@ -81,6 +122,7 @@ def get_log():
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для обновления логов на сервере
 def update_log(log):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/log/update', json = {
@@ -95,6 +137,7 @@ def update_log(log):
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для получения одной записи из DB от сервере
 def find_in_database(sqlite3_command):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/find', json = {
@@ -111,6 +154,7 @@ def find_in_database(sqlite3_command):
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для получения нескольких записей из DB от сервере
 def find_all_in_database(sqlite3_command):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/find_all', json = {
@@ -127,6 +171,7 @@ def find_all_in_database(sqlite3_command):
 	except requests.exceptions.ConnectionError:
 		MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
 
+# Функция для выполения SQLite3 команд на сервере
 def edit_database(sqlite3_command, values = ()):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/edit_database', json = {

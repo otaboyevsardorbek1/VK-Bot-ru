@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(432, 341)
+        MainWindow.resize(432, 392)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 321))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 371))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -200,7 +200,7 @@ class Ui_MainWindow(object):
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
         self.OnOrOffBotButton = QtWidgets.QPushButton(self.Window)
-        self.OnOrOffBotButton.setGeometry(QtCore.QRect(210, 260, 181, 41))
+        self.OnOrOffBotButton.setGeometry(QtCore.QRect(210, 310, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -221,7 +221,7 @@ class Ui_MainWindow(object):
 "}")
         self.OnOrOffBotButton.setObjectName("OnOrOffBotButton")
         self.SettingsWindowButton = QtWidgets.QPushButton(self.Window)
-        self.SettingsWindowButton.setGeometry(QtCore.QRect(20, 260, 181, 41))
+        self.SettingsWindowButton.setGeometry(QtCore.QRect(20, 310, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -281,7 +281,7 @@ class Ui_MainWindow(object):
         self.LogListWidget.setSelectionRectVisible(False)
         self.LogListWidget.setObjectName("LogListWidget")
         self.SaveLogButton = QtWidgets.QPushButton(self.Window)
-        self.SaveLogButton.setGeometry(QtCore.QRect(20, 210, 181, 41))
+        self.SaveLogButton.setGeometry(QtCore.QRect(20, 260, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -303,7 +303,7 @@ class Ui_MainWindow(object):
 "}")
         self.SaveLogButton.setObjectName("SaveLogButton")
         self.ClearLogButton = QtWidgets.QPushButton(self.Window)
-        self.ClearLogButton.setGeometry(QtCore.QRect(210, 210, 181, 41))
+        self.ClearLogButton.setGeometry(QtCore.QRect(210, 260, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -324,6 +324,28 @@ class Ui_MainWindow(object):
 "    background-color: #434965;\n"
 "}")
         self.ClearLogButton.setObjectName("ClearLogButton")
+        self.RankSystemButton = QtWidgets.QPushButton(self.Window)
+        self.RankSystemButton.setGeometry(QtCore.QRect(20, 210, 371, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.RankSystemButton.setFont(font)
+        self.RankSystemButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.RankSystemButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.RankSystemButton.setObjectName("RankSystemButton")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -339,3 +361,4 @@ class Ui_MainWindow(object):
         self.LogListWidget.setSortingEnabled(False)
         self.SaveLogButton.setText(_translate("MainWindow", "Сохранить логи"))
         self.ClearLogButton.setText(_translate("MainWindow", "Очистить логи"))
+        self.RankSystemButton.setText(_translate("MainWindow", "Система рангов"))

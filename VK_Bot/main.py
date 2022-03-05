@@ -7,12 +7,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import Registration_Window.registration_window as registration_window
 import Authorization_Window.authorization_window as authorization_window
 from main_window import MainWindow
-from message_box import MessageBox
 
 # Другое
-import config as Config
-import requests
-import json
+import server as Server
 import sys
 
 # Глобальные функции
@@ -45,9 +42,9 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 
 		# Обработчики основных кнопок
 		self.ui.ShowPasswordButton.clicked.connect(lambda: show_password(self))
-		self.ui.CreateAccountButton.clicked.connect(self.create_account)
-		self.ui.LoginLineEdit.returnPressed.connect(self.create_account)
-		self.ui.PasswordLineEdit.returnPressed.connect(self.create_account)
+		self.ui.CreateAccountButton.clicked.connect(self.create_new_account)
+		self.ui.LoginLineEdit.returnPressed.connect(self.create_new_account)
+		self.ui.PasswordLineEdit.returnPressed.connect(self.create_new_account)
 		self.ui.AskButton.clicked.connect(self.authorization_window)
 
 		# Обработчики кнопок с панели
@@ -76,31 +73,22 @@ class RegistrationWindow(QtWidgets.QMainWindow): # Окно регистраци
 
 	# Логика основных кнопок
 	# ==================================================================
-	def create_account(self):
-		try:
-			data = {
-				'Login': self.ui.LoginLineEdit.text(),
-				'Password': self.ui.PasswordLineEdit.text()
-			}
-			server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration', json = data)
-			server_answer_text = json.loads(server_answer.text)
-			if server_answer.status_code == 200:
-				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
+	def create_new_account(self):
+		login = self.ui.LoginLineEdit.text()
+		password = self.ui.PasswordLineEdit.text()
 
-				auth = AuthorizationWindow()
-				self.close()
-				auth.show()
-			else:
-				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-		except requests.exceptions.ConnectionError:
-			MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
+		server_answer_status_code = Server.create_new_account(login, password)
+		if server_answer_status_code == 200:
+			self.auth = AuthorizationWindow()
+			self.auth.show()
+
+			self.close()
 
 	def authorization_window(self):
 		self.auth = AuthorizationWindow()
 		self.auth.show()
 
 		self.close()
-	# ==================================================================
 
 class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизации
 	def __init__(self, parent = None):
@@ -115,9 +103,9 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 
 		# Обработчики основных кнопок
 		self.ui.ShowPasswordButton.clicked.connect(lambda: show_password(self))
-		self.ui.AuthorizationButton.clicked.connect(self.authorization)
-		self.ui.LoginLineEdit.returnPressed.connect(self.authorization)
-		self.ui.PasswordLineEdit.returnPressed.connect(self.authorization)
+		self.ui.AuthorizationButton.clicked.connect(self.authorization_in_account)
+		self.ui.LoginLineEdit.returnPressed.connect(self.authorization_in_account)
+		self.ui.PasswordLineEdit.returnPressed.connect(self.authorization_in_account)
 		self.ui.AskButton.clicked.connect(self.registration_window)
 
 		# Обработчики кнопок с панели
@@ -146,37 +134,26 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 
 	# Логика основных кнопок
 	# ==================================================================
-	def authorization(self):
-		try:
-			data = {
-				'Login': self.ui.LoginLineEdit.text(),
-				'Password': self.ui.PasswordLineEdit.text()
-			}
-			server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization', json = data)
-			server_answer_text = json.loads(server_answer.text)
-			if server_answer.status_code == 200:
-				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-				Config.UNIQUE_KEY = server_answer_text['Unique_Key']
-				Config.PASSWORD = self.ui.PasswordLineEdit.text()
+	def authorization_in_account(self):
+		login = self.ui.LoginLineEdit.text()
+		password = self.ui.PasswordLineEdit.text()
 
-				self.bot_panel = MainWindow()
-				self.bot_panel.show()
+		server_answer_status_code = Server.authorization_in_account(login, password)
+		if server_answer_status_code == 200:
+			self.bot_panel = MainWindow()
+			self.bot_panel.show()
 
-				self.close()
-			else:
-				MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-		except requests.exceptions.ConnectionError:
-			MessageBox(text = 'Отсутствует подключение к интернету', button_2 = 'Окей')
+			self.close()
 
 	def registration_window(self):
 		self.reg = RegistrationWindow()
 		self.reg.show()
 
 		self.close()
-	# ==================================================================
 # ==================================================================
 
 if __name__ == '__main__':
+	# Запуск GUI
 	app = QtWidgets.QApplication(sys.argv)
 	myapp = AuthorizationWindow()
 	myapp.show()

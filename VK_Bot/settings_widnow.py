@@ -57,7 +57,7 @@ class SettingsWindow(QtWidgets.QMainWindow):
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 
-		# Перетаскивание безрамочного окна
+	# Перетаскивание безрамочного окна
 	# ==================================================================
 	def center(self):
 		qr = self.frameGeometry()

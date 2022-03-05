@@ -2,7 +2,6 @@
 
 # PyQt5
 from PyQt5 import QtCore, QtGui, QtWidgets
-from flask import Config
 
 # GUI
 import Main_Window.main_window as main_window
@@ -40,6 +39,7 @@ class MainWindow(QtWidgets.QMainWindow):
 					self.ui.LogListWidget.addItem(item)
 
 		# Обработчики основных кнопок
+		self.ui.RankSystemButton.clicked.connect(self.rank_system_button)
 		self.ui.SaveLogButton.clicked.connect(lambda: self.save_log())
 		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)
 		self.ui.SettingsWindowButton.clicked.connect(self.settings_window_button)
@@ -71,6 +71,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Логика основных кнопок
 	# ==================================================================
+	def rank_system_button(self):
+		MessageBox(text = 'В разработке...', button_1 = 'Окей')
+
 	def clear_log_button(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
