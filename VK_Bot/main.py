@@ -140,8 +140,8 @@ class AuthorizationWindow(QtWidgets.QMainWindow): # Окно авторизац�
 
 		server_answer_status_code = Server.authorization_in_account(login, password)
 		if server_answer_status_code == 200:
-			self.bot_panel = MainWindow()
-			self.bot_panel.show()
+			self.main_window = MainWindow()
+			self.main_window.show()
 
 			self.close()
 

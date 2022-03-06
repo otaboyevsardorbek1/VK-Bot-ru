@@ -5,8 +5,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
 import Main_Window.main_window as main_window
-from message_box import MessageBox
+from rank_system_window import RankSystemWindow
 from settings_widnow import SettingsWindow
+from message_box import MessageBox
 
 # Другие
 import server as Server
@@ -25,25 +26,10 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.center()
 
-		# Вывод логов в "self.ui.LogListWidget"
-		log = Server.get_log()
-		if log != []:
-			for text in log:
-				if text != '':
-					text = text.split(': ')
-					item = QtWidgets.QListWidgetItem()
-					self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
-					item.setIcon(QtGui.QIcon('../Icons/user.png'))
-					item.setTextAlignment(QtCore.Qt.AlignLeft)
-					item.setText(f'{text[0]}:\n{text[1]}')
-					self.ui.LogListWidget.addItem(item)
-
-		# Обработчики основных кнопок
-		self.ui.RankSystemButton.clicked.connect(self.rank_system_button)
-		self.ui.SaveLogButton.clicked.connect(lambda: self.save_log())
-		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)
-		self.ui.SettingsWindowButton.clicked.connect(self.settings_window_button)
-		self.ui.OnOrOffBotButton.clicked.connect(self.on_or_off_bot_button)
+		# Запуск потоков
+		self.widget_settings_theard = WidgetSettingsTheard()
+		self.widget_settings_theard.signalWidgetSettings.connect(self.widget_settings)
+		self.widget_settings_theard.start()
 
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
@@ -72,6 +58,8 @@ class MainWindow(QtWidgets.QMainWindow):
 	# Логика основных кнопок
 	# ==================================================================
 	def rank_system_button(self):
+		# self.rank_system_window = RankSystemWindow()
+		# self.rank_system_window.show()
 		MessageBox(text = 'В разработке...', button_1 = 'Окей')
 
 	def clear_log_button(self):
@@ -122,6 +110,26 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
+	def widget_settings(self, log):
+		# Настройка виджетов
+		if log != []:
+			for text in log:
+				if text != '':
+					text = text.split(': ')
+					item = QtWidgets.QListWidgetItem()
+					self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
+					item.setIcon(QtGui.QIcon('../Icons/user.png'))
+					item.setTextAlignment(QtCore.Qt.AlignLeft)
+					item.setText(f'{text[0]}:\n{text[1]}')
+					self.ui.LogListWidget.addItem(item)
+
+		# Обработчики основных кнопок
+		self.ui.RankSystemButton.clicked.connect(self.rank_system_button)
+		self.ui.SaveLogButton.clicked.connect(lambda: self.save_log())
+		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)
+		self.ui.SettingsWindowButton.clicked.connect(self.settings_window_button)
+		self.ui.OnOrOffBotButton.clicked.connect(self.on_or_off_bot_button)
+
 	def print_user_message(self, user, message):
 		item = QtWidgets.QListWidgetItem()
 		self.ui.LogListWidget.setIconSize(QtCore.QSize(45, 45))
@@ -134,3 +142,14 @@ class MainWindow(QtWidgets.QMainWindow):
 		if bot_settings['Automati_Save_Log'] == True:
 			self.save_log()
     # ==================================================================
+
+# Поток для настрйоки виджетов
+class WidgetSettingsTheard(QtCore.QThread):
+	signalWidgetSettings = QtCore.pyqtSignal(list)
+
+	def __init__(self):
+		QtCore.QThread.__init__(self)
+
+	def run(self):
+		log = Server.get_log()
+		self.signalWidgetSettings.emit(log)

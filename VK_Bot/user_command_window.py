@@ -27,37 +27,13 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 		self.center()
 
 		# Все нужные переменные
-		self.user_commands = Server.get_user_commands()
 		self.button_text = button_text
+		self.item = item
 
-		# Обработчик основной кнопки
-		if self.button_text == 'Создать команду':
-			self.ui.UserCommandButton.setText(self.button_text)
-			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
-		if self.button_text == 'Редактировать команду':
-			self.item = item
-
-			old_user_command = self.item.text().replace('Команда: ', '').strip()
-
-			self.user_command_value = 0
-			for user_command in self.user_commands:
-				if user_command['Command_Name'] == old_user_command:
-					break
-				self.user_command_value += 1
-
-			self.ui.CommandNameLineEdit.setText(self.user_commands[self.user_command_value]['Command_Name'])
-			self.ui.CommandlineEdit.setText(self.user_commands[self.user_command_value]['Command'])
-			self.ui.CommandAnsweTextEdit.setText(self.user_commands[self.user_command_value]['Command_Answer'])
-
-			self.ui.UserCommandButton.setText(self.button_text)
-			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
-
-		self.ui.UserVariableButton.clicked.connect(self.user_variable_button)
-		self.ui.OtherUserVariable.clicked.connect(self.other_user_variable_button)
-		self.ui.DBVariableButton.clicked.connect(self.db_variable_button)
-		self.ui.OtherDBVariableButton.clicked.connect(self.other_db_variable_button)
-		self.ui.AllCommandsVariableButton.clicked.connect(self.all_commands_variable_button)
-		self.ui.TakeUserIDVariableButton.clicked.connect(self.take_user_id_variable_button)
+		# Запуск потоков
+		self.widget_settings_theard = WidgetSettingsTheard()
+		self.widget_settings_theard.signalWidgetSettings.connect(self.widget_settings)
+		self.widget_settings_theard.start()
 
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
@@ -185,6 +161,40 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 			MessageBox(text = '{take_user_id} можно использовать только один раз!', button_1 = 'Окей')
 	# ==================================================================
 
+	# Обычные функции
+	# ==================================================================
+	def widget_settings(self, user_commands):
+		# Настройка виджетов
+		self.user_commands = user_commands
+
+		if self.button_text == 'Создать команду':
+			self.ui.UserCommandButton.setText(self.button_text)
+			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
+		if self.button_text == 'Редактировать команду':
+			old_user_command = self.item.text().replace('Команда: ', '').strip()
+
+			self.user_command_value = 0
+			for user_command in self.user_commands:
+				if user_command['Command_Name'] == old_user_command:
+					break
+				self.user_command_value += 1
+
+			self.ui.CommandNameLineEdit.setText(self.user_commands[self.user_command_value]['Command_Name'])
+			self.ui.CommandlineEdit.setText(self.user_commands[self.user_command_value]['Command'])
+			self.ui.CommandAnsweTextEdit.setText(self.user_commands[self.user_command_value]['Command_Answer'])
+
+			self.ui.UserCommandButton.setText(self.button_text)
+			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
+
+		# Обработчики основных кнопок
+		self.ui.UserVariableButton.clicked.connect(self.user_variable_button)
+		self.ui.OtherUserVariable.clicked.connect(self.other_user_variable_button)
+		self.ui.DBVariableButton.clicked.connect(self.db_variable_button)
+		self.ui.OtherDBVariableButton.clicked.connect(self.other_db_variable_button)
+		self.ui.AllCommandsVariableButton.clicked.connect(self.all_commands_variable_button)
+		self.ui.TakeUserIDVariableButton.clicked.connect(self.take_user_id_variable_button)
+	# ==================================================================
+
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
 	def db_or_other_db_variable(self, text):
@@ -198,3 +208,14 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 				command += '{take_user_id}'
 				self.ui.CommandlineEdit.setText(command)
 	# ==================================================================
+
+# Поток для настрйоки виджетов
+class WidgetSettingsTheard(QtCore.QThread):
+	signalWidgetSettings = QtCore.pyqtSignal(list)
+
+	def __init__(self):
+		QtCore.QThread.__init__(self)
+
+	def run(self):
+		user_commands = Server.get_user_commands()
+		self.signalWidgetSettings.emit(user_commands)
