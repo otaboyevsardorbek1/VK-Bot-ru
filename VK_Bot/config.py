@@ -4,7 +4,7 @@ SERVER = 'http://exg1o.pythonanywhere.com' # Глобальный сервер
 # SERVER = 'http://127.0.0.1:5000/' # Локальный сервер
 
 # Для отслеживание версии программы
-VERSION = 'v1.0.2'
+VERSION = 'v1.0.3'
 
 # Не менять!
 LOGIN = None
