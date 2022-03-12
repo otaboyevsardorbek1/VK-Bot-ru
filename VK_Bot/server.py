@@ -36,8 +36,9 @@ def authorization_in_account(login, password):
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
 			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
-			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
+			Config.LOGIN = login
 			Config.PASSWORD = password
+			Config.UNIQUE_KEY = server_answer_text['Unique_Key']
 		else:
 			MessageBox(text = server_answer_text['Answer'], button_2 = 'Окей')
 		return server_answer.status_code
@@ -48,6 +49,7 @@ def authorization_in_account(login, password):
 def get_bot_settings():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/bot_settings/get', json = {
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -65,6 +67,7 @@ def update_bot_settings(bot_settings):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/bot_settings/update', json = {
 				'Bot_Settings': bot_settings,
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -79,6 +82,7 @@ def update_bot_settings(bot_settings):
 def get_user_commands():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/user_commands/get', json = {
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -96,6 +100,7 @@ def update_user_commands(user_commands):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/user_commands/update', json = {
 				'User_Commands': user_commands,
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -110,6 +115,7 @@ def update_user_commands(user_commands):
 def get_log():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/log/get', json = {
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -127,6 +133,7 @@ def update_log(log):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/log/update', json = {
 				'Log': log,
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -142,6 +149,7 @@ def find_in_database(sqlite3_command):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/find', json = {
 				'SQLite3_Command': sqlite3_command,
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -159,6 +167,7 @@ def find_all_in_database(sqlite3_command):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/find_all', json = {
 				'SQLite3_Command': sqlite3_command,
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}
@@ -177,10 +186,12 @@ def edit_database(sqlite3_command, values = ()):
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/files/database/edit_database', json = {
 				'SQLite3_Command': sqlite3_command,
 				'Values': values,
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			} if values != () else {
 				'SQLite3_Command': sqlite3_command,
+				'Login': Config.LOGIN,
 				'Password': Config.PASSWORD,
 				'Unique_Key': Config.UNIQUE_KEY
 			}

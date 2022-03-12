@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-SERVER = 'http://exg1o.pythonanywhere.com' # Глобальный сервер
-# SERVER = 'http://127.0.0.1:5000/' # Локальный сервер
+# SERVER = 'http://exg1o.pythonanywhere.com' # Глобальный сервер
+SERVER = 'http://127.0.0.1:5000/' # Локальный сервер
 
 # Для отслеживание версии программы
 VERSION = 'v1.0.2'
 
 # Не менять!
-UNIQUE_KEY = None
+LOGIN = None
 PASSWORD = None
+UNIQUE_KEY = None
 
 # Стили для кнопки вкл. и выкл. бота
 ON_BUTTON = """\
