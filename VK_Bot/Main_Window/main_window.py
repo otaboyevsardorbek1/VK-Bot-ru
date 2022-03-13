@@ -199,8 +199,52 @@ class Ui_MainWindow(object):
 "}")
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
+        self.SettingsWindowButton = QtWidgets.QPushButton(self.WindowFrame)
+        self.SettingsWindowButton.setGeometry(QtCore.QRect(0, 0, 101, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.SettingsWindowButton.setFont(font)
+        self.SettingsWindowButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.SettingsWindowButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-top-left-radius: 7px;\n"
+"    background-color: #2C313C;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #45494D;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #1B1D23;\n"
+"}")
+        self.SettingsWindowButton.setObjectName("SettingsWindowButton")
+        self.ProgramInfoWindowButton = QtWidgets.QPushButton(self.WindowFrame)
+        self.ProgramInfoWindowButton.setGeometry(QtCore.QRect(100, 0, 121, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ProgramInfoWindowButton.setFont(font)
+        self.ProgramInfoWindowButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ProgramInfoWindowButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border: none;\n"
+"    background-color: #2C313C;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #45494D;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #1B1D23;\n"
+"}")
+        self.ProgramInfoWindowButton.setObjectName("ProgramInfoWindowButton")
         self.OnOrOffBotButton = QtWidgets.QPushButton(self.Window)
-        self.OnOrOffBotButton.setGeometry(QtCore.QRect(210, 350, 181, 41))
+        self.OnOrOffBotButton.setGeometry(QtCore.QRect(20, 350, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -220,28 +264,6 @@ class Ui_MainWindow(object):
 "    background-color: #7DC802;\n"
 "}")
         self.OnOrOffBotButton.setObjectName("OnOrOffBotButton")
-        self.SettingsWindowButton = QtWidgets.QPushButton(self.Window)
-        self.SettingsWindowButton.setGeometry(QtCore.QRect(20, 350, 181, 41))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.SettingsWindowButton.setFont(font)
-        self.SettingsWindowButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.SettingsWindowButton.setStyleSheet("QPushButton{\n"
-"    color: white;\n"
-"    border-radius: 8px;\n"
-"    background-color: #595F76;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-color: #50566E;\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    background-color: #434965;\n"
-"}")
-        self.SettingsWindowButton.setObjectName("SettingsWindowButton")
         self.LogListWidget = QtWidgets.QListWidget(self.Window)
         self.LogListWidget.setGeometry(QtCore.QRect(20, 90, 371, 151))
         font = QtGui.QFont()
@@ -427,7 +449,7 @@ class Ui_MainWindow(object):
 "}")
         self.EditUserCommandButton.setObjectName("EditUserCommandButton")
         self.Label = QtWidgets.QLabel(self.Window)
-        self.Label.setGeometry(QtCore.QRect(20, 30, 371, 61))
+        self.Label.setGeometry(QtCore.QRect(20, 40, 371, 51))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -448,7 +470,7 @@ class Ui_MainWindow(object):
         self.Label.setAlignment(QtCore.Qt.AlignCenter)
         self.Label.setObjectName("Label")
         self.Label_2 = QtWidgets.QLabel(self.Window)
-        self.Label_2.setGeometry(QtCore.QRect(400, 30, 371, 61))
+        self.Label_2.setGeometry(QtCore.QRect(400, 40, 371, 51))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -478,8 +500,9 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.CloseWindowButton.setText(_translate("MainWindow", "X"))
         self.MinimizeWindowButton.setText(_translate("MainWindow", "_"))
-        self.OnOrOffBotButton.setText(_translate("MainWindow", "Запустить бота"))
         self.SettingsWindowButton.setText(_translate("MainWindow", "Настройки"))
+        self.ProgramInfoWindowButton.setText(_translate("MainWindow", "О программе"))
+        self.OnOrOffBotButton.setText(_translate("MainWindow", "Запустить бота"))
         self.LogListWidget.setSortingEnabled(False)
         self.SaveLogButton.setText(_translate("MainWindow", "Сохранить логи"))
         self.ClearLogButton.setText(_translate("MainWindow", "Очистить логи"))

@@ -254,13 +254,89 @@ QPushButton:pressed{
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="SettingsWindowButton">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	color: white;
+	border-top-left-radius: 7px;
+	background-color: #2C313C;
+}
+
+QPushButton:hover{
+	background-color: #45494D;
+}
+
+QPushButton:pressed{
+	background-color: #1B1D23;
+}</string>
+      </property>
+      <property name="text">
+       <string>Настройки</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ProgramInfoWindowButton">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>0</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	color: white;
+	border: none;
+	background-color: #2C313C;
+}
+
+QPushButton:hover{
+	background-color: #45494D;
+}
+
+QPushButton:pressed{
+	background-color: #1B1D23;
+}</string>
+      </property>
+      <property name="text">
+       <string>О программе</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QPushButton" name="OnOrOffBotButton">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>20</x>
        <y>350</y>
-       <width>181</width>
+       <width>371</width>
        <height>41</height>
       </rect>
      </property>
@@ -290,44 +366,6 @@ QPushButton:pressed{
      </property>
      <property name="text">
       <string>Запустить бота</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="SettingsWindowButton">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>350</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-	color: white;
-	border-radius: 8px;
-	background-color: #595F76;
-}
-
-QPushButton:hover{
-	background-color: #50566E;
-}
-
-QPushButton:pressed{
-	background-color: #434965;
-}</string>
-     </property>
-     <property name="text">
-      <string>Настройки</string>
      </property>
     </widget>
     <widget class="QListWidget" name="LogListWidget">
@@ -722,9 +760,9 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>30</y>
+       <y>40</y>
        <width>371</width>
-       <height>61</height>
+       <height>51</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -760,9 +798,9 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>30</y>
+       <y>40</y>
        <width>371</width>
-       <height>61</height>
+       <height>51</height>
       </rect>
      </property>
      <property name="sizePolicy">

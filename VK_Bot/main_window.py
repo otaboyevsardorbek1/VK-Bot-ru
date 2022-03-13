@@ -5,8 +5,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
 import Main_Window.main_window as main_window
-from settings_widnow import SettingsWindow
 from user_command_window import UserCommandWindow
+from settings_widnow import SettingsWindow
+from program_info_window import ProgramInfoWindow
 from message_box import MessageBox
 
 # Другие
@@ -57,6 +58,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Логика основных кнопок
 	# ==================================================================
+	def settings_window_button(self):
+		self.settings_window = SettingsWindow()
+		self.settings_window.show()
+
+	def program_info_window_button(self):
+		self.program_info_window = ProgramInfoWindow()
+		self.program_info_window.show()
+
 	def clear_log_button(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
@@ -65,10 +74,6 @@ class MainWindow(QtWidgets.QMainWindow):
 		for item in items:
 			self.ui.LogListWidget.takeItem(self.ui.LogListWidget.row(item))
 		Server.update_log([])
-
-	def settings_window_button(self):
-		self.settings_window = SettingsWindow()
-		self.settings_window.show()
 
 	def on_or_off_bot_button(self):
 		bot_settings = Server.get_bot_settings()
@@ -162,9 +167,10 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.ui.UserCommandsListWidget.addItem(item)
 
 		# Обработчики основных кнопок
+		self.ui.SettingsWindowButton.clicked.connect(self.settings_window_button)
+		self.ui.ProgramInfoWindowButton.clicked.connect(self.program_info_window_button)
 		self.ui.SaveLogButton.clicked.connect(lambda: self.save_log())
 		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)
-		self.ui.SettingsWindowButton.clicked.connect(self.settings_window_button)
 		self.ui.OnOrOffBotButton.clicked.connect(self.on_or_off_bot_button)
 		self.ui.AddUserCommandButton.clicked.connect(self.add_new_user_command_window_button)
 		self.ui.EditUserCommandButton.clicked.connect(self.edit_user_command_window_button)
