@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'settings_widnow.ui'
+# Form implementation generated from reading ui file '.\settings_widnow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(433, 483)
+        Form.resize(432, 171)
         self.Window = QtWidgets.QFrame(Form)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 461))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 151))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -282,108 +282,6 @@ class Ui_Form(object):
         self.ShowVKTokenButton.setIcon(icon1)
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
-        self.AddUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.AddUserCommandButton.setGeometry(QtCore.QRect(20, 300, 371, 41))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.AddUserCommandButton.setFont(font)
-        self.AddUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.AddUserCommandButton.setStyleSheet("QPushButton{\n"
-"    color: white;\n"
-"    border-radius: 8px;\n"
-"    background-color: #595F76;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-color: #50566E;\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    background-color: #434965;\n"
-"}")
-        self.AddUserCommandButton.setObjectName("AddUserCommandButton")
-        self.UserCommandsListWidget = QtWidgets.QListWidget(self.Window)
-        self.UserCommandsListWidget.setGeometry(QtCore.QRect(20, 150, 371, 141))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        font.setBold(True)
-        font.setWeight(75)
-        self.UserCommandsListWidget.setFont(font)
-        self.UserCommandsListWidget.setTabletTracking(False)
-        self.UserCommandsListWidget.setAutoFillBackground(False)
-        self.UserCommandsListWidget.setStyleSheet("color: white;\n"
-"border-radius: 7px;\n"
-"background-color: #2C313C;\n"
-"")
-        self.UserCommandsListWidget.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.UserCommandsListWidget.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.UserCommandsListWidget.setLineWidth(1)
-        self.UserCommandsListWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.UserCommandsListWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.UserCommandsListWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
-        self.UserCommandsListWidget.setAutoScroll(True)
-        self.UserCommandsListWidget.setTabKeyNavigation(False)
-        self.UserCommandsListWidget.setProperty("showDropIndicator", True)
-        self.UserCommandsListWidget.setDragDropOverwriteMode(False)
-        self.UserCommandsListWidget.setAlternatingRowColors(False)
-        self.UserCommandsListWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
-        self.UserCommandsListWidget.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
-        self.UserCommandsListWidget.setMovement(QtWidgets.QListView.Static)
-        self.UserCommandsListWidget.setFlow(QtWidgets.QListView.TopToBottom)
-        self.UserCommandsListWidget.setProperty("isWrapping", False)
-        self.UserCommandsListWidget.setResizeMode(QtWidgets.QListView.Fixed)
-        self.UserCommandsListWidget.setLayoutMode(QtWidgets.QListView.SinglePass)
-        self.UserCommandsListWidget.setViewMode(QtWidgets.QListView.ListMode)
-        self.UserCommandsListWidget.setUniformItemSizes(False)
-        self.UserCommandsListWidget.setWordWrap(False)
-        self.UserCommandsListWidget.setSelectionRectVisible(False)
-        self.UserCommandsListWidget.setObjectName("UserCommandsListWidget")
-        self.DeleteUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.DeleteUserCommandButton.setGeometry(QtCore.QRect(20, 400, 371, 41))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.DeleteUserCommandButton.setFont(font)
-        self.DeleteUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.DeleteUserCommandButton.setStyleSheet("QPushButton{\n"
-"    color: white;\n"
-"    border-radius: 8px;\n"
-"    background-color: #595F76;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-color: #50566E;\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    background-color: #434965;\n"
-"}")
-        self.DeleteUserCommandButton.setObjectName("DeleteUserCommandButton")
-        self.EditUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.EditUserCommandButton.setGeometry(QtCore.QRect(20, 350, 371, 41))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.EditUserCommandButton.setFont(font)
-        self.EditUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.EditUserCommandButton.setStyleSheet("QPushButton{\n"
-"    color: white;\n"
-"    border-radius: 8px;\n"
-"    background-color: #595F76;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-color: #50566E;\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    background-color: #434965;\n"
-"}")
-        self.EditUserCommandButton.setObjectName("EditUserCommandButton")
         self.label_3 = QtWidgets.QLabel(self.Window)
         self.label_3.setGeometry(QtCore.QRect(20, 123, 281, 20))
         font = QtGui.QFont()
@@ -409,10 +307,6 @@ class Ui_Form(object):
         self.WindowFrame.raise_()
         self.VKTokenLineEdit.raise_()
         self.IDBotLineEdit.raise_()
-        self.AddUserCommandButton.raise_()
-        self.UserCommandsListWidget.raise_()
-        self.DeleteUserCommandButton.raise_()
-        self.EditUserCommandButton.raise_()
         self.label_3.raise_()
         self.AutomatiSaveLogButton.raise_()
 
@@ -426,8 +320,4 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setText(_translate("Form", "_"))
         self.VKTokenLineEdit.setPlaceholderText(_translate("Form", "Введите VK Token бота"))
         self.IDBotLineEdit.setPlaceholderText(_translate("Form", "Введите ID бота"))
-        self.AddUserCommandButton.setText(_translate("Form", "Добавить команду"))
-        self.UserCommandsListWidget.setSortingEnabled(False)
-        self.DeleteUserCommandButton.setText(_translate("Form", "Удалить команду"))
-        self.EditUserCommandButton.setText(_translate("Form", "Редактировать команду"))
         self.label_3.setText(_translate("Form", "Автомат. сохранение логов:"))

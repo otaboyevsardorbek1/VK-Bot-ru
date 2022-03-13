@@ -4,7 +4,7 @@
 from PyQt5 import QtCore, QtWidgets
 
 # GUI
-import Main_Window.Settings_Window.User_Command_Widnow.user_command_window as user_command_window
+import Main_Window.User_Command_Widnow.user_command_window as user_command_window
 from db_variable_window import DBVariableWindow
 from message_box import MessageBox
 

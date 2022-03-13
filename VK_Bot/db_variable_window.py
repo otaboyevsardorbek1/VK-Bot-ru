@@ -4,7 +4,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Main_Window.Settings_Window.User_Command_Widnow.DB_Variable_Window.db_variable_window as db_variable_window
+import Main_Window.User_Command_Widnow.DB_Variable_Window.db_variable_window as db_variable_window
 from message_box import MessageBox
 
 # Окно для выбора значения DB

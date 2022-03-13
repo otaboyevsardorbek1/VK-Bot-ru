@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main_window.ui'
+# Form implementation generated from reading ui file '.\main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(432, 392)
+        MainWindow.resize(812, 431)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 371))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 791, 411))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -143,7 +143,7 @@ class Ui_MainWindow(object):
         self.Window.setFrameShadow(QtWidgets.QFrame.Raised)
         self.Window.setObjectName("Window")
         self.WindowFrame = QtWidgets.QFrame(self.Window)
-        self.WindowFrame.setGeometry(QtCore.QRect(0, 0, 411, 31))
+        self.WindowFrame.setGeometry(QtCore.QRect(0, 0, 791, 31))
         self.WindowFrame.setStyleSheet("QFrame{\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -153,7 +153,7 @@ class Ui_MainWindow(object):
         self.WindowFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.WindowFrame.setObjectName("WindowFrame")
         self.CloseWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.CloseWindowButton.setGeometry(QtCore.QRect(370, 0, 41, 31))
+        self.CloseWindowButton.setGeometry(QtCore.QRect(750, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -176,7 +176,7 @@ class Ui_MainWindow(object):
 "}")
         self.CloseWindowButton.setObjectName("CloseWindowButton")
         self.MinimizeWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.MinimizeWindowButton.setGeometry(QtCore.QRect(329, 0, 41, 31))
+        self.MinimizeWindowButton.setGeometry(QtCore.QRect(709, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -200,7 +200,7 @@ class Ui_MainWindow(object):
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
         self.OnOrOffBotButton = QtWidgets.QPushButton(self.Window)
-        self.OnOrOffBotButton.setGeometry(QtCore.QRect(210, 310, 181, 41))
+        self.OnOrOffBotButton.setGeometry(QtCore.QRect(210, 350, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -221,7 +221,7 @@ class Ui_MainWindow(object):
 "}")
         self.OnOrOffBotButton.setObjectName("OnOrOffBotButton")
         self.SettingsWindowButton = QtWidgets.QPushButton(self.Window)
-        self.SettingsWindowButton.setGeometry(QtCore.QRect(20, 310, 181, 41))
+        self.SettingsWindowButton.setGeometry(QtCore.QRect(20, 350, 181, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -243,7 +243,7 @@ class Ui_MainWindow(object):
 "}")
         self.SettingsWindowButton.setObjectName("SettingsWindowButton")
         self.LogListWidget = QtWidgets.QListWidget(self.Window)
-        self.LogListWidget.setGeometry(QtCore.QRect(20, 50, 371, 151))
+        self.LogListWidget.setGeometry(QtCore.QRect(20, 90, 371, 151))
         font = QtGui.QFont()
         font.setPointSize(9)
         font.setBold(True)
@@ -281,7 +281,7 @@ class Ui_MainWindow(object):
         self.LogListWidget.setSelectionRectVisible(False)
         self.LogListWidget.setObjectName("LogListWidget")
         self.SaveLogButton = QtWidgets.QPushButton(self.Window)
-        self.SaveLogButton.setGeometry(QtCore.QRect(20, 260, 181, 41))
+        self.SaveLogButton.setGeometry(QtCore.QRect(20, 250, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -303,7 +303,7 @@ class Ui_MainWindow(object):
 "}")
         self.SaveLogButton.setObjectName("SaveLogButton")
         self.ClearLogButton = QtWidgets.QPushButton(self.Window)
-        self.ClearLogButton.setGeometry(QtCore.QRect(210, 260, 181, 41))
+        self.ClearLogButton.setGeometry(QtCore.QRect(20, 300, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -324,15 +324,51 @@ class Ui_MainWindow(object):
 "    background-color: #434965;\n"
 "}")
         self.ClearLogButton.setObjectName("ClearLogButton")
-        self.RankSystemButton = QtWidgets.QPushButton(self.Window)
-        self.RankSystemButton.setGeometry(QtCore.QRect(20, 210, 371, 41))
+        self.UserCommandsListWidget = QtWidgets.QListWidget(self.Window)
+        self.UserCommandsListWidget.setGeometry(QtCore.QRect(400, 90, 371, 151))
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.UserCommandsListWidget.setFont(font)
+        self.UserCommandsListWidget.setTabletTracking(False)
+        self.UserCommandsListWidget.setAutoFillBackground(False)
+        self.UserCommandsListWidget.setStyleSheet("color: white;\n"
+"border-radius: 7px;\n"
+"background-color: #2C313C;\n"
+"")
+        self.UserCommandsListWidget.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.UserCommandsListWidget.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.UserCommandsListWidget.setLineWidth(1)
+        self.UserCommandsListWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.UserCommandsListWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.UserCommandsListWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.UserCommandsListWidget.setAutoScroll(True)
+        self.UserCommandsListWidget.setTabKeyNavigation(False)
+        self.UserCommandsListWidget.setProperty("showDropIndicator", True)
+        self.UserCommandsListWidget.setDragDropOverwriteMode(False)
+        self.UserCommandsListWidget.setAlternatingRowColors(False)
+        self.UserCommandsListWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
+        self.UserCommandsListWidget.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
+        self.UserCommandsListWidget.setMovement(QtWidgets.QListView.Static)
+        self.UserCommandsListWidget.setFlow(QtWidgets.QListView.TopToBottom)
+        self.UserCommandsListWidget.setProperty("isWrapping", False)
+        self.UserCommandsListWidget.setResizeMode(QtWidgets.QListView.Fixed)
+        self.UserCommandsListWidget.setLayoutMode(QtWidgets.QListView.SinglePass)
+        self.UserCommandsListWidget.setViewMode(QtWidgets.QListView.ListMode)
+        self.UserCommandsListWidget.setUniformItemSizes(False)
+        self.UserCommandsListWidget.setWordWrap(False)
+        self.UserCommandsListWidget.setSelectionRectVisible(False)
+        self.UserCommandsListWidget.setObjectName("UserCommandsListWidget")
+        self.DeleteUserCommandButton = QtWidgets.QPushButton(self.Window)
+        self.DeleteUserCommandButton.setGeometry(QtCore.QRect(400, 350, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.RankSystemButton.setFont(font)
-        self.RankSystemButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.RankSystemButton.setStyleSheet("QPushButton{\n"
+        self.DeleteUserCommandButton.setFont(font)
+        self.DeleteUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.DeleteUserCommandButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
 "    border-radius: 8px;\n"
 "    background-color: #595F76;\n"
@@ -345,7 +381,93 @@ class Ui_MainWindow(object):
 "QPushButton:pressed{\n"
 "    background-color: #434965;\n"
 "}")
-        self.RankSystemButton.setObjectName("RankSystemButton")
+        self.DeleteUserCommandButton.setObjectName("DeleteUserCommandButton")
+        self.AddUserCommandButton = QtWidgets.QPushButton(self.Window)
+        self.AddUserCommandButton.setGeometry(QtCore.QRect(400, 250, 371, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.AddUserCommandButton.setFont(font)
+        self.AddUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.AddUserCommandButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.AddUserCommandButton.setObjectName("AddUserCommandButton")
+        self.EditUserCommandButton = QtWidgets.QPushButton(self.Window)
+        self.EditUserCommandButton.setGeometry(QtCore.QRect(400, 300, 371, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.EditUserCommandButton.setFont(font)
+        self.EditUserCommandButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.EditUserCommandButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
+"}")
+        self.EditUserCommandButton.setObjectName("EditUserCommandButton")
+        self.Label = QtWidgets.QLabel(self.Window)
+        self.Label.setGeometry(QtCore.QRect(20, 30, 371, 61))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Label.sizePolicy().hasHeightForWidth())
+        self.Label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(30)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.Label.setFont(font)
+        self.Label.setStyleSheet("QLabel{\n"
+"    color: white;\n"
+"}")
+        self.Label.setAlignment(QtCore.Qt.AlignCenter)
+        self.Label.setObjectName("Label")
+        self.Label_2 = QtWidgets.QLabel(self.Window)
+        self.Label_2.setGeometry(QtCore.QRect(400, 30, 371, 61))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Label_2.sizePolicy().hasHeightForWidth())
+        self.Label_2.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(30)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.Label_2.setFont(font)
+        self.Label_2.setStyleSheet("QLabel{\n"
+"    color: white;\n"
+"}")
+        self.Label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.Label_2.setObjectName("Label_2")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -361,4 +483,9 @@ class Ui_MainWindow(object):
         self.LogListWidget.setSortingEnabled(False)
         self.SaveLogButton.setText(_translate("MainWindow", "Сохранить логи"))
         self.ClearLogButton.setText(_translate("MainWindow", "Очистить логи"))
-        self.RankSystemButton.setText(_translate("MainWindow", "Система рангов"))
+        self.UserCommandsListWidget.setSortingEnabled(False)
+        self.DeleteUserCommandButton.setText(_translate("MainWindow", "Удалить команду"))
+        self.AddUserCommandButton.setText(_translate("MainWindow", "Добавить команду"))
+        self.EditUserCommandButton.setText(_translate("MainWindow", "Редактировать команду"))
+        self.Label.setText(_translate("MainWindow", "Логи"))
+        self.Label_2.setText(_translate("MainWindow", "Команды бота"))

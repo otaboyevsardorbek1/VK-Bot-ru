@@ -5,8 +5,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
 import Main_Window.main_window as main_window
-from rank_system_window import RankSystemWindow
 from settings_widnow import SettingsWindow
+from user_command_window import UserCommandWindow
 from message_box import MessageBox
 
 # Другие
@@ -57,11 +57,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Логика основных кнопок
 	# ==================================================================
-	def rank_system_button(self):
-		# self.rank_system_window = RankSystemWindow()
-		# self.rank_system_window.show()
-		MessageBox(text = 'В разработке...', button_1 = 'Окей')
-
 	def clear_log_button(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
@@ -92,6 +87,43 @@ class MainWindow(QtWidgets.QMainWindow):
 				self.bot.longpoll.bot_theard_run = False
 		else:
 			MessageBox(text = 'Отсутствует "VK Token" или "ID Group" в настройках!', button_2 = 'Окей')
+
+	def add_new_user_command_window_button(self):
+		self.add_new_user_command_window = UserCommandWindow(button_text = 'Создать команду')
+		self.add_new_user_command_window.signalAddNewUserCommand.connect(self.add_new_user_command)
+		self.add_new_user_command_window.show()
+
+	def edit_user_command_window_button(self):
+		item = self.ui.UserCommandsListWidget.selectedItems()
+		if len(item) == 0:
+			MessageBox(text = 'Вы не выбрали команду, которую хотите изменить!', button_1 = 'Щас исправлю...')
+		elif len(item) == 1:
+			item = item[0]
+			self.edit_user_command_window = UserCommandWindow(button_text = 'Редактировать команду', item = item)
+			self.edit_user_command_window.show()
+
+	def remove_user_command_button(self):
+		item = self.ui.UserCommandsListWidget.selectedItems()
+		if len(item) == 0:
+			MessageBox(text = 'Вы не выбрали команду, которую хотите удалить!', button_1 = 'Щас исправлю...')
+		elif len(item) == 1:
+			item = item[0]
+
+			old_user_command = item.text().replace('Команда: ', '').strip()
+			user_commands = Server.get_user_commands()
+
+			user_command_value = 0
+			for user_command in user_commands:
+				if user_command['Command_Name'] == old_user_command: 
+					break
+				user_command_value += 1
+			del user_commands[user_command_value]
+
+			Server.update_user_commands(user_commands)
+
+			self.ui.UserCommandsListWidget.takeItem(self.ui.UserCommandsListWidget.row(item))
+
+			MessageBox(text = 'Вы успешно удалили пользоватскую команду.', button_1 = 'Окей')
 	# ==================================================================
 
 	# Обычные функции
@@ -110,7 +142,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
-	def widget_settings(self, log):
+	def widget_settings(self, log, user_commands):
 		# Настройка виджетов
 		if log != []:
 			for text in log:
@@ -123,12 +155,20 @@ class MainWindow(QtWidgets.QMainWindow):
 					item.setText(f'{text[0]}:\n{text[1]}')
 					self.ui.LogListWidget.addItem(item)
 
+		for user_command in user_commands:
+			item = QtWidgets.QListWidgetItem()
+			item.setTextAlignment(QtCore.Qt.AlignLeft)
+			item.setText(user_command['Command_Name'])
+			self.ui.UserCommandsListWidget.addItem(item)
+
 		# Обработчики основных кнопок
-		self.ui.RankSystemButton.clicked.connect(self.rank_system_button)
 		self.ui.SaveLogButton.clicked.connect(lambda: self.save_log())
 		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)
 		self.ui.SettingsWindowButton.clicked.connect(self.settings_window_button)
 		self.ui.OnOrOffBotButton.clicked.connect(self.on_or_off_bot_button)
+		self.ui.AddUserCommandButton.clicked.connect(self.add_new_user_command_window_button)
+		self.ui.EditUserCommandButton.clicked.connect(self.edit_user_command_window_button)
+		self.ui.DeleteUserCommandButton.clicked.connect(self.remove_user_command_button)
 
 	def print_user_message(self, user, message):
 		item = QtWidgets.QListWidgetItem()
@@ -141,15 +181,22 @@ class MainWindow(QtWidgets.QMainWindow):
 		bot_settings = Server.get_bot_settings()
 		if bot_settings['Automati_Save_Log'] == True:
 			self.save_log()
+	
+	def add_new_user_command(self, new_command):
+		item = QtWidgets.QListWidgetItem()
+		item.setTextAlignment(QtCore.Qt.AlignLeft)
+		item.setText(new_command['Command_Name'])
+		self.ui.UserCommandsListWidget.addItem(item)
     # ==================================================================
 
 # Поток для настрйоки виджетов
 class WidgetSettingsTheard(QtCore.QThread):
-	signalWidgetSettings = QtCore.pyqtSignal(list)
+	signalWidgetSettings = QtCore.pyqtSignal(list, list)
 
 	def __init__(self):
 		QtCore.QThread.__init__(self)
 
 	def run(self):
 		log = Server.get_log()
-		self.signalWidgetSettings.emit(log)
+		user_commands = Server.get_user_commands()
+		self.signalWidgetSettings.emit(log, user_commands)
