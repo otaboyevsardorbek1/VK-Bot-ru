@@ -4,18 +4,22 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Main_Window.User_Command_Widnow.DB_Variable_Window.db_variable_window as db_variable_window
+import Main_Window.User_Bot_Menu_Window.User_Command_Widnow.DB_Variable_Window.db_variable_window as db_variable_window
 from message_box import MessageBox
+import logging
 
-# Окно для выбора значения DB
+# Окно выбора значения DB
 class DBVariableWindow(QtWidgets.QMainWindow):
 	signalReturnDBVariable = QtCore.pyqtSignal(str)
 
-	def __init__(self, db_variable_type, parent = None):
+	def __init__(self, bot_name, db_variable_type, parent=None):
 		super().__init__(parent, QtCore.Qt.Window)
 		self.ui = db_variable_window.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
+
+		# Запись в логи программы
+		logging.debug(f'{bot_name} - Окно выбора значения DB.')
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -23,6 +27,7 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 		self.center()
 
 		# Все нужные переменные
+		self.bot_name = bot_name
 		self.db_variable_type = db_variable_type
 		self.select_button = None
 
@@ -31,11 +36,10 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 		self.ui.UserBalanceButton.clicked.connect(self.user_balance_button)
 		self.ui.UserExperienceButton.clicked.connect(self.user_experience_button)
 		self.ui.UserRankButton.clicked.connect(self.user_rank_button)
-
 		self.ui.SelectDBVariableButton.clicked.connect(self.select_db_variable_button)
 
 		# Обработчики кнопок с панели
-		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
+		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 
 	# Перетаскивание безрамочного окна
@@ -60,16 +64,19 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 
 	# Логика основной кнопки
 	# ==================================================================
+	def close_window_button(self):
+		logging.debug('Выход из окна выбора значения DB.')
+		self.close()
+
 	def user_level_button(self):
+		icon = QtGui.QIcon()
 		if self.select_button == self.ui.UserLevelButton:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserLevelButton.setIcon(icon)
 
 			self.select_button = None
 		else:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserLevelButton.setIcon(icon)
 
 			self.select_button = self.ui.UserLevelButton
@@ -77,15 +84,14 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 		self.clear_all_buttons()
 
 	def user_balance_button(self):
+		icon = QtGui.QIcon()
 		if self.select_button == self.ui.UserBalanceButton:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserBalanceButton.setIcon(icon)
 
 			self.select_button = None
 		else:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserBalanceButton.setIcon(icon)
 
 			self.select_button = self.ui.UserBalanceButton
@@ -93,15 +99,14 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 		self.clear_all_buttons()
 
 	def user_experience_button(self):
+		icon = QtGui.QIcon()
 		if self.select_button == self.ui.UserExperienceButton:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserExperienceButton.setIcon(icon)
 
 			self.select_button = None
 		else:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserExperienceButton.setIcon(icon)
 
 			self.select_button = self.ui.UserExperienceButton
@@ -109,15 +114,14 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 		self.clear_all_buttons()
 
 	def user_rank_button(self):
+		icon = QtGui.QIcon()
 		if self.select_button == self.ui.UserRankButton:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserRankButton.setIcon(icon)
 
 			self.select_button = None
 		else:
-			icon = QtGui.QIcon()
-			icon.addPixmap(QtGui.QPixmap("../Icons/On.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.UserRankButton.setIcon(icon)
 
 			self.select_button = self.ui.UserRankButton
@@ -137,6 +141,7 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 				text = '{' + self.db_variable_type + '[' + str(num) + ']}'
 			num += 1
 		if text != None:
+			logging.debug(f'{self.bot_name} - Пользователь выбрал значения DB {self.db_variable_type}.')
 			self.signalReturnDBVariable.emit(text)
 			self.close()
 		else:
@@ -157,6 +162,6 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 				continue
 			else:
 				icon = QtGui.QIcon()
-				icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+				icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 				button.setIcon(icon)
 	# ==================================================================

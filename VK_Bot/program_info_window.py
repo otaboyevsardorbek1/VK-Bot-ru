@@ -9,14 +9,18 @@ import Main_Window.Program_Info_Window.program_info_window as program_info_windo
 # Другое
 import config as Config
 import webbrowser
+import logging
 
-# Окно настроек бота
+# Окно информации о проекте
 class ProgramInfoWindow(QtWidgets.QMainWindow):
 	def __init__(self, parent = None):
 		super().__init__(parent, QtCore.Qt.Window)
 		self.ui = program_info_window.Ui_Form()
 		self.ui.setupUi(self)
 		self.setWindowModality(2)
+
+		# Запись в логи программы
+		logging.debug('Окно информации о проекте.')
 
 		# Отключаем стандартные границы окна программы
 		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -34,6 +38,9 @@ class ProgramInfoWindow(QtWidgets.QMainWindow):
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
+
+		# Запуск окноа информации о проекте
+		self.show()
 
 	# Перетаскивание безрамочного окна
 	# ==================================================================
@@ -53,4 +60,11 @@ class ProgramInfoWindow(QtWidgets.QMainWindow):
 			self.oldPos = event.globalPos()
 		except AttributeError:
 			pass
+	# ==================================================================
+
+	# Логика основной кнопки
+	# ==================================================================
+	def close_window_button(self):
+		logging.debug('Выход из окна информации о проекте.')
+		self.close()
 	# ==================================================================

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'authorization_window.ui'
+# Form implementation generated from reading ui file '.\authorization_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -102,6 +102,7 @@ class Ui_MainWindow(object):
         self.Label.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "}")
+        self.Label.setAlignment(QtCore.Qt.AlignCenter)
         self.Label.setObjectName("Label")
         self.LoginLineEdit = QtWidgets.QLineEdit(self.Window)
         self.LoginLineEdit.setGeometry(QtCore.QRect(20, 110, 371, 41))

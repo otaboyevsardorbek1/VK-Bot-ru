@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\settings_widnow.ui'
+# Form implementation generated from reading ui file '.\add_new_user_bot_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(432, 171)
+        Form.resize(432, 292)
         self.Window = QtWidgets.QFrame(Form)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 151))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 271))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -201,31 +201,8 @@ class Ui_Form(object):
 "}")
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
-        self.SaveBotSettingsButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.SaveBotSettingsButton.setGeometry(QtCore.QRect(298, 0, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.SaveBotSettingsButton.setFont(font)
-        self.SaveBotSettingsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.SaveBotSettingsButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
-"    border-top-right-radius: 7px;\n"
-"    background-color: #2C313C;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-color: #45494D;\n"
-"}")
-        self.SaveBotSettingsButton.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Icons/SaveOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.SaveBotSettingsButton.setIcon(icon)
-        self.SaveBotSettingsButton.setIconSize(QtCore.QSize(25, 25))
-        self.SaveBotSettingsButton.setObjectName("SaveBotSettingsButton")
         self.VKTokenLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.VKTokenLineEdit.setGeometry(QtCore.QRect(20, 50, 331, 31))
+        self.VKTokenLineEdit.setGeometry(QtCore.QRect(20, 130, 331, 31))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(False)
@@ -243,7 +220,7 @@ class Ui_Form(object):
         self.VKTokenLineEdit.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
         self.VKTokenLineEdit.setObjectName("VKTokenLineEdit")
         self.IDBotLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.IDBotLineEdit.setGeometry(QtCore.QRect(20, 90, 371, 31))
+        self.IDBotLineEdit.setGeometry(QtCore.QRect(20, 170, 371, 31))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(False)
@@ -260,7 +237,7 @@ class Ui_Form(object):
         self.IDBotLineEdit.setReadOnly(False)
         self.IDBotLineEdit.setObjectName("IDBotLineEdit")
         self.frame = QtWidgets.QFrame(self.Window)
-        self.frame.setGeometry(QtCore.QRect(350, 50, 41, 31))
+        self.frame.setGeometry(QtCore.QRect(350, 130, 41, 31))
         self.frame.setStyleSheet("QFrame{\n"
 "    border-bottom-right-radius: 12px;\n"
 "    border-top-right-radius: 12px;\n"
@@ -277,38 +254,78 @@ class Ui_Form(object):
 "    border: none;\n"
 "}")
         self.ShowVKTokenButton.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ShowVKTokenButton.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.ShowVKTokenButton.setIcon(icon)
         self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
-        self.label_3 = QtWidgets.QLabel(self.Window)
-        self.label_3.setGeometry(QtCore.QRect(20, 123, 281, 20))
+        self.UserBotNameLineEdit = QtWidgets.QLineEdit(self.Window)
+        self.UserBotNameLineEdit.setGeometry(QtCore.QRect(20, 90, 371, 31))
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(16)
+        font.setBold(False)
+        font.setWeight(50)
+        self.UserBotNameLineEdit.setFont(font)
+        self.UserBotNameLineEdit.setStyleSheet("QLineEdit{\n"
+"    border-radius: 12px;\n"
+"}")
+        self.UserBotNameLineEdit.setInputMask("")
+        self.UserBotNameLineEdit.setText("")
+        self.UserBotNameLineEdit.setFrame(False)
+        self.UserBotNameLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
+        self.UserBotNameLineEdit.setDragEnabled(False)
+        self.UserBotNameLineEdit.setReadOnly(False)
+        self.UserBotNameLineEdit.setObjectName("UserBotNameLineEdit")
+        self.Label_1 = QtWidgets.QLabel(self.Window)
+        self.Label_1.setGeometry(QtCore.QRect(20, 34, 371, 51))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Label_1.sizePolicy().hasHeightForWidth())
+        self.Label_1.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(30)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.Label_1.setFont(font)
+        self.Label_1.setStyleSheet("QLabel{\n"
+"    color: white;\n"
+"}")
+        self.Label_1.setAlignment(QtCore.Qt.AlignCenter)
+        self.Label_1.setObjectName("Label_1")
+        self.AddNewUserBotButton = QtWidgets.QPushButton(self.Window)
+        self.AddNewUserBotButton.setGeometry(QtCore.QRect(20, 210, 371, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.label_3.setFont(font)
-        self.label_3.setStyleSheet("")
-        self.label_3.setObjectName("label_3")
-        self.AutomatiSaveLogButton = QtWidgets.QPushButton(self.Window)
-        self.AutomatiSaveLogButton.setGeometry(QtCore.QRect(298, 126, 20, 21))
-        self.AutomatiSaveLogButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.AutomatiSaveLogButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
+        self.AddNewUserBotButton.setFont(font)
+        self.AddNewUserBotButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.AddNewUserBotButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    background-color: #595F76;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #50566E;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #434965;\n"
 "}")
-        self.AutomatiSaveLogButton.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.AutomatiSaveLogButton.setIcon(icon2)
-        self.AutomatiSaveLogButton.setIconSize(QtCore.QSize(16, 16))
-        self.AutomatiSaveLogButton.setObjectName("AutomatiSaveLogButton")
+        self.AddNewUserBotButton.setObjectName("AddNewUserBotButton")
         self.frame.raise_()
         self.WindowFrame.raise_()
         self.VKTokenLineEdit.raise_()
         self.IDBotLineEdit.raise_()
-        self.label_3.raise_()
-        self.AutomatiSaveLogButton.raise_()
+        self.UserBotNameLineEdit.raise_()
+        self.Label_1.raise_()
+        self.AddNewUserBotButton.raise_()
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -320,4 +337,6 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setText(_translate("Form", "_"))
         self.VKTokenLineEdit.setPlaceholderText(_translate("Form", "Введите VK Token бота"))
         self.IDBotLineEdit.setPlaceholderText(_translate("Form", "Введите ID бота"))
-        self.label_3.setText(_translate("Form", "Автомат. сохранение логов:"))
+        self.UserBotNameLineEdit.setPlaceholderText(_translate("Form", "Придумайте имя боту"))
+        self.Label_1.setText(_translate("Form", "Добавление бота"))
+        self.AddNewUserBotButton.setText(_translate("Form", "Добавить бота"))

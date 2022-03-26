@@ -4,7 +4,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import MessageBox.message_box as message_box
+import Message_Box.message_box as message_box
 
 # Всплывающее окно
 class MyMessageBox(QtWidgets.QMainWindow):
@@ -106,7 +106,7 @@ QPushButton:pressed{
 	# ==================================================================
 
 class MessageBox:
-	def __init__(self, text = '', button_1 = '', button_2 = '', font_size = 10):
+	def __init__(self, text='', button_1='', button_2='', font_size=11):
 		self.message_box = MyMessageBox(text, button_1, button_2, font_size)
 		self.message_box.signalButton.connect(lambda: self.message_box.close())
 		self.message_box.show()

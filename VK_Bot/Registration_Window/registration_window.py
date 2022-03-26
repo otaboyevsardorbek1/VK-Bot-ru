@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'registration_window.ui'
+# Form implementation generated from reading ui file '.\registration_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(421, 301)
+        MainWindow.resize(431, 301)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 401, 281))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 281))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         self.Window.setFrameShadow(QtWidgets.QFrame.Raised)
         self.Window.setObjectName("Window")
         self.WindowFrame = QtWidgets.QFrame(self.Window)
-        self.WindowFrame.setGeometry(QtCore.QRect(0, 0, 401, 31))
+        self.WindowFrame.setGeometry(QtCore.QRect(0, 0, 411, 31))
         self.WindowFrame.setStyleSheet("QFrame{\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         self.WindowFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.WindowFrame.setObjectName("WindowFrame")
         self.CloseWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.CloseWindowButton.setGeometry(QtCore.QRect(360, 0, 41, 31))
+        self.CloseWindowButton.setGeometry(QtCore.QRect(371, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -60,7 +60,7 @@ class Ui_MainWindow(object):
 "}")
         self.CloseWindowButton.setObjectName("CloseWindowButton")
         self.MinimizeWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.MinimizeWindowButton.setGeometry(QtCore.QRect(319, 0, 41, 31))
+        self.MinimizeWindowButton.setGeometry(QtCore.QRect(330, 0, 41, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -84,7 +84,7 @@ class Ui_MainWindow(object):
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
         self.Label = QtWidgets.QLabel(self.Window)
-        self.Label.setGeometry(QtCore.QRect(20, 40, 361, 61))
+        self.Label.setGeometry(QtCore.QRect(20, 40, 371, 61))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -102,9 +102,10 @@ class Ui_MainWindow(object):
         self.Label.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "}")
+        self.Label.setAlignment(QtCore.Qt.AlignCenter)
         self.Label.setObjectName("Label")
         self.LoginLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.LoginLineEdit.setGeometry(QtCore.QRect(20, 110, 361, 41))
+        self.LoginLineEdit.setGeometry(QtCore.QRect(20, 110, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.LoginLineEdit.setFont(font)
@@ -118,7 +119,7 @@ class Ui_MainWindow(object):
         self.LoginLineEdit.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
         self.LoginLineEdit.setObjectName("LoginLineEdit")
         self.PasswordLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.PasswordLineEdit.setGeometry(QtCore.QRect(20, 160, 321, 41))
+        self.PasswordLineEdit.setGeometry(QtCore.QRect(20, 160, 331, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.PasswordLineEdit.setFont(font)
@@ -136,7 +137,7 @@ class Ui_MainWindow(object):
         self.PasswordLineEdit.setReadOnly(False)
         self.PasswordLineEdit.setObjectName("PasswordLineEdit")
         self.CreateAccountButton = QtWidgets.QPushButton(self.Window)
-        self.CreateAccountButton.setGeometry(QtCore.QRect(210, 220, 171, 41))
+        self.CreateAccountButton.setGeometry(QtCore.QRect(220, 220, 171, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -158,7 +159,7 @@ class Ui_MainWindow(object):
 "}")
         self.CreateAccountButton.setObjectName("CreateAccountButton")
         self.AskButton = QtWidgets.QPushButton(self.Window)
-        self.AskButton.setGeometry(QtCore.QRect(40, 230, 141, 21))
+        self.AskButton.setGeometry(QtCore.QRect(45, 230, 141, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(False)
@@ -181,7 +182,7 @@ class Ui_MainWindow(object):
 "}")
         self.AskButton.setObjectName("AskButton")
         self.frame = QtWidgets.QFrame(self.Window)
-        self.frame.setGeometry(QtCore.QRect(340, 160, 41, 41))
+        self.frame.setGeometry(QtCore.QRect(350, 160, 41, 41))
         self.frame.setStyleSheet("QFrame{\n"
 "    border-bottom-right-radius: 12px;\n"
 "    border-top-right-radius: 12px;\n"

@@ -167,7 +167,7 @@ class Ui_Form(object):
 "}")
         self.UserLevelButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Icons/Off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.UserLevelButton.setIcon(icon)
         self.UserLevelButton.setIconSize(QtCore.QSize(16, 16))
         self.UserLevelButton.setObjectName("UserLevelButton")

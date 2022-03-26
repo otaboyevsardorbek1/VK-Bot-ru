@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>432</width>
-    <height>171</height>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>411</width>
-     <height>151</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -257,56 +257,12 @@ QPushButton:pressed{
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="SaveBotSettingsButton">
-     <property name="geometry">
-      <rect>
-       <x>298</x>
-       <y>0</y>
-       <width>31</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-	border: none;
-	border-top-right-radius: 7px;
-	background-color: #2C313C;
-}
-
-QPushButton:hover{
-	background-color: #45494D;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../../../Icons/SaveOff.png</normaloff>../../../Icons/SaveOff.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>25</width>
-       <height>25</height>
-      </size>
-     </property>
-    </widget>
    </widget>
    <widget class="QLineEdit" name="VKTokenLineEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>50</y>
+      <y>130</y>
       <width>331</width>
       <height>31</height>
      </rect>
@@ -350,7 +306,7 @@ QPushButton:hover{
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>90</y>
+      <y>170</y>
       <width>371</width>
       <height>31</height>
      </rect>
@@ -393,7 +349,7 @@ QPushButton:hover{
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>50</y>
+      <y>130</y>
       <width>41</width>
       <height>31</height>
      </rect>
@@ -442,66 +398,132 @@ QPushButton:hover{
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLineEdit" name="UserBotNameLineEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>123</y>
-      <width>281</width>
-      <height>20</height>
+      <y>90</y>
+      <width>371</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QLineEdit{
+	border-radius: 12px;
+}</string>
+    </property>
+    <property name="inputMask">
+     <string/>
     </property>
     <property name="text">
-     <string>Автомат. сохранение логов:</string>
+     <string/>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Normal</enum>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>Придумайте имя боту</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="AutomatiSaveLogButton">
+   <widget class="QLabel" name="Label_1">
     <property name="geometry">
      <rect>
-      <x>298</x>
-      <y>126</y>
-      <width>20</width>
-      <height>21</height>
+      <x>20</x>
+      <y>34</y>
+      <width>371</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>30</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+	color: white;
+}</string>
+    </property>
+    <property name="text">
+     <string>Добавление бота</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AddNewUserBotButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>210</y>
+      <width>371</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
-	border: none;
+	color: white;
+	border-radius: 8px;
+	background-color: #595F76;
+}
+
+QPushButton:hover{
+	background-color: #50566E;
+}
+
+QPushButton:pressed{
+	background-color: #434965;
 }</string>
     </property>
     <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../../Icons/Off.png</normaloff>../../../Icons/Off.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>16</width>
-      <height>16</height>
-     </size>
+     <string>Добавить бота</string>
     </property>
    </widget>
    <zorder>frame</zorder>
    <zorder>WindowFrame</zorder>
    <zorder>VKTokenLineEdit</zorder>
    <zorder>IDBotLineEdit</zorder>
-   <zorder>label_3</zorder>
-   <zorder>AutomatiSaveLogButton</zorder>
+   <zorder>UserBotNameLineEdit</zorder>
+   <zorder>Label_1</zorder>
+   <zorder>AddNewUserBotButton</zorder>
   </widget>
  </widget>
  <resources/>

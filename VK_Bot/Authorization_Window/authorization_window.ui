@@ -173,6 +173,9 @@ QPushButton:pressed{
      <property name="text">
       <string>АВТОРИЗАЦИЯ</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
     <widget class="QLineEdit" name="LoginLineEdit">
      <property name="geometry">

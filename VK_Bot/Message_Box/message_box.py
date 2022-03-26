@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'message_box.ui'
+# Form implementation generated from reading ui file '.\message_box.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -89,7 +89,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.Label.sizePolicy().hasHeightForWidth())
         self.Label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(True)
         font.setItalic(False)
         font.setUnderline(False)

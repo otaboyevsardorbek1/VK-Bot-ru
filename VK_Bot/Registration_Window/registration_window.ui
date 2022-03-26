@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>421</width>
+    <width>431</width>
     <height>301</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>401</width>
+      <width>411</width>
       <height>281</height>
      </rect>
     </property>
@@ -40,7 +40,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>401</width>
+       <width>411</width>
        <height>31</height>
       </rect>
      </property>
@@ -60,7 +60,7 @@
      <widget class="QPushButton" name="CloseWindowButton">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>371</x>
         <y>0</y>
         <width>41</width>
         <height>31</height>
@@ -99,7 +99,7 @@ QPushButton:pressed{
      <widget class="QPushButton" name="MinimizeWindowButton">
       <property name="geometry">
        <rect>
-        <x>319</x>
+        <x>330</x>
         <y>0</y>
         <width>41</width>
         <height>31</height>
@@ -144,7 +144,7 @@ QPushButton:pressed{
       <rect>
        <x>20</x>
        <y>40</y>
-       <width>361</width>
+       <width>371</width>
        <height>61</height>
       </rect>
      </property>
@@ -173,13 +173,16 @@ QPushButton:pressed{
      <property name="text">
       <string>РЕГИСТРАЦИЯ</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
     <widget class="QLineEdit" name="LoginLineEdit">
      <property name="geometry">
       <rect>
        <x>20</x>
        <y>110</y>
-       <width>361</width>
+       <width>371</width>
        <height>41</height>
       </rect>
      </property>
@@ -217,7 +220,7 @@ QPushButton:pressed{
       <rect>
        <x>20</x>
        <y>160</y>
-       <width>321</width>
+       <width>331</width>
        <height>41</height>
       </rect>
      </property>
@@ -259,7 +262,7 @@ QPushButton:pressed{
     <widget class="QPushButton" name="CreateAccountButton">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>220</x>
        <y>220</y>
        <width>171</width>
        <height>41</height>
@@ -297,7 +300,7 @@ QPushButton:pressed{
     <widget class="QPushButton" name="AskButton">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>45</x>
        <y>230</y>
        <width>141</width>
        <height>21</height>
@@ -336,7 +339,7 @@ QPushButton:pressed{
     <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
-       <x>340</x>
+       <x>350</x>
        <y>160</y>
        <width>41</width>
        <height>41</height>
