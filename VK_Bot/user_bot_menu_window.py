@@ -55,6 +55,7 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 		self.ui.ProgramInfoWindowButton.clicked.connect(lambda: ProgramInfoWindow())
 		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings_button)
 		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token_button)
+		self.ui.UserBotButton.clicked.connect(self.start_or_stop_bot_button)
 		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log_button)
 		self.ui.SaveLogButton.clicked.connect(self.save_log)
 		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)
@@ -291,8 +292,6 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 			self.ui.AutomatiSaveLogButton.setIcon(icon)
 		else:
 			self.automati_save_log_button_status = False
-
-		self.ui.UserBotButton.clicked.connect(self.start_or_stop_bot_button)
 
 	def add_new_user_command(self, new_command):
 		item = QtWidgets.QListWidgetItem()
