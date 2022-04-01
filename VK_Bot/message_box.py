@@ -6,21 +6,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 # GUI
 import Message_Box.message_box as message_box
 
+# Другое
+import methods as Method
+
 # Всплывающее окно
-class MyMessageBox(QtWidgets.QMainWindow):
+class MyMessageBox(Method.CreateFormWindow):
 	signalButton = QtCore.pyqtSignal(str)
 
-	def __init__(self, text, button_1, button_2, font_size, parent = None):
-		super().__init__(parent, QtCore.Qt.Window)
+	def __init__(self, text, button_1, button_2, font_size, parent=None):
+		super().__init__(parent)
 		_translate = QtCore.QCoreApplication.translate
 		self.ui = message_box.Ui_Form()
 		self.ui.setupUi(self)
-		self.setWindowModality(2)
-
-		# Отключаем стандартные границы окна программы
-		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		self.center()
 
 		self.ui.Label.setText(text)
 
@@ -84,26 +81,6 @@ QPushButton:pressed{
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
-
-	# Перетаскивание безрамочного окна
-	# ==================================================================
-	def center(self):
-		qr = self.frameGeometry()
-		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
-		qr.moveCenter(cp)
-		self.move(qr.topLeft())
-
-	def mousePressEvent(self, event):
-		self.oldPos = event.globalPos()
-
-	def mouseMoveEvent(self, event):
-		try:
-			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-			self.move(self.x() + delta.x(), self.y() + delta.y())
-			self.oldPos = event.globalPos()
-		except AttributeError:
-			pass
-	# ==================================================================
 
 class MessageBox:
 	def __init__(self, text='', button_1='', button_2='', font_size=11):

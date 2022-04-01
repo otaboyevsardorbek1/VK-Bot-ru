@@ -12,24 +12,20 @@ from message_box import MessageBox
 
 # Другие
 import global_variables as GlobalVariables
+import methods as Method
 import server as Server
 from bot import Bot
 import logging
 
 # Главное окно
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(Method.CreateMainWindow):
 	def __init__(self, parent=None):
-		QtWidgets.QWidget.__init__(self, parent)
+		super().__init__(parent)
 		self.ui = main_window.Ui_MainWindow()
 		self.ui.setupUi(self)
 
 		# Запись в логи программы
 		logging.debug('Главное окно.')
-
-		# Отключаем стандартные границы окна программы
-		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		self.center()
 
 		# Запуск потока
 		self.widget_settings_theard = WidgetSettingsTheard()
@@ -45,26 +41,6 @@ class MainWindow(QtWidgets.QMainWindow):
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
-
-	# Перетаскивание безрамочного окна
-	# ==================================================================
-	def center(self):
-		qr = self.frameGeometry()
-		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
-		qr.moveCenter(cp)
-		self.move(qr.topLeft())
-
-	def mousePressEvent(self, event):
-		self.oldPos = event.globalPos()
-
-	def mouseMoveEvent(self, event):
-		try:
-			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-			self.move(self.x() + delta.x(), self.y() + delta.y())
-			self.oldPos = event.globalPos()
-		except AttributeError:
-			pass
-	# ==================================================================
 
 	# Декораторы
 	# ==================================================================
@@ -87,7 +63,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.close()
 
 	@check_selected_user_bot
-	def user_bot_menu_window_button(self, bot_name, item):
+	def user_bot_menu_window_button(self, bot_name: str, item: QtWidgets.QListWidgetItem):
 		logging.debug('Переход в меню бота.')
 		self.user_bot_menu_window = UserBotMenuWindow(bot_name, item)
 		self.user_bot_menu_window.signalStartBot.connect(self.start_bot)
@@ -103,7 +79,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.add_new_user_bot_window.show()
 
 	@check_selected_user_bot
-	def delete_user_bot_button(self, bot_name, item):
+	def delete_user_bot_button(self, bot_name: str, item: QtWidgets.QListWidgetItem):
 		if bot_name not in GlobalVariables.online_bot_dict:
 			server_answer_status_code = Server.delete_user_bot(bot_name)
 			if server_answer_status_code == 200:
@@ -116,20 +92,20 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
-	def widget_settings(self, user_bot_list):
+	def widget_settings(self, user_bot_list: list):
 		for user_bot in user_bot_list:
 			item = QtWidgets.QListWidgetItem()
 			item.setTextAlignment(QtCore.Qt.AlignLeft)
 			item.setText(f'{user_bot}: выключен')
 			self.ui.UserBotListWidget.addItem(item)
 
-	def add_user_bot(self, user_bot):
+	def add_user_bot(self, user_bot: str):
 		item = QtWidgets.QListWidgetItem()
 		item.setTextAlignment(QtCore.Qt.AlignLeft)
 		item.setText(f'{user_bot}: выключен')
 		self.ui.UserBotListWidget.addItem(item)
 
-	def start_bot(self, vk_token, id_bot, bot_name):
+	def start_bot(self, vk_token: str, id_bot: str, bot_name: str):
 		logging.debug(f'Включение бота {bot_name}.')
 		self.bot = Bot(vk_token, id_bot, bot_name)
 		self.bot.signalPrintUserMessage.connect(self.print_user_message)
@@ -138,7 +114,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		logging.debug('Добавление бота в глобальную переменную "online_bot_dict".')
 		GlobalVariables.online_bot_dict.update({bot_name: self.bot})
 
-	def print_user_message(self, bot_name, user, message):
+	def print_user_message(self, bot_name: str, user: str, message: str):
 		logging.debug(f'{bot_name} - Новое сообщение от пользователя {user}: {message}.')
 
 		def save_log(log, bot_settings):
@@ -173,6 +149,7 @@ class WidgetSettingsTheard(QtCore.QThread):
 		user_bot_list = Server.get_user_bot_list()
 		self.signalWidgetSettings.emit(user_bot_list)
 
+# Поток для получения настроек бота и логов бота
 class ReturnBotSettingsAndLog(QtCore.QThread):
 	signalReturnBotSettingsAndLog = QtCore.pyqtSignal(list, dict)
 

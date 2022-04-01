@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # PyQt5
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore
 
 # GUI
 import Main_Window.User_Bot_Menu_Window.User_Command_Widnow.user_command_window as user_command_window
@@ -9,26 +9,21 @@ from db_variable_window import DBVariableWindow
 from message_box import MessageBox
 
 # Другое
+import methods as Method
 import server as Server
 import logging
 
 # Окно пользоватской команды
-class UserCommandWindow(QtWidgets.QMainWindow):
+class UserCommandWindow(Method.CreateFormWindow):
 	signalAddNewUserCommand = QtCore.pyqtSignal(dict)
 
 	def __init__(self, button_text, bot_name, item=None, parent=None):
-		super().__init__(parent, QtCore.Qt.Window)
+		super().__init__(parent)
 		self.ui = user_command_window.Ui_Form()
 		self.ui.setupUi(self)
-		self.setWindowModality(2)
 
 		# Запись в логи программы
 		logging.debug(f'{bot_name} - Окно пользоватской команды.')
-
-		# Отключаем стандартные границы окна программы
-		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		self.center()
 
 		# Все нужные переменные
 		self.button_text = button_text
@@ -51,26 +46,6 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
-
-	# Перетаскивание безрамочного окна
-	# ==================================================================
-	def center(self):
-		qr = self.frameGeometry()
-		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
-		qr.moveCenter(cp)
-		self.move(qr.topLeft())
-
-	def mousePressEvent(self, event):
-		self.oldPos = event.globalPos()
-
-	def mouseMoveEvent(self, event):
-		try:
-			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-			self.move(self.x() + delta.x(), self.y() + delta.y())
-			self.oldPos = event.globalPos()
-		except AttributeError:
-			pass
-	# ==================================================================
 
 	# Логика основной кнопки
 	# ==================================================================
@@ -177,7 +152,7 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
-	def widget_settings(self, user_commands):
+	def widget_settings(self, user_commands: list):
 		self.user_commands = user_commands
 		if self.button_text == 'Создать команду':
 			self.ui.UserCommandButton.setText(self.button_text)
@@ -196,9 +171,8 @@ class UserCommandWindow(QtWidgets.QMainWindow):
 			self.ui.UserCommandButton.setText(self.button_text)
 			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
 
-	def db_or_other_db_variable(self, text):
-		command = self.ui.CommandAnsweTextEdit.toPlainText()
-		command += text
+	def db_or_other_db_variable(self, text: str):
+		command = self.ui.CommandAnsweTextEdit.toPlainText() + text
 		self.ui.CommandAnsweTextEdit.setText(command)
 
 		if text.find('other_db') != -1:

@@ -11,27 +11,22 @@ from message_box import MessageBox
 
 # Другое
 import global_variables as GlobalVariables
+import methods as Method
 import server as Server
 import config as Config
 import logging
 
 # Окно меню бота
-class UserBotMenuWindow(QtWidgets.QMainWindow):
+class UserBotMenuWindow(Method.CreateFormWindow):
 	signalStartBot = QtCore.pyqtSignal(str, str, str)
 
 	def __init__(self, bot_name, item, parent=None):
-		super().__init__(parent, QtCore.Qt.Window)
+		super().__init__(parent)
 		self.ui = user_bot_menu_window.Ui_Form()
 		self.ui.setupUi(self)
-		self.setWindowModality(2)
 
 		# Запись в логи программы
 		logging.debug(f'{bot_name} - Окно меню бота {bot_name}.')
-
-		# Отключаем стандартные границы окна программы
-		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		self.center()
 
 		# Все нужные переменные
 		self.bot_name = bot_name
@@ -54,7 +49,7 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 		# Обработчики основных кнопок
 		self.ui.ProgramInfoWindowButton.clicked.connect(lambda: ProgramInfoWindow())
 		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings_button)
-		self.ui.ShowVKTokenButton.clicked.connect(self.show_vk_token_button)
+		self.ui.ShowVKTokenButton.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.VKTokenLineEdit, self.ui.ShowVKTokenButton))
 		self.ui.UserBotButton.clicked.connect(self.start_or_stop_bot_button)
 		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log_button)
 		self.ui.SaveLogButton.clicked.connect(self.save_log)
@@ -66,26 +61,6 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
-
-	# Перетаскивание безрамочного окна
-	# ==================================================================
-	def center(self):
-		qr = self.frameGeometry()
-		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
-		qr.moveCenter(cp)
-		self.move(qr.topLeft())
-
-	def mousePressEvent(self, event):
-		self.oldPos = event.globalPos()
-
-	def mouseMoveEvent(self, event):
-		try:
-			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-			self.move(self.x() + delta.x(), self.y() + delta.y())
-			self.oldPos = event.globalPos()
-		except AttributeError:
-			pass
-	# ==================================================================
 
 	# Декораторы
 	# ==================================================================
@@ -183,17 +158,6 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 			self.ui.AutomatiSaveLogButton.setIcon(icon)
 
-	def show_vk_token_button(self):
-		icon = QtGui.QIcon()
-		if self.ui.VKTokenLineEdit.echoMode() == 2:
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowVKTokenButton.setIcon(icon)
-			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
-		else:
-			icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.ShowVKTokenButton.setIcon(icon)
-			self.ui.VKTokenLineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
-
 	def save_log(self):
 		items = []
 		for num in range(self.ui.LogListWidget.count()):
@@ -223,13 +187,13 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 		self.add_new_user_command_window.show()
 
 	@check_selected_user_command
-	def edit_user_command_button(self, item):
+	def edit_user_command_button(self, item: QtWidgets.QListWidgetItem):
 		logging.debug(f'{self.bot_name} - Переход в окно редактирования пользоватской команды.')
 		self.edit_user_command_window = UserCommandWindow('Редактировать команду', self.bot_name, item=item)
 		self.edit_user_command_window.show()
 
 	@check_selected_user_command
-	def remove_user_command_button(self, item):
+	def remove_user_command_button(self, item: QtWidgets.QListWidgetItem):
 		user_commands = Server.get_user_commands(self.bot_name)
 		old_user_command = item.text().replace('Команда: ', '').strip()
 
@@ -261,7 +225,7 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
-	def widget_settings(self, log, user_commands, bot_settings):
+	def widget_settings(self, log: list, user_commands: list, bot_settings: dict):
 		self.bot_settings = bot_settings
 		self.ui.UserBotNameLineEdit.setText(self.bot_name)
 		self.ui.UserBotNameLineEdit.setDisabled(True)
@@ -293,7 +257,7 @@ class UserBotMenuWindow(QtWidgets.QMainWindow):
 		else:
 			self.automati_save_log_button_status = False
 
-	def add_new_user_command(self, new_command):
+	def add_new_user_command(self, new_command: dict):
 		item = QtWidgets.QListWidgetItem()
 		item.setTextAlignment(QtCore.Qt.AlignLeft)
 		item.setText(new_command['Command_Name'])

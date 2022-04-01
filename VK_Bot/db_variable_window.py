@@ -1,30 +1,27 @@
 # -*- coding: utf-8 -*-
 
 # PyQt5
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui
 
 # GUI
 import Main_Window.User_Bot_Menu_Window.User_Command_Widnow.DB_Variable_Window.db_variable_window as db_variable_window
 from message_box import MessageBox
+
+# Другое
+import methods as Method
 import logging
 
 # Окно выбора значения DB
-class DBVariableWindow(QtWidgets.QMainWindow):
+class DBVariableWindow(Method.CreateFormWindow):
 	signalReturnDBVariable = QtCore.pyqtSignal(str)
 
 	def __init__(self, bot_name, db_variable_type, parent=None):
-		super().__init__(parent, QtCore.Qt.Window)
+		super().__init__(parent)
 		self.ui = db_variable_window.Ui_Form()
 		self.ui.setupUi(self)
-		self.setWindowModality(2)
 
 		# Запись в логи программы
 		logging.debug(f'{bot_name} - Окно выбора значения DB.')
-
-		# Отключаем стандартные границы окна программы
-		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		self.center()
 
 		# Все нужные переменные
 		self.bot_name = bot_name
@@ -41,26 +38,6 @@ class DBVariableWindow(QtWidgets.QMainWindow):
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
-
-	# Перетаскивание безрамочного окна
-	# ==================================================================
-	def center(self):
-		qr = self.frameGeometry()
-		cp = QtWidgets.QDesktopWidget().availableGeometry().center()
-		qr.moveCenter(cp)
-		self.move(qr.topLeft())
-
-	def mousePressEvent(self, event):
-		self.oldPos = event.globalPos()
-
-	def mouseMoveEvent(self, event):
-		try:
-			delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-			self.move(self.x() + delta.x(), self.y() + delta.y())
-			self.oldPos = event.globalPos()
-		except AttributeError:
-			pass
-	# ==================================================================
 
 	# Логика основной кнопки
 	# ==================================================================
