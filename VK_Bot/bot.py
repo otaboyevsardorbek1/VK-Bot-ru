@@ -14,32 +14,21 @@ import server as Server
 # Классы для работы бота
 # ==================================================================
 class Sender:
-	def __init__(self, vk_session):
+	def __init__(self, vk_session: vk_api.VkApi):
 		self.vk_session = vk_session
 
-	def send_message(self, peer_id, message, keyboard = None):
-		if keyboard != None:
-			self.vk_session.method(
-				'messages.send',
-				{
-					'peer_id': peer_id,
-					'message': message,
-					'keyboard': keyboard.encode('UTF-8'),
-					'random_id': 0
-				}
-			)
-		else:
-			self.vk_session.method(
-				'messages.send',
-				{
-					'peer_id': peer_id,
-					'message': message,
-					'random_id': 0
-				}
-			)
+	def send_message(self, peer_id: int, message: str):
+		self.vk_session.method(
+			'messages.send',
+			{
+				'peer_id': peer_id,
+				'message': message,
+				'random_id': 0
+			}
+		)
 
 class MyBotLongPool(VkBotLongPoll):
-	def __init__(self, vk, group_id):
+	def __init__(self, vk: vk_api.VkApi, group_id: int):
 		super().__init__(vk, group_id)
 
 		self.bot_theard_run = True
@@ -71,12 +60,12 @@ class MyBotLongPool(VkBotLongPoll):
 				yield event
 # ==================================================================
 
-# Потоки
+# Бот
 # ==================================================================
 class Bot(QtCore.QThread):
 	signalPrintUserMessage = QtCore.pyqtSignal(str, str, str)
 
-	def __init__(self, token, group_id, bot_name):
+	def __init__(self, token: str, group_id: str, bot_name: str):
 		QtCore.QThread.__init__(self)
 
 		self.bot_name = bot_name
