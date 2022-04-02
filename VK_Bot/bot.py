@@ -5,7 +5,7 @@ import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
 # PyQt5
-from PyQt5 import QtCore
+from PyQt5.QtCore import QThread, pyqtSignal
 
 # Другие
 import global_variables as GlobalVariables
@@ -62,11 +62,11 @@ class MyBotLongPool(VkBotLongPoll):
 
 # Бот
 # ==================================================================
-class Bot(QtCore.QThread):
-	signalPrintUserMessage = QtCore.pyqtSignal(str, str, str)
+class Bot(QThread):
+	signalPrintUserMessage = pyqtSignal(str, str, str)
 
 	def __init__(self, token: str, group_id: str, bot_name: str):
-		QtCore.QThread.__init__(self)
+		QThread.__init__(self)
 
 		self.bot_name = bot_name
 		self.dict_for_warning_func = {}
@@ -75,7 +75,7 @@ class Bot(QtCore.QThread):
 		self.vk_session = vk_api.VkApi(token = token)
 		self.longpoll = MyBotLongPool(self.vk_session, int(group_id))
 
-		self._sender = Sender(self.vk_session)
+		self.sender = Sender(self.vk_session)
 
 		Server.edit_database(self.bot_name, """
 			CREATE TABLE IF NOT EXISTS Users(
@@ -94,7 +94,7 @@ class Bot(QtCore.QThread):
 
 		user = Server.find_in_database(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
 		if user == None:
-			self._sender.send_message(peer_id, f"""\
+			self.sender.send_message(peer_id, f"""\
 Добро пожаловать @id{id} ({user_data['first_name']} {user_data['last_name']})!
 Так как я тебя раньше не видел, попрошу тебя ознакомится с списком команд через команду "!Список команд".
 """)
@@ -105,7 +105,7 @@ class Bot(QtCore.QThread):
 			Server.edit_database(self.bot_name, f"UPDATE Users SET exp = '{user[3] + 1}' WHERE id = '{id}'")
 			if user[3] + 1 >= user[1] * 20:
 				Server.edit_database(self.bot_name, f"UPDATE Users SET level = '{user[1] + 1}' WHERE id = '{id}'")
-				self._sender.send_message(peer_id, f"Пользователь @id{id} ({user_data['first_name']} {user_data['last_name']}) получил новый уровень!")
+				self.sender.send_message(peer_id, f"Пользователь @id{id} ({user_data['first_name']} {user_data['last_name']}) получил новый уровень!")
 				user = Server.find_in_database(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
 
 			# Костыль, нужно будет переделать!!!
@@ -132,7 +132,7 @@ class Bot(QtCore.QThread):
 									command  = f'[ID другого пользователя]'.join(command.split('{take_user_id}'))
 								message += f"•  {command}\n"
 							command_answer = message.join(command_answer.split('{all_commands}'))
-						self._sender.send_message(peer_id, command_answer)
+						self.sender.send_message(peer_id, command_answer)
 					else:
 						if message.find('[id') != -1:
 							message_value = 0
@@ -167,10 +167,10 @@ class Bot(QtCore.QThread):
 										if command_answer.find('{other_db[4]}') != -1:
 											command_answer = f'{other_user[4]}'.join(command_answer.split('{other_db[4]}'))
 									else:
-										self._sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), пользователь @id{other_id} ({other_user_data['first_name']} {other_user_data['last_name']}) не является участником данной беседы!")
+										self.sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), пользователь @id{other_id} ({other_user_data['first_name']} {other_user_data['last_name']}) не является участником данной беседы!")
 										code_work = False
 								else:
-									self._sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), пользователя @id{other_id} ({other_user_data['first_name']} {other_user_data['last_name']}) нет в базе данных бота, попробуйте в другой раз!")
+									self.sender.send_message(peer_id, f"@id{id} ({user_data['first_name']} {user_data['last_name']}), пользователя @id{other_id} ({other_user_data['first_name']} {other_user_data['last_name']}) нет в базе данных бота, попробуйте в другой раз!")
 									code_work = False
 
 								if code_work:
@@ -191,7 +191,7 @@ class Bot(QtCore.QThread):
 											message += f"• {user_command['Command']}\n"
 										command_answer = message.join(command_answer.split('{all_commands}'))
 
-									self._sender.send_message(peer_id, command_answer)
+									self.sender.send_message(peer_id, command_answer)
 				except IndexError:
 					pass
 

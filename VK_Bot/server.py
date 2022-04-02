@@ -4,8 +4,8 @@
 from message_box import MessageBox
 
 # Другие
-import config as Config
 import global_variables as GlobalVariables
+import config as Config
 import requests
 import json
 
