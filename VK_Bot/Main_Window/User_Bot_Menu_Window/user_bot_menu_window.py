@@ -188,7 +188,6 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
 "    border: none;\n"
-"    border-top-right-radius: 7px;\n"
 "    background-color: #2C313C;\n"
 "}\n"
 "\n"
@@ -211,7 +210,6 @@ class Ui_Form(object):
         self.SaveBotSettingsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.SaveBotSettingsButton.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
-"    border-top-right-radius: 7px;\n"
 "    background-color: #2C313C;\n"
 "}\n"
 "\n"
@@ -256,6 +254,7 @@ class Ui_Form(object):
         self.VKTokenLineEdit.setStyleSheet("QLineEdit{\n"
 "    border-bottom-left-radius: 12px;\n"
 "    border-top-left-radius: 12px;\n"
+"    background-color: white;\n"
 "}")
         self.VKTokenLineEdit.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText|QtCore.Qt.ImhSensitiveData)
         self.VKTokenLineEdit.setInputMask("")
@@ -273,6 +272,7 @@ class Ui_Form(object):
         self.IDBotLineEdit.setFont(font)
         self.IDBotLineEdit.setStyleSheet("QLineEdit{\n"
 "    border-radius: 12px;\n"
+"    background-color: white;\n"
 "}")
         self.IDBotLineEdit.setInputMask("")
         self.IDBotLineEdit.setText("")
@@ -281,29 +281,6 @@ class Ui_Form(object):
         self.IDBotLineEdit.setDragEnabled(False)
         self.IDBotLineEdit.setReadOnly(False)
         self.IDBotLineEdit.setObjectName("IDBotLineEdit")
-        self.frame = QtWidgets.QFrame(self.Window)
-        self.frame.setGeometry(QtCore.QRect(350, 130, 41, 31))
-        self.frame.setStyleSheet("QFrame{\n"
-"    border-bottom-right-radius: 12px;\n"
-"    border-top-right-radius: 12px;\n"
-"    border-bottom-left-radius: 0px;\n"
-"    border-top-left-radius: 0px;\n"
-"    background-color: white;\n"
-"}")
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.ShowVKTokenButton = QtWidgets.QPushButton(self.frame)
-        self.ShowVKTokenButton.setGeometry(QtCore.QRect(0, 0, 41, 31))
-        self.ShowVKTokenButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
-"}")
-        self.ShowVKTokenButton.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ShowVKTokenButton.setIcon(icon1)
-        self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
-        self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
         self.label_3 = QtWidgets.QLabel(self.Window)
         self.label_3.setGeometry(QtCore.QRect(400, 244, 281, 20))
         font = QtGui.QFont()
@@ -320,9 +297,9 @@ class Ui_Form(object):
 "    border: none;\n"
 "}")
         self.AutomatiSaveLogButton.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.AutomatiSaveLogButton.setIcon(icon2)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.AutomatiSaveLogButton.setIcon(icon1)
         self.AutomatiSaveLogButton.setIconSize(QtCore.QSize(16, 16))
         self.AutomatiSaveLogButton.setObjectName("AutomatiSaveLogButton")
         self.UserBotNameLineEdit = QtWidgets.QLineEdit(self.Window)
@@ -334,6 +311,7 @@ class Ui_Form(object):
         self.UserBotNameLineEdit.setFont(font)
         self.UserBotNameLineEdit.setStyleSheet("QLineEdit{\n"
 "    border-radius: 12px;\n"
+"    background-color: white;\n"
 "}")
         self.UserBotNameLineEdit.setInputMask("")
         self.UserBotNameLineEdit.setText("")
@@ -612,24 +590,22 @@ class Ui_Form(object):
 "    background-color: #434965;\n"
 "}")
         self.AddUserCommandButton.setObjectName("AddUserCommandButton")
-        self.frame.raise_()
-        self.WindowFrame.raise_()
-        self.VKTokenLineEdit.raise_()
-        self.IDBotLineEdit.raise_()
-        self.label_3.raise_()
-        self.AutomatiSaveLogButton.raise_()
-        self.UserBotNameLineEdit.raise_()
-        self.Label_1.raise_()
-        self.UserBotButton.raise_()
-        self.ClearLogButton.raise_()
-        self.SaveLogButton.raise_()
-        self.Label_2.raise_()
-        self.LogListWidget.raise_()
-        self.DeleteUserCommandButton.raise_()
-        self.UserCommandsListWidget.raise_()
-        self.Label_3.raise_()
-        self.EditUserCommandButton.raise_()
-        self.AddUserCommandButton.raise_()
+        self.ShowVKTokenButton = QtWidgets.QPushButton(self.Window)
+        self.ShowVKTokenButton.setGeometry(QtCore.QRect(350, 130, 41, 31))
+        self.ShowVKTokenButton.setStyleSheet("QPushButton{\n"
+"    border: none;\n"
+"    border-bottom-right-radius: 12px;\n"
+"    border-top-right-radius: 12px;\n"
+"    border-bottom-left-radius: 0px;\n"
+"    border-top-left-radius: 0px;\n"
+"    background-color: white;\n"
+"}")
+        self.ShowVKTokenButton.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.ShowVKTokenButton.setIcon(icon2)
+        self.ShowVKTokenButton.setIconSize(QtCore.QSize(32, 32))
+        self.ShowVKTokenButton.setObjectName("ShowVKTokenButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

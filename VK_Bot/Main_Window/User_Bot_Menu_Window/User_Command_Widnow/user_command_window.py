@@ -140,7 +140,6 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
 "    border: none;\n"
-"    border-top-right-radius: 7px;\n"
 "    background-color: #2C313C;\n"
 "}\n"
 "\n"
@@ -287,7 +286,7 @@ class Ui_Form(object):
 "}")
         self.NewUserButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.NewUserButton.setIcon(icon)
         self.NewUserButton.setIconSize(QtCore.QSize(16, 16))
         self.NewUserButton.setObjectName("NewUserButton")

@@ -27,10 +27,12 @@ class RegistrationWindow(Method.CreateMainWindow): # Окно регистрац
 		logging.debug('Окно регистрации.')
 
 		# Обработчики основных кнопок
-		self.ui.ShowPasswordButton.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.PasswordLineEdit, self.ui.ShowPasswordButton))
+		for widgets in [self.ui.LoginLineEdit, self.ui.PasswordLineEdit_1, self.ui.ShowPasswordButton_1, self.ui.PasswordLineEdit_2, self.ui.ShowPasswordButton_2]:
+			if widgets in [self.ui.LoginLineEdit, self.ui.PasswordLineEdit_1, self.ui.PasswordLineEdit_2]:
+				widgets.returnPressed.connect(self.create_new_account)
+			else:
+				widgets.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.PasswordLineEdit, self.ui.ShowPasswordButton))
 		self.ui.CreateAccountButton.clicked.connect(self.create_new_account)
-		self.ui.LoginLineEdit.returnPressed.connect(self.create_new_account)
-		self.ui.PasswordLineEdit.returnPressed.connect(self.create_new_account)
 		self.ui.AskButton.clicked.connect(self.authorization_window_button)
 
 		# Обработчики кнопок с панели
@@ -45,9 +47,10 @@ class RegistrationWindow(Method.CreateMainWindow): # Окно регистрац
 
 	def create_new_account(self):
 		login = self.ui.LoginLineEdit.text()
-		password = self.ui.PasswordLineEdit.text()
+		password_1 = self.ui.PasswordLineEdit_1.text()
+		password_2 = self.ui.PasswordLineEdit_2.text()
 
-		server_answer_status_code = Server.create_new_account(login, password)
+		server_answer_status_code = Server.create_new_account(login, password_1, password_2)
 		if server_answer_status_code == 200:
 			logging.debug('Успешное создания нового аккаунта.')
 			logging.debug('Переход в окно авторизации.')
@@ -71,10 +74,10 @@ class AuthorizationWindow(Method.CreateMainWindow): # Окно авториза�
 		logging.debug('Окно авторизации.')
 
 		# Обработчики основных кнопок
-		self.ui.ShowPasswordButton.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.PasswordLineEdit, self.ui.ShowPasswordButton))
-		self.ui.AuthorizationButton.clicked.connect(self.authorization_in_account)
 		self.ui.LoginLineEdit.returnPressed.connect(self.authorization_in_account)
 		self.ui.PasswordLineEdit.returnPressed.connect(self.authorization_in_account)
+		self.ui.ShowPasswordButton.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.PasswordLineEdit, self.ui.ShowPasswordButton))
+		self.ui.AuthorizationButton.clicked.connect(self.authorization_in_account)
 		self.ui.AskButton.clicked.connect(self.registration_window_button)
 
 		# Обработчики кнопок с панели

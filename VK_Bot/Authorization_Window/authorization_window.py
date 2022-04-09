@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\authorization_window.ui'
+# Form implementation generated from reading ui file 'authorization_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -70,7 +70,6 @@ class Ui_MainWindow(object):
         self.MinimizeWindowButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
 "    border: none;\n"
-"    border-top-right-radius: 7px;\n"
 "    background-color: #2C313C;\n"
 "}\n"
 "\n"
@@ -200,7 +199,7 @@ class Ui_MainWindow(object):
 "}")
         self.ShowPasswordButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ShowPasswordButton.setIcon(icon)
         self.ShowPasswordButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowPasswordButton.setObjectName("ShowPasswordButton")
@@ -215,7 +214,7 @@ class Ui_MainWindow(object):
         self.CloseWindowButton.setText(_translate("MainWindow", "X"))
         self.MinimizeWindowButton.setText(_translate("MainWindow", "_"))
         self.Label.setText(_translate("MainWindow", "АВТОРИЗАЦИЯ"))
-        self.LoginLineEdit.setPlaceholderText(_translate("MainWindow", "Login"))
-        self.PasswordLineEdit.setPlaceholderText(_translate("MainWindow", "Password"))
+        self.LoginLineEdit.setPlaceholderText(_translate("MainWindow", "Введите Login"))
+        self.PasswordLineEdit.setPlaceholderText(_translate("MainWindow", "Введите Password"))
         self.AuthorizationButton.setText(_translate("MainWindow", "Вход"))
         self.AskButton.setText(_translate("MainWindow", "Eщё нет аккаунта?"))

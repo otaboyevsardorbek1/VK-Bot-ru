@@ -4,8 +4,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Main_Window.main_window as main_window
 from program_info_window import ProgramInfoWindow
+import Main_Window.main_window as main_window
 from user_bot_menu_window import UserBotMenuWindow
 from add_new_user_bot_window import AddNewUserBotWindow
 from message_box import MessageBox
@@ -33,12 +33,12 @@ class MainWindow(Method.CreateMainWindow):
 		self.widget_settings_theard.start()
 
 		# Обработчики основных кнопок
-		self.ui.ProgramInfoWindowButton.clicked.connect(lambda: ProgramInfoWindow())
 		self.ui.UserBotMenuButton.clicked.connect(self.user_bot_menu_window_button)
 		self.ui.AddUserBotButton.clicked.connect(self.add_new_user_bot_window_button)
 		self.ui.DeleteUserBotButton.clicked.connect(self.delete_user_bot_button)
 
 		# Обработчики кнопок с панели
+		self.ui.ProgramInfoWindowButton.clicked.connect(lambda: ProgramInfoWindow())
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 

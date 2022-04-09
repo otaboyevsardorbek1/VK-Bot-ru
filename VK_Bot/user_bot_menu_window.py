@@ -4,8 +4,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # GUI
-import Main_Window.User_Bot_Menu_Window.user_bot_menu_window as user_bot_menu_window
 from program_info_window import ProgramInfoWindow
+import Main_Window.User_Bot_Menu_Window.user_bot_menu_window as user_bot_menu_window
 from user_command_window import UserCommandWindow
 from message_box import MessageBox
 
@@ -47,8 +47,6 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 		self.widget_settings_theard.start()
 
 		# Обработчики основных кнопок
-		self.ui.ProgramInfoWindowButton.clicked.connect(lambda: ProgramInfoWindow())
-		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings_button)
 		self.ui.ShowVKTokenButton.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.VKTokenLineEdit, self.ui.ShowVKTokenButton))
 		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log_button)
 		self.ui.SaveLogButton.clicked.connect(self.save_log)
@@ -58,6 +56,8 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 		self.ui.DeleteUserCommandButton.clicked.connect(self.remove_user_command_button)
 
 		# Обработчики кнопок с панели
+		self.ui.ProgramInfoWindowButton.clicked.connect(lambda: ProgramInfoWindow())
+		self.ui.SaveBotSettingsButton.clicked.connect(self.save_bot_settings_button)
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 

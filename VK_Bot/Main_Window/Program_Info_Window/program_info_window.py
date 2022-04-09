@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\program_info_window.ui'
+# Form implementation generated from reading ui file 'program_info_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -75,7 +75,6 @@ class Ui_Form(object):
         self.MinimizeWindowButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
 "    border: none;\n"
-"    border-top-right-radius: 7px;\n"
 "    background-color: #2C313C;\n"
 "}\n"
 "\n"

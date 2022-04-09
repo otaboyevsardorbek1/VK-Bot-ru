@@ -10,18 +10,16 @@ import requests
 import json
 
 # Функция для создания аккаунта на сервере
-def create_new_account(login: str, password: str):
+def create_new_account(login: str, password_1: str, password_2: str):
 	try:
 		data = {
 			'Login': login,
-			'Password': password
+			'Password_1': password_1,
+			'Password_2': password_2
 		}
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration_account', json=data)
 		server_answer_text = json.loads(server_answer.text)
-		if server_answer.status_code == 200:
-			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
-		else:
-			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
+		MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 		return server_answer.status_code
 	except requests.exceptions.ConnectionError:
 			MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')

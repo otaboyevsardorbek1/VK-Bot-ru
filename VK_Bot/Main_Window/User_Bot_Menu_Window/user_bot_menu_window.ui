@@ -238,7 +238,6 @@ QPushButton:pressed{
       <string notr="true">QPushButton{
 	color: white;
 	border: none;
-	border-top-right-radius: 7px;
 	background-color: #2C313C;
 }
 
@@ -279,7 +278,6 @@ QPushButton:pressed{
      <property name="styleSheet">
       <string notr="true">QPushButton{
 	border: none;
-	border-top-right-radius: 7px;
 	background-color: #2C313C;
 }
 
@@ -360,6 +358,7 @@ QPushButton:pressed{
      <string notr="true">QLineEdit{
 	border-bottom-left-radius: 12px;
 	border-top-left-radius: 12px;
+	background-color: white;
 }</string>
     </property>
     <property name="inputMethodHints">
@@ -403,6 +402,7 @@ QPushButton:pressed{
     <property name="styleSheet">
      <string notr="true">QLineEdit{
 	border-radius: 12px;
+	background-color: white;
 }</string>
     </property>
     <property name="inputMask">
@@ -426,59 +426,6 @@ QPushButton:pressed{
     <property name="placeholderText">
      <string>Введите ID бота</string>
     </property>
-   </widget>
-   <widget class="QFrame" name="frame">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>130</y>
-      <width>41</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QFrame{
-	border-bottom-right-radius: 12px;
-	border-top-right-radius: 12px;
-	border-bottom-left-radius: 0px;
-	border-top-left-radius: 0px;
-	background-color: white;
-}</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QPushButton" name="ShowVKTokenButton">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>41</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-	border: none;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../../../Icons/eyeOn.png</normaloff>../../../Icons/eyeOn.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-    </widget>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
@@ -553,6 +500,7 @@ QPushButton:pressed{
     <property name="styleSheet">
      <string notr="true">QLineEdit{
 	border-radius: 12px;
+	background-color: white;
 }</string>
     </property>
     <property name="inputMask">
@@ -1117,24 +1065,39 @@ QPushButton:pressed{
      <string>Добавить команду</string>
     </property>
    </widget>
-   <zorder>frame</zorder>
-   <zorder>WindowFrame</zorder>
-   <zorder>VKTokenLineEdit</zorder>
-   <zorder>IDBotLineEdit</zorder>
-   <zorder>label_3</zorder>
-   <zorder>AutomatiSaveLogButton</zorder>
-   <zorder>UserBotNameLineEdit</zorder>
-   <zorder>Label_1</zorder>
-   <zorder>UserBotButton</zorder>
-   <zorder>ClearLogButton</zorder>
-   <zorder>SaveLogButton</zorder>
-   <zorder>Label_2</zorder>
-   <zorder>LogListWidget</zorder>
-   <zorder>DeleteUserCommandButton</zorder>
-   <zorder>UserCommandsListWidget</zorder>
-   <zorder>Label_3</zorder>
-   <zorder>EditUserCommandButton</zorder>
-   <zorder>AddUserCommandButton</zorder>
+   <widget class="QPushButton" name="ShowVKTokenButton">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>130</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	border: none;
+	border-bottom-right-radius: 12px;
+	border-top-right-radius: 12px;
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+	background-color: white;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../Icons/eyeOn.png</normaloff>../../../Icons/eyeOn.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

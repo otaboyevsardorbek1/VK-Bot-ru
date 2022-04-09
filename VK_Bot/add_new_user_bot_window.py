@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # PyQt5
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore
 
 # GUI
 import Main_Window.Add_New_User_Bot_Window.add_new_user_bot_window as add_new_user_bot_window

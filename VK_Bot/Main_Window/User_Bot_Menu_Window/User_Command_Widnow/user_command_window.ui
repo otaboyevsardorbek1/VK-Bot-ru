@@ -192,7 +192,6 @@ QPushButton:pressed{
       <string notr="true">QPushButton{
 	color: white;
 	border: none;
-	border-top-right-radius: 7px;
 	background-color: #2C313C;
 }
 
