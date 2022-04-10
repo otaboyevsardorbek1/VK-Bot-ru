@@ -199,7 +199,7 @@ class Ui_MainWindow(object):
 "}")
         self.ShowPasswordButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ShowPasswordButton.setIcon(icon)
         self.ShowPasswordButton.setIconSize(QtCore.QSize(32, 32))
         self.ShowPasswordButton.setObjectName("ShowPasswordButton")

@@ -27,11 +27,14 @@ class RegistrationWindow(Method.CreateMainWindow): # Окно регистрац
 		logging.debug('Окно регистрации.')
 
 		# Обработчики основных кнопок
-		for widgets in [self.ui.LoginLineEdit, self.ui.PasswordLineEdit_1, self.ui.ShowPasswordButton_1, self.ui.PasswordLineEdit_2, self.ui.ShowPasswordButton_2]:
-			if widgets in [self.ui.LoginLineEdit, self.ui.PasswordLineEdit_1, self.ui.PasswordLineEdit_2]:
-				widgets.returnPressed.connect(self.create_new_account)
-			else:
-				widgets.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.PasswordLineEdit, self.ui.ShowPasswordButton))
+		widgets = [self.ui.LoginLineEdit, self.ui.PasswordLineEdit_1, self.ui.ShowPasswordButton_1, self.ui.PasswordLineEdit_2, self.ui.ShowPasswordButton_2]
+		for widget in widgets:
+			if widget in [self.ui.LoginLineEdit, self.ui.PasswordLineEdit_1, self.ui.PasswordLineEdit_2]:
+				widget.returnPressed.connect(self.create_new_account)
+			elif widget == self.ui.ShowPasswordButton_1:
+				widget.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.PasswordLineEdit_1, self.ui.ShowPasswordButton_1))
+			elif widget == self.ui.ShowPasswordButton_2:
+				widget.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.PasswordLineEdit_2, self.ui.ShowPasswordButton_2))
 		self.ui.CreateAccountButton.clicked.connect(self.create_new_account)
 		self.ui.AskButton.clicked.connect(self.authorization_window_button)
 
