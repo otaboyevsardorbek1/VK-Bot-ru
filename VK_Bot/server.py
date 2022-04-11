@@ -37,7 +37,6 @@ def authorization_in_account(login: str, password: str):
 			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 			GlobalVariables.login = login
 			GlobalVariables.password = password
-			GlobalVariables.unique_key = server_answer_text['Unique_Key']
 		else:
 			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 		return server_answer.status_code
@@ -50,8 +49,7 @@ def create_user_bot(bot_name: str, bot_settings: dict):
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/create_user_bot', json={
 				'Bot_Name': bot_name,
 				'Bot_Settings': bot_settings,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -66,8 +64,7 @@ def create_user_bot(bot_name: str, bot_settings: dict):
 def get_user_bot_list():
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/get_user_bot_list', json={
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -83,8 +80,7 @@ def delete_user_bot(bot_name: str):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/delete_user_bot', json={
 				'Bot_Name': bot_name,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -99,8 +95,7 @@ def delete_user_bot(bot_name: str):
 def get_bot_settings(bot_name: str):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/bot_settings/get', json={
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -116,8 +111,7 @@ def update_bot_settings(bot_name: str, bot_settings: dict):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/bot_settings/update', json={
 				'Bot_Settings': bot_settings,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		if server_answer.status_code == 400:
@@ -130,8 +124,7 @@ def update_bot_settings(bot_name: str, bot_settings: dict):
 def get_user_commands(bot_name: str):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/user_commands/get', json={
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -147,8 +140,7 @@ def update_user_commands(bot_name: str, user_commands: list):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/user_commands/update', json={
 				'User_Commands': user_commands,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		if server_answer.status_code == 400:
@@ -161,8 +153,7 @@ def update_user_commands(bot_name: str, user_commands: list):
 def get_log(bot_name: str):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/log/get', json={
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -178,8 +169,7 @@ def update_log(bot_name: str, log: list):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/log/update', json={
 				'Log': log,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		if server_answer.status_code == 400:
@@ -193,8 +183,7 @@ def find_in_database(bot_name: str, sqlite3_command: str):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/find', json={
 				'SQLite3_Command': sqlite3_command,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -210,8 +199,7 @@ def find_all_in_database(bot_name: str, sqlite3_command: str):
 	try:
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/find_all', json={
 				'SQLite3_Command': sqlite3_command,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
@@ -228,12 +216,10 @@ def edit_database(bot_name: str, sqlite3_command: str, values: tuple = ()):
 		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/edit_database', json={
 				'SQLite3_Command': sqlite3_command,
 				'Values': values,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			} if values != () else {
 				'SQLite3_Command': sqlite3_command,
-				'Password': GlobalVariables.password,
-				'Unique_Key': GlobalVariables.unique_key
+				'Password': GlobalVariables.password
 			}
 		)
 		if server_answer.status_code == 400:
