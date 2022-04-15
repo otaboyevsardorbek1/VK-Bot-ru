@@ -2,7 +2,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # Функция для показа/скрывания текста в LineEdit
-def show_or_hide_text(self, lineEdit: QtWidgets.QLineEdit, eyeButton: QtWidgets.QPushButton):
+def show_or_hide_text(lineEdit: QtWidgets.QLineEdit, eyeButton: QtWidgets.QPushButton):
 	icon = QtGui.QIcon()
 	if lineEdit.echoMode() == 2:
 		icon.addPixmap(QtGui.QPixmap("../Icons/eyeOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -12,6 +12,19 @@ def show_or_hide_text(self, lineEdit: QtWidgets.QLineEdit, eyeButton: QtWidgets.
 		icon.addPixmap(QtGui.QPixmap("../Icons/eyeOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		eyeButton.setIcon(icon)
 		lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+
+# Функция для включения/выключения определённой функции
+def on_or_off_func(button_value: bool, funcButton: QtWidgets.QPushButton):
+	icon = QtGui.QIcon()
+	if button_value == True:
+		icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		funcButton.setIcon(icon)
+		button_value = False
+	else:
+		icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		funcButton.setIcon(icon)
+		button_value = True
+	return button_value
 
 # Класс для создания основы для MainWindow
 class CreateMainWindow(QtWidgets.QMainWindow):

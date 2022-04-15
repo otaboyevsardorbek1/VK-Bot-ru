@@ -28,6 +28,7 @@ class UserCommandWindow(Method.CreateFormWindow):
 		# Все нужные переменные
 		self.message_for_new_user = False
 		self.message_for_up_level = False
+		self.show_command_in_commands_list = False
 		self.button_text = button_text
 		self.bot_name = bot_name
 		self.item = item
@@ -43,8 +44,9 @@ class UserCommandWindow(Method.CreateFormWindow):
 		self.ui.OtherDBVariableButton.clicked.connect(self.other_db_variable_button)
 		self.ui.AllCommandsVariableButton.clicked.connect(self.all_commands_variable_button)
 		self.ui.TakeUserIDVariableButton.clicked.connect(self.take_user_id_variable_button)
-		self.ui.NewUserButton.clicked.connect(self.new_user_Button)
+		self.ui.NewUserButton.clicked.connect(self.new_user_button)
 		self.ui.LevelUPButton.clicked.connect(self.level_up_button)
+		self.ui.ShowCommandInCommandsListButton.clicked.connect(self.show_command_in_commands_list_button)
 		self.ui.UserVariableButton.clicked.connect(self.user_variable_button)
 
 		# Обработчики кнопок с панели
@@ -93,28 +95,6 @@ class UserCommandWindow(Method.CreateFormWindow):
 		else:
 			MessageBox(text = '{take_user_id} можно использовать только один раз!', button_1 = 'Окей')
 
-	def new_user_Button(self):
-		icon = QtGui.QIcon()
-		if self.message_for_new_user == True:
-			self.message_for_new_user = False
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.NewUserButton.setIcon(icon)
-		else:
-			self.message_for_new_user = True
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.NewUserButton.setIcon(icon)
-
-	def level_up_button(self):
-		icon = QtGui.QIcon()
-		if self.message_for_up_level == True:
-			self.message_for_up_level = False
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.LevelUPButton.setIcon(icon)
-		else:
-			self.message_for_up_level = True
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.LevelUPButton.setIcon(icon)
-
 	def create_new_or_edit_user_command_button(self):
 		command_name = self.ui.CommandNameLineEdit.text()
 		command = self.ui.CommandlineEdit.text()
@@ -138,16 +118,17 @@ class UserCommandWindow(Method.CreateFormWindow):
 				break
 
 		if find_command_name == False and find_command == False:
+			data = {
+				'Command_Name': command_name,
+				'Command': command,
+				'Flags': {
+					'Message_For_New_User': self.message_for_new_user,
+					'Message_For_Up_Level': self.message_for_up_level,
+					'Show_Command_In_Commands_List': self.show_command_in_commands_list
+				},
+				'Command_Answer': command_answer
+			}
 			if self.button_text == 'Создать команду':
-				data = {
-					'Command_Name': command_name,
-					'Command': command,
-					'Flags': {
-						'Message_For_New_User': self.message_for_new_user,
-						'Message_For_Up_Level': self.message_for_up_level
-					},
-					'Command_Answer': command_answer
-				}
 				self.user_commands.append(data)
 				Server.update_user_commands(self.bot_name, self.user_commands)
 
@@ -157,15 +138,7 @@ class UserCommandWindow(Method.CreateFormWindow):
 
 				self.close()
 			elif self.button_text == 'Редактировать команду':
-				self.user_commands[self.user_command_value] = {
-					'Command_Name': command_name,
-					'Command': command,
-					'Flags': {
-						'Message_For_New_User': self.message_for_new_user,
-						'Message_For_Up_Level': self.message_for_up_level
-					},
-					'Command_Answer': command_answer
-				}
+				self.user_commands[self.user_command_value] = data
 				Server.update_user_commands(self.bot_name, self.user_commands)
 
 				self.item.setText(command_name)
@@ -182,6 +155,18 @@ class UserCommandWindow(Method.CreateFormWindow):
 				text = f'Команда "{command}" уже существует!'
 
 			MessageBox(text = text, button_1 = 'Щас исправлю...')
+
+	def new_user_button(self):
+		Method.on_or_off_func(self.message_for_new_user, self.ui.NewUserButton)
+		self.message_for_new_user = True
+
+	def level_up_button(self):
+		Method.on_or_off_func(self.message_for_up_level, self.ui.LevelUPButton)
+		self.message_for_up_level = True
+
+	def show_command_in_commands_list_button(self):
+		Method.on_or_off_func(self.show_command_in_commands_list, self.ui.ShowCommandInCommandsListButton)
+		self.show_command_in_commands_list = True
 	# ==================================================================
 
 	# Сигналы QtCore.pyqtSignal
@@ -212,6 +197,11 @@ class UserCommandWindow(Method.CreateFormWindow):
 				icon = QtGui.QIcon()
 				icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 				self.ui.LevelUPButton.setIcon(icon)
+			if self.user_commands[self.user_command_value]['Flags']['Show_Command_In_Commands_List'] == True:
+				self.show_command_in_commands_list = True
+				icon = QtGui.QIcon()
+				icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+				self.ui.ShowCommandInCommandsListButton.setIcon(icon)
 
 			self.ui.UserCommandButton.setText(self.button_text)
 			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)

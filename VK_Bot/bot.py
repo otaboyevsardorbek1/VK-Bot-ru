@@ -10,6 +10,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 # Другие
 import global_variables as GlobalVariables
 import server as Server
+import requests
 
 # Классы для работы бота
 # ==================================================================
@@ -78,8 +79,11 @@ class MyBotLongPool(VkBotLongPoll):
 
 	def listen(self):
 		while self.bot_theard_run == True:
-			for event in self.check():
-				yield event
+			try:
+				for event in self.check():
+					yield event
+			except requests.exceptions.ReadTimeout:
+				pass
 # ==================================================================
 
 # Бот
@@ -97,6 +101,17 @@ class Bot(QThread):
 		self.vk_session = vk_api.VkApi(token = token)
 		self.longpoll = MyBotLongPool(self.vk_session, int(group_id))
 		self.sender = Sender(self.vk_session)
+	
+	def get_commands_list(self):
+		commands_list = ''
+		user_commands = Server.get_user_commands(self.bot_name)
+		for user_command in user_commands:
+			if user_command['Flags']['Show_Command_In_Commands_List'] == True:
+				command = user_command['Command']
+				if command.find('{take_user_id}') != -1:
+					command  = f'[ID другого пользователя]'.join(command.split('{take_user_id}'))
+				commands_list += f"•  {command}\n"
+		return commands_list
 
 	def default_command(self, id: int, user_data: dict, user: list, user_command: dict):
 		command_answer = user_command['Command_Answer']
@@ -109,13 +124,8 @@ class Bot(QThread):
 		if command_answer.find('{db[3]}') != -1:
 			command_answer = f'{user[3]}/{user[1] * 20}'.join(command_answer.split('{db[3]}'))
 		if command_answer.find('{all_commands}') != -1:
-			user_commands, message = Server.get_user_commands(self.bot_name), ''
-			for user_command in user_commands:
-				command = user_command['Command']
-				if command.find('{take_user_id}') != -1:
-					command  = f'[ID другого пользователя]'.join(command.split('{take_user_id}'))
-				message += f"•  {command}\n"
-			command_answer = message.join(command_answer.split('{all_commands}'))
+			commands_list = self.get_commands_list()
+			command_answer = commands_list.join(command_answer.split('{all_commands}'))
 		return command_answer
 
 	def not_default_command(self, peer_id: int, id: int, user_data: dict, user: list, message: str, message_value: int, user_command: dict):
@@ -163,12 +173,8 @@ class Bot(QThread):
 			if command_answer.find('{db[4]}') != -1:
 				command_answer = f'{user[4]}'.join(command_answer.split('{db[4]}'))
 			if command_answer.find('{all_commands}') != -1:
-				message = ''
-				user_commands = Server.get_user_commands(self.bot_name)
-				for user_command in user_commands:
-					message += f"• {user_command['Command']}\n"
-				command_answer = message.join(command_answer.split('{all_commands}'))
-
+				commands_list = self.get_commands_list()
+				command_answer = commands_list.join(command_answer.split('{all_commands}'))
 		return command_answer
 
 	def user_command_answer(self, peer_id: int, id: int, user_data: dict, user: list, message: str, user_commands: dict):

@@ -28,7 +28,7 @@ class AddNewUserBotWindow(Method.CreateFormWindow):
 		self.ui.AddNewUserBotButton.setText('Добавить бота')
 
 		# Обработчики основных кнопок
-		self.ui.ShowVKTokenButton.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.VKTokenLineEdit, self.ui.ShowVKTokenButton))
+		self.ui.ShowVKTokenButton.clicked.connect(lambda: Method.show_or_hide_text(self.ui.VKTokenLineEdit, self.ui.ShowVKTokenButton))
 		self.ui.AddNewUserBotButton.clicked.connect(self.create_new_user_bot_button)
 
 		# Обработчики кнопок с панели

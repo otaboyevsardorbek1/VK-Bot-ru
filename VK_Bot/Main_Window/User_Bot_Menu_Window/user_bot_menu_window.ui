@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1191</width>
-    <height>431</height>
+    <width>811</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>1171</width>
-     <height>411</height>
+     <width>791</width>
+     <height>621</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -159,7 +159,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal{
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1171</width>
+      <width>791</width>
       <height>31</height>
      </rect>
     </property>
@@ -179,7 +179,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal{
     <widget class="QPushButton" name="CloseWindowButton">
      <property name="geometry">
       <rect>
-       <x>1130</x>
+       <x>750</x>
        <y>0</y>
        <width>41</width>
        <height>31</height>
@@ -218,7 +218,7 @@ QPushButton:pressed{
     <widget class="QPushButton" name="MinimizeWindowButton">
      <property name="geometry">
       <rect>
-       <x>1089</x>
+       <x>709</x>
        <y>0</y>
        <width>41</width>
        <height>31</height>
@@ -259,7 +259,7 @@ QPushButton:pressed{
     <widget class="QPushButton" name="SaveBotSettingsButton">
      <property name="geometry">
       <rect>
-       <x>1058</x>
+       <x>678</x>
        <y>0</y>
        <width>31</width>
        <height>31</height>
@@ -431,7 +431,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>244</y>
+      <y>484</y>
       <width>281</width>
       <height>20</height>
      </rect>
@@ -454,7 +454,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>678</x>
-      <y>247</y>
+      <y>487</y>
       <width>20</width>
       <height>21</height>
      </rect>
@@ -605,7 +605,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>320</y>
+      <y>560</y>
       <width>371</width>
       <height>41</height>
      </rect>
@@ -643,7 +643,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>270</y>
+      <y>510</y>
       <width>371</width>
       <height>41</height>
      </rect>
@@ -721,7 +721,7 @@ QPushButton:pressed{
       <x>400</x>
       <y>90</y>
       <width>371</width>
-      <height>151</height>
+      <height>391</height>
      </rect>
     </property>
     <property name="font">
@@ -818,8 +818,8 @@ QPushButton:pressed{
    <widget class="QPushButton" name="DeleteUserCommandButton">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>350</y>
+      <x>20</x>
+      <y>560</y>
       <width>371</width>
       <height>41</height>
      </rect>
@@ -856,8 +856,8 @@ QPushButton:pressed{
    <widget class="QListWidget" name="UserCommandsListWidget">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>90</y>
+      <x>20</x>
+      <y>300</y>
       <width>371</width>
       <height>151</height>
      </rect>
@@ -954,10 +954,10 @@ background-color: #2C313C;
    <widget class="QLabel" name="Label_3">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>34</y>
+      <x>20</x>
+      <y>254</y>
       <width>371</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -992,8 +992,8 @@ background-color: #2C313C;
    <widget class="QPushButton" name="EditUserCommandButton">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>300</y>
+      <x>20</x>
+      <y>510</y>
       <width>371</width>
       <height>41</height>
      </rect>
@@ -1030,8 +1030,8 @@ QPushButton:pressed{
    <widget class="QPushButton" name="AddUserCommandButton">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>250</y>
+      <x>20</x>
+      <y>460</y>
       <width>371</width>
       <height>41</height>
      </rect>

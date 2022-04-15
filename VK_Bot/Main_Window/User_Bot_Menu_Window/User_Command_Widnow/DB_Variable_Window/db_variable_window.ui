@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>342</width>
-    <height>241</height>
+    <height>222</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>321</width>
-     <height>221</height>
+     <height>201</height>
     </rect>
    </property>
    <property name="font">
@@ -159,7 +159,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>160</y>
+      <y>140</y>
       <width>191</width>
       <height>41</height>
      </rect>
@@ -273,26 +273,6 @@ QPushButton:pressed{
      <string>Опыт пользователя:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>130</y>
-      <width>154</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Ранг пользователя:</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="UserLevelButton">
     <property name="geometry">
      <rect>
@@ -315,7 +295,7 @@ QPushButton:pressed{
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../../../Icons/Off.png</normaloff>../../../../../Icons/Off.png</iconset>
+      <normaloff>../../../../../Icons/iconOff.png</normaloff>../../../../../Icons/iconOff.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -346,7 +326,7 @@ QPushButton:pressed{
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../../../Icons/Off.png</normaloff>../../../../../Icons/Off.png</iconset>
+      <normaloff>../../../../../Icons/iconOff.png</normaloff>../../../../../Icons/iconOff.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -377,38 +357,7 @@ QPushButton:pressed{
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../../../Icons/Off.png</normaloff>../../../../../Icons/Off.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>16</width>
-      <height>16</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="UserRankButton">
-    <property name="geometry">
-     <rect>
-      <x>174</x>
-      <y>133</y>
-      <width>20</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton{
-	border: none;
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../../../../Icons/Off.png</normaloff>../../../../../Icons/Off.png</iconset>
+      <normaloff>../../../../../Icons/iconOff.png</normaloff>../../../../../Icons/iconOff.png</iconset>
     </property>
     <property name="iconSize">
      <size>

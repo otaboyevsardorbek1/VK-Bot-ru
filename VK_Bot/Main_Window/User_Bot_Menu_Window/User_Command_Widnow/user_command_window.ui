@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>601</width>
-    <height>431</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>581</width>
-     <height>411</height>
+     <height>431</height>
     </rect>
    </property>
    <property name="font">
@@ -261,7 +261,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>190</y>
+      <y>210</y>
       <width>361</width>
       <height>151</height>
      </rect>
@@ -288,7 +288,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>350</y>
+      <y>370</y>
       <width>361</width>
       <height>41</height>
      </rect>
@@ -328,7 +328,7 @@ QPushButton:pressed{
       <x>390</x>
       <y>50</y>
       <width>171</width>
-      <height>341</height>
+      <height>361</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -554,7 +554,7 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>22</x>
-      <y>166</y>
+      <y>165</y>
       <width>323</width>
       <height>21</height>
      </rect>
@@ -577,7 +577,61 @@ QPushButton:pressed{
     <property name="geometry">
      <rect>
       <x>347</x>
-      <y>169</y>
+      <y>168</y>
+      <width>20</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	border: none;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../Icons/iconOff.png</normaloff>../../../../Icons/iconOff.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>186</y>
+      <width>295</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Показывать в списке команд:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ShowCommandInCommandsListButton">
+    <property name="geometry">
+     <rect>
+      <x>318</x>
+      <y>189</y>
       <width>20</width>
       <height>21</height>
      </rect>

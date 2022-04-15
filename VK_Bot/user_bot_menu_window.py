@@ -47,7 +47,7 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 		self.widget_settings_theard.start()
 
 		# Обработчики основных кнопок
-		self.ui.ShowVKTokenButton.clicked.connect(lambda: Method.show_or_hide_text(self, self.ui.VKTokenLineEdit, self.ui.ShowVKTokenButton))
+		self.ui.ShowVKTokenButton.clicked.connect(lambda: Method.show_or_hide_text(self.ui.VKTokenLineEdit, self.ui.ShowVKTokenButton))
 		self.ui.AutomatiSaveLogButton.clicked.connect(self.automati_save_log_button)
 		self.ui.SaveLogButton.clicked.connect(self.save_log)
 		self.ui.ClearLogButton.clicked.connect(self.clear_log_button)

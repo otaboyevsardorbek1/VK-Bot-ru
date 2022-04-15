@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(601, 431)
+        Form.resize(601, 452)
         self.Window = QtWidgets.QFrame(Form)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 581, 411))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 581, 431))
         font = QtGui.QFont()
         font.setPointSize(8)
         self.Window.setFont(font)
@@ -171,7 +171,7 @@ class Ui_Form(object):
         self.CommandlineEdit.setInputMask("")
         self.CommandlineEdit.setObjectName("CommandlineEdit")
         self.CommandAnsweTextEdit = QtWidgets.QTextEdit(self.Window)
-        self.CommandAnsweTextEdit.setGeometry(QtCore.QRect(20, 190, 361, 151))
+        self.CommandAnsweTextEdit.setGeometry(QtCore.QRect(20, 210, 361, 151))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
@@ -179,7 +179,7 @@ class Ui_Form(object):
         self.CommandAnsweTextEdit.setFont(font)
         self.CommandAnsweTextEdit.setObjectName("CommandAnsweTextEdit")
         self.UserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.UserCommandButton.setGeometry(QtCore.QRect(20, 350, 361, 41))
+        self.UserCommandButton.setGeometry(QtCore.QRect(20, 370, 361, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -202,7 +202,7 @@ class Ui_Form(object):
         self.UserCommandButton.setText("")
         self.UserCommandButton.setObjectName("UserCommandButton")
         self.Variable = QtWidgets.QFrame(self.Window)
-        self.Variable.setGeometry(QtCore.QRect(390, 50, 171, 341))
+        self.Variable.setGeometry(QtCore.QRect(390, 50, 171, 361))
         self.Variable.setStyleSheet("QFrame{\n"
 "    border-radius: 12px;\n"
 "    background-color: #2C313C;\n"
@@ -286,7 +286,7 @@ class Ui_Form(object):
 "}")
         self.NewUserButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.NewUserButton.setIcon(icon)
         self.NewUserButton.setIconSize(QtCore.QSize(16, 16))
         self.NewUserButton.setObjectName("NewUserButton")
@@ -300,7 +300,7 @@ class Ui_Form(object):
         self.label_1.setStyleSheet("")
         self.label_1.setObjectName("label_1")
         self.label_2 = QtWidgets.QLabel(self.Window)
-        self.label_2.setGeometry(QtCore.QRect(22, 166, 323, 21))
+        self.label_2.setGeometry(QtCore.QRect(22, 165, 323, 21))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
@@ -309,7 +309,7 @@ class Ui_Form(object):
         self.label_2.setStyleSheet("")
         self.label_2.setObjectName("label_2")
         self.LevelUPButton = QtWidgets.QPushButton(self.Window)
-        self.LevelUPButton.setGeometry(QtCore.QRect(347, 169, 20, 21))
+        self.LevelUPButton.setGeometry(QtCore.QRect(347, 168, 20, 21))
         self.LevelUPButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.LevelUPButton.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
@@ -318,6 +318,25 @@ class Ui_Form(object):
         self.LevelUPButton.setIcon(icon)
         self.LevelUPButton.setIconSize(QtCore.QSize(16, 16))
         self.LevelUPButton.setObjectName("LevelUPButton")
+        self.label_3 = QtWidgets.QLabel(self.Window)
+        self.label_3.setGeometry(QtCore.QRect(22, 186, 295, 21))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
+        self.label_3.setStyleSheet("")
+        self.label_3.setObjectName("label_3")
+        self.ShowCommandInCommandsListButton = QtWidgets.QPushButton(self.Window)
+        self.ShowCommandInCommandsListButton.setGeometry(QtCore.QRect(318, 189, 20, 21))
+        self.ShowCommandInCommandsListButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ShowCommandInCommandsListButton.setStyleSheet("QPushButton{\n"
+"    border: none;\n"
+"}")
+        self.ShowCommandInCommandsListButton.setText("")
+        self.ShowCommandInCommandsListButton.setIcon(icon)
+        self.ShowCommandInCommandsListButton.setIconSize(QtCore.QSize(16, 16))
+        self.ShowCommandInCommandsListButton.setObjectName("ShowCommandInCommandsListButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -343,3 +362,4 @@ class Ui_Form(object):
         self.TakeUserIDVariableButton.setText(_translate("Form", "{take_user_id}"))
         self.label_1.setText(_translate("Form", "Каждому новому пользователю:"))
         self.label_2.setText(_translate("Form", "При достижении нового уровня:"))
+        self.label_3.setText(_translate("Form", "Показывать в списке команд:"))

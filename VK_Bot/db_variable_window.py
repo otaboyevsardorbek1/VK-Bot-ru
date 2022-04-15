@@ -32,7 +32,6 @@ class DBVariableWindow(Method.CreateFormWindow):
 		self.ui.UserLevelButton.clicked.connect(self.user_level_button)
 		self.ui.UserBalanceButton.clicked.connect(self.user_balance_button)
 		self.ui.UserExperienceButton.clicked.connect(self.user_experience_button)
-		self.ui.UserRankButton.clicked.connect(self.user_rank_button)
 		self.ui.SelectDBVariableButton.clicked.connect(self.select_db_variable_button)
 
 		# Обработчики кнопок с панели
@@ -46,62 +45,29 @@ class DBVariableWindow(Method.CreateFormWindow):
 		self.close()
 
 	def user_level_button(self):
-		icon = QtGui.QIcon()
-		if self.select_button == self.ui.UserLevelButton:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserLevelButton.setIcon(icon)
-
+		button_value = Method.on_or_off_func(self.select_button == self.ui.UserLevelButton, self.ui.UserLevelButton)
+		if button_value == False:
 			self.select_button = None
 		else:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserLevelButton.setIcon(icon)
-
 			self.select_button = self.ui.UserLevelButton
 
 		self.clear_all_buttons()
 
 	def user_balance_button(self):
-		icon = QtGui.QIcon()
-		if self.select_button == self.ui.UserBalanceButton:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserBalanceButton.setIcon(icon)
-
+		button_value = Method.on_or_off_func(self.select_button == self.ui.UserBalanceButton, self.ui.UserBalanceButton)
+		if button_value == False:
 			self.select_button = None
 		else:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserBalanceButton.setIcon(icon)
-
 			self.select_button = self.ui.UserBalanceButton
 
 		self.clear_all_buttons()
 
 	def user_experience_button(self):
-		icon = QtGui.QIcon()
-		if self.select_button == self.ui.UserExperienceButton:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserExperienceButton.setIcon(icon)
-
+		button_value = Method.on_or_off_func(self.select_button == self.ui.UserExperienceButton, self.ui.UserExperienceButton)
+		if button_value == False:
 			self.select_button = None
 		else:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserExperienceButton.setIcon(icon)
-
 			self.select_button = self.ui.UserExperienceButton
-
-		self.clear_all_buttons()
-
-	def user_rank_button(self):
-		icon = QtGui.QIcon()
-		if self.select_button == self.ui.UserRankButton:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserRankButton.setIcon(icon)
-
-			self.select_button = None
-		else:
-			icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-			self.ui.UserRankButton.setIcon(icon)
-
-			self.select_button = self.ui.UserRankButton
 
 		self.clear_all_buttons()
 
@@ -110,8 +76,7 @@ class DBVariableWindow(Method.CreateFormWindow):
 		buttons = [
 			self.ui.UserLevelButton,
 			self.ui.UserBalanceButton,
-			self.ui.UserExperienceButton,
-			self.ui.UserRankButton
+			self.ui.UserExperienceButton
 		]
 		for button in buttons:
 			if self.select_button == button:
@@ -131,13 +96,10 @@ class DBVariableWindow(Method.CreateFormWindow):
 		buttons = [
 			self.ui.UserLevelButton,
 			self.ui.UserBalanceButton,
-			self.ui.UserExperienceButton,
-			self.ui.UserRankButton
+			self.ui.UserExperienceButton
 		]
 		for button in buttons:
-			if self.select_button == button:
-				continue
-			else:
+			if self.select_button != button:
 				icon = QtGui.QIcon()
 				icon.addPixmap(QtGui.QPixmap("../Icons/iconOff.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 				button.setIcon(icon)
