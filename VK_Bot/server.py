@@ -31,7 +31,7 @@ def authorization_in_account(login: str, password: str):
 			'Login': login,
 			'Password': password
 		}
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization_at_account', json=data)
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization_in_account', json=data)
 		server_answer_text = json.loads(server_answer.text)
 		if server_answer.status_code == 200:
 			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
