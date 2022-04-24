@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # GUI
-import Main_Window.Program_Info_Window.program_info_window as program_info_window
+import Program_Info_Window.program_info_window as program_info_window
 
 # Другое
 import methods as Method
