@@ -31,7 +31,7 @@ class ProgramInfoWindow(Method.CreateFormWindow):
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 
-		# Запуск окна информации о проекте
+		# Запуск окна
 		self.show()
 
 	# Логика основной кнопки

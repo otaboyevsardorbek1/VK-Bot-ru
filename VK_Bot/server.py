@@ -9,36 +9,46 @@ import config as Config
 import requests
 import json
 
+# Функция для подтверждения почты на сервере
+def mail_confirmation(gunique_code: str):
+	try:
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/mail_confirmation/{gunique_code}')
+		server_answer_text = json.loads(server_answer.text)
+		MessageBox(text=server_answer_text['Answer'], button_2='Окей')
+		return server_answer.status_code
+	except requests.exceptions.ConnectionError:
+		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
+
 # Функция для создания аккаунта на сервере
-def create_new_account(login: str, password_1: str, password_2: str):
+def register_account(login: str, mail: str, password_1: str, password_2: str):
 	try:
 		data = {
 			'Login': login,
+			'Mail': mail,
 			'Password_1': password_1,
 			'Password_2': password_2
 		}
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/registration_account', json=data)
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/register_account', json=data)
 		server_answer_text = json.loads(server_answer.text)
-		MessageBox(text=server_answer_text['Answer'], button_2='Окей')
+		if server_answer.status_code != 200:
+			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 		return server_answer.status_code
 	except requests.exceptions.ConnectionError:
 			MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для авторизации аккаунта на сервере
-def authorization_in_account(login: str, password: str):
+def authorize_in_account(login: str, password: str):
 	try:
 		data = {
 			'Login': login,
 			'Password': password
 		}
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorization_in_account', json=data)
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/authorize_in_account', json=data)
 		server_answer_text = json.loads(server_answer.text)
+		MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 		if server_answer.status_code == 200:
-			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 			GlobalVariables.login = login
 			GlobalVariables.password = password
-		else:
-			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 		return server_answer.status_code
 	except requests.exceptions.ConnectionError:
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
@@ -46,24 +56,23 @@ def authorization_in_account(login: str, password: str):
 # Функция для создания бота на сервере
 def create_user_bot(bot_name: str, bot_settings: dict):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/create_user_bot', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/create_bot', json={
 				'Bot_Name': bot_name,
 				'Bot_Settings': bot_settings,
 				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
-		if server_answer.status_code == 200:
-			return server_answer.status_code
-		else:
+		if server_answer.status_code != 200:
 			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
+		return server_answer.status_code
 	except requests.exceptions.ConnectionError:
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для получения списка ботов на сервере
-def get_user_bot_list():
+def get_user_bots_list():
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/get_user_bot_list', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/get_bots_list', json={
 				'Password': GlobalVariables.password
 			}
 		)
@@ -78,23 +87,22 @@ def get_user_bot_list():
 # Функция для удаления бота на сервере
 def delete_user_bot(bot_name: str):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/delete_user_bot', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/delete_bot', json={
 				'Bot_Name': bot_name,
 				'Password': GlobalVariables.password
 			}
 		)
 		server_answer_text = json.loads(server_answer.text)
-		if server_answer.status_code == 200:
-			return server_answer.status_code
-		else:
+		if server_answer.status_code != 200:
 			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
+		return server_answer.status_code
 	except requests.exceptions.ConnectionError:
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для получения настроек бота от сервере
 def get_bot_settings(bot_name: str):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/bot_settings/get', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/get_bot_settings', json={
 				'Password': GlobalVariables.password
 			}
 		)
@@ -109,7 +117,7 @@ def get_bot_settings(bot_name: str):
 # Функция для обновления настроек бота на сервере
 def update_bot_settings(bot_name: str, bot_settings: dict):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/bot_settings/update', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/update_bot_settings', json={
 				'Bot_Settings': bot_settings,
 				'Password': GlobalVariables.password
 			}
@@ -117,13 +125,14 @@ def update_bot_settings(bot_name: str, bot_settings: dict):
 		if server_answer.status_code == 400:
 			server_answer_text = json.loads(server_answer.text)
 			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
+		return server_answer.status_code
 	except requests.exceptions.ConnectionError:
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для получения пользоватских команд от сервере
-def get_user_commands(bot_name: str):
+def get_bot_commands_list(bot_name: str):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/user_commands/get', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/get_bot_commands_list', json={
 				'Password': GlobalVariables.password
 			}
 		)
@@ -136,9 +145,9 @@ def get_user_commands(bot_name: str):
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для обновления пользоватских команд на сервере
-def update_user_commands(bot_name: str, user_commands: list):
+def update_bot_commands_list(bot_name: str, user_commands: list):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/user_commands/update', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/update_bot_commands_list', json={
 				'User_Commands': user_commands,
 				'Password': GlobalVariables.password
 			}
@@ -146,13 +155,14 @@ def update_user_commands(bot_name: str, user_commands: list):
 		if server_answer.status_code == 400:
 			server_answer_text = json.loads(server_answer.text)
 			MessageBox(text=server_answer_text['Answer'], button_2='Окей')
+		return server_answer.status_code
 	except requests.exceptions.ConnectionError:
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для получения логов от сервере
-def get_log(bot_name: str):
+def get_bot_log(bot_name: str):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/log/get', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/get_bot_log', json={
 				'Password': GlobalVariables.password
 			}
 		)
@@ -165,9 +175,9 @@ def get_log(bot_name: str):
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для обновления логов на сервере
-def update_log(bot_name: str, log: list):
+def update_bot_log(bot_name: str, log: list):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/log/update', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/update_bot_log', json={
 				'Log': log,
 				'Password': GlobalVariables.password
 			}
@@ -179,9 +189,9 @@ def update_log(bot_name: str, log: list):
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для получения одной записи из DB от сервере
-def find_in_database(bot_name: str, sqlite3_command: str):
+def bot_database_fetchone(bot_name: str, sqlite3_command: str):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/find', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/fetchone', json={
 				'SQLite3_Command': sqlite3_command,
 				'Password': GlobalVariables.password
 			}
@@ -195,9 +205,9 @@ def find_in_database(bot_name: str, sqlite3_command: str):
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для получения нескольких записей из DB от сервере
-def find_all_in_database(bot_name: str, sqlite3_command: str):
+def bot_database_fetchall(bot_name: str, sqlite3_command: str):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/find_all', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/fetchall', json={
 				'SQLite3_Command': sqlite3_command,
 				'Password': GlobalVariables.password
 			}
@@ -211,9 +221,9 @@ def find_all_in_database(bot_name: str, sqlite3_command: str):
 		MessageBox(text='Отсутствует подключение к интернету', button_2='Окей')
 
 # Функция для выполения SQLite3 команд на сервере
-def edit_database(bot_name: str, sqlite3_command: str, values: tuple = ()):
+def bot_database_edit(bot_name: str, sqlite3_command: str, values: tuple = ()):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/edit_database', json={
+		server_answer = requests.post(f'{Config.SERVER}/vk_bot/{GlobalVariables.login}/{bot_name}/database/edit', json={
 				'SQLite3_Command': sqlite3_command,
 				'Values': values,
 				'Password': GlobalVariables.password

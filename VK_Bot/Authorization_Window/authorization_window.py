@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(431, 301)
+        MainWindow.resize(431, 281)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 281))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 261))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -82,8 +82,31 @@ class Ui_MainWindow(object):
 "}")
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
+        self.RecoverAccountButton = QtWidgets.QPushButton(self.WindowFrame)
+        self.RecoverAccountButton.setGeometry(QtCore.QRect(0, 0, 201, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.RecoverAccountButton.setFont(font)
+        self.RecoverAccountButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.RecoverAccountButton.setStyleSheet("QPushButton{\n"
+"    color: white;\n"
+"    border: none;\n"
+"    border-top-left-radius: 7px;\n"
+"    background-color: #2C313C;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #45494D;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: #1B1D23;\n"
+"}")
+        self.RecoverAccountButton.setObjectName("RecoverAccountButton")
         self.Label = QtWidgets.QLabel(self.Window)
-        self.Label.setGeometry(QtCore.QRect(20, 40, 371, 61))
+        self.Label.setGeometry(QtCore.QRect(20, 34, 371, 61))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -104,7 +127,7 @@ class Ui_MainWindow(object):
         self.Label.setAlignment(QtCore.Qt.AlignCenter)
         self.Label.setObjectName("Label")
         self.LoginLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.LoginLineEdit.setGeometry(QtCore.QRect(20, 110, 371, 41))
+        self.LoginLineEdit.setGeometry(QtCore.QRect(20, 100, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.LoginLineEdit.setFont(font)
@@ -118,7 +141,7 @@ class Ui_MainWindow(object):
         self.LoginLineEdit.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
         self.LoginLineEdit.setObjectName("LoginLineEdit")
         self.PasswordLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.PasswordLineEdit.setGeometry(QtCore.QRect(20, 160, 331, 41))
+        self.PasswordLineEdit.setGeometry(QtCore.QRect(20, 150, 331, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.PasswordLineEdit.setFont(font)
@@ -136,7 +159,7 @@ class Ui_MainWindow(object):
         self.PasswordLineEdit.setReadOnly(False)
         self.PasswordLineEdit.setObjectName("PasswordLineEdit")
         self.AuthorizationButton = QtWidgets.QPushButton(self.Window)
-        self.AuthorizationButton.setGeometry(QtCore.QRect(220, 220, 171, 41))
+        self.AuthorizationButton.setGeometry(QtCore.QRect(220, 200, 171, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -158,7 +181,7 @@ class Ui_MainWindow(object):
 "}")
         self.AuthorizationButton.setObjectName("AuthorizationButton")
         self.AskButton = QtWidgets.QPushButton(self.Window)
-        self.AskButton.setGeometry(QtCore.QRect(40, 230, 151, 21))
+        self.AskButton.setGeometry(QtCore.QRect(40, 210, 151, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(False)
@@ -180,22 +203,15 @@ class Ui_MainWindow(object):
 "    color: white;\n"
 "}")
         self.AskButton.setObjectName("AskButton")
-        self.frame = QtWidgets.QFrame(self.Window)
-        self.frame.setGeometry(QtCore.QRect(350, 160, 41, 41))
-        self.frame.setStyleSheet("QFrame{\n"
+        self.ShowPasswordButton = QtWidgets.QPushButton(self.Window)
+        self.ShowPasswordButton.setGeometry(QtCore.QRect(350, 150, 41, 41))
+        self.ShowPasswordButton.setStyleSheet("QPushButton{\n"
+"    border: none;\n"
 "    border-bottom-right-radius: 12px;\n"
 "    border-top-right-radius: 12px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-top-left-radius: 0px;\n"
 "    background-color: white;\n"
-"}")
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.ShowPasswordButton = QtWidgets.QPushButton(self.frame)
-        self.ShowPasswordButton.setGeometry(QtCore.QRect(0, 0, 41, 41))
-        self.ShowPasswordButton.setStyleSheet("QPushButton{\n"
-"    border: none;\n"
 "}")
         self.ShowPasswordButton.setText("")
         icon = QtGui.QIcon()
@@ -213,6 +229,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.CloseWindowButton.setText(_translate("MainWindow", "X"))
         self.MinimizeWindowButton.setText(_translate("MainWindow", "_"))
+        self.RecoverAccountButton.setText(_translate("MainWindow", "Восстановить аккаунт"))
         self.Label.setText(_translate("MainWindow", "АВТОРИЗАЦИЯ"))
         self.LoginLineEdit.setPlaceholderText(_translate("MainWindow", "Введите Login"))
         self.PasswordLineEdit.setPlaceholderText(_translate("MainWindow", "Введите Password"))

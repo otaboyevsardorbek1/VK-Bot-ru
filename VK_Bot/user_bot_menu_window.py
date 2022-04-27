@@ -63,7 +63,7 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 
 	# Декораторы
 	# ==================================================================
-	def check_selected_user_command(func):
+	def check_selected_bot_command(func):
 		def wrapper(self):
 			items = self.ui.UserCommandsListWidget.selectedItems()
 			if len(items) == 1:
@@ -105,8 +105,9 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 				'VK_Token': self.ui.VKTokenLineEdit.text(),
 				'Group_ID': self.ui.IDBotLineEdit.text()
 			}
-			Server.update_bot_settings(self.bot_name, self.bot_settings)
-			MessageBox(text='Успешное сохранение настроек бота', button_2='Окей')
+			server_answer_status_code = Server.update_bot_settings(self.bot_name, self.bot_settings)
+			if server_answer_status_code == 200:
+				MessageBox(text='Успешное сохранение настроек бота', button_2='Окей')
 		else:
 			MessageBox(text='Придумайте сначала имя боту!', button_1='Окей')
 
@@ -165,7 +166,7 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 		for item in items:
 			text = ' '.join(item.text().split('\n'))
 			log.append(text)
-		Server.update_log(self.bot_name, log)
+		Server.update_bot_log(self.bot_name, log)
 		logging.debug(f'{self.bot_name} - Успешное сохранения логов бота {self.bot_name}.')
 		MessageBox(text='Успешное сохранение логов бота.', button_1='Окей')
 
@@ -175,34 +176,34 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 			items.append(self.ui.LogListWidget.item(num))
 		for item in items:
 			self.ui.LogListWidget.takeItem(self.ui.LogListWidget.row(item))
-		Server.update_log(self.bot_name, [])
+		Server.update_bot_log(self.bot_name, [])
 		logging.debug(f'{self.bot_name} - Успешная очистка логов бота {self.bot_name}.')
 		MessageBox(text='Успешная очистка логов бота.', button_1='Окей')
 
 	def add_new_user_command_button(self):
 		logging.debug(f'{self.bot_name} - Переход в окно создания новой пользоватской команды.')
 		self.add_new_user_command_window = UserCommandWindow('Создать команду', self.bot_name)
-		self.add_new_user_command_window.signalAddNewUserCommand.connect(self.add_new_user_command)
+		self.add_new_user_command_window.signalAddNewUserCommand.connect(self.add_new_bot_command)
 		self.add_new_user_command_window.show()
 
-	@check_selected_user_command
+	@check_selected_bot_command
 	def edit_user_command_button(self, item: QtWidgets.QListWidgetItem):
 		logging.debug(f'{self.bot_name} - Переход в окно редактирования пользоватской команды.')
 		self.edit_user_command_window = UserCommandWindow('Редактировать команду', self.bot_name, item=item)
 		self.edit_user_command_window.show()
 
-	@check_selected_user_command
+	@check_selected_bot_command
 	def remove_user_command_button(self, item: QtWidgets.QListWidgetItem):
-		user_commands = Server.get_user_commands(self.bot_name)
-		old_user_command = item.text().replace('Команда: ', '').strip()
+		bot_commands_list = Server.get_bot_commands_list(self.bot_name)
+		old_bot_command = item.text().replace('Команда: ', '').strip()
 
 		user_command_value = 0
-		for user_command in user_commands:
-			if user_command['Command_Name'] == old_user_command: 
+		for bot_command in bot_commands_list:
+			if bot_command['Command_Name'] == old_bot_command: 
 				break
 			user_command_value += 1
-		del user_commands[user_command_value]
-		Server.update_user_commands(self.bot_name, user_commands)
+		del bot_commands_list[user_command_value]
+		Server.update_bot_commands_list(self.bot_name, bot_commands_list)
 
 		logging.debug(f'{self.bot_name} - Успешное удаление пользоватской команды.')
 		self.ui.UserCommandsListWidget.takeItem(self.ui.UserCommandsListWidget.row(item))
@@ -224,15 +225,15 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
-	def widget_settings(self, log: list, user_commands: list, bot_settings: dict):
+	def widget_settings(self, bot_log: list, bot_commands_list: list, bot_settings: dict):
 		self.bot_settings = bot_settings
 		self.ui.UserBotNameLineEdit.setText(self.bot_name)
 		self.ui.UserBotNameLineEdit.setDisabled(True)
 		self.ui.VKTokenLineEdit.setText(self.bot_settings['VK_Token'])
 		self.ui.IDBotLineEdit.setText(self.bot_settings['Group_ID'])
 
-		if log != []:
-			for text in log:
+		if bot_log != []:
+			for text in bot_log:
 				if text != '':
 					text = text.split(': ')
 					item = QtWidgets.QListWidgetItem()
@@ -242,10 +243,10 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 					item.setText(f'{text[0]}:\n{text[1]}')
 					self.ui.LogListWidget.addItem(item)
 
-		for user_command in user_commands:
+		for bot_command in bot_commands_list:
 			item = QtWidgets.QListWidgetItem()
 			item.setTextAlignment(QtCore.Qt.AlignLeft)
-			item.setText(user_command['Command_Name'])
+			item.setText(bot_command['Command_Name'])
 			self.ui.UserCommandsListWidget.addItem(item)
 
 		if self.bot_settings['Automati_Save_Log'] == True:
@@ -259,10 +260,10 @@ class UserBotMenuWindow(Method.CreateFormWindow):
 		# Обработчики основных кнопок
 		self.ui.UserBotButton.clicked.connect(self.start_or_stop_bot_button)
 
-	def add_new_user_command(self, new_command: dict):
+	def add_new_bot_command(self, new_bot_command: dict):
 		item = QtWidgets.QListWidgetItem()
 		item.setTextAlignment(QtCore.Qt.AlignLeft)
-		item.setText(new_command['Command_Name'])
+		item.setText(new_bot_command['Command_Name'])
 		self.ui.UserCommandsListWidget.addItem(item)
 	# ==================================================================
 
@@ -276,7 +277,7 @@ class WidgetSettingsTheard(QtCore.QThread):
 		self.bot_name = bot_name
 
 	def run(self):
-		log = Server.get_log(self.bot_name)
-		user_commands = Server.get_user_commands(self.bot_name)
+		bot_log = Server.get_bot_log(self.bot_name)
+		bot_commands_list = Server.get_bot_commands_list(self.bot_name)
 		bot_settings = Server.get_bot_settings(self.bot_name)
-		self.signalWidgetSettings.emit(log, user_commands, bot_settings)
+		self.signalWidgetSettings.emit(bot_log, bot_commands_list, bot_settings)

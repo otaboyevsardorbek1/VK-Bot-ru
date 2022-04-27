@@ -101,13 +101,13 @@ class Bot(QThread):
 		self.vk_session = vk_api.VkApi(token = token)
 		self.longpoll = MyBotLongPool(self.vk_session, int(group_id))
 		self.sender = Sender(self.vk_session)
-	
+
 	def get_commands_list(self):
 		commands_list = ''
-		user_commands = Server.get_user_commands(self.bot_name)
-		for user_command in user_commands:
-			if user_command['Flags']['Show_Command_In_Commands_List'] == True:
-				command = user_command['Command']
+		bot_commands_list = Server.get_bot_commands_list(self.bot_name)
+		for bot_command in bot_commands_list:
+			if bot_command['Flags']['Show_Command_In_Commands_List'] == True:
+				command = bot_command['Command']
 				if command.find('{take_user_id}') != -1:
 					command  = f'[ID другого пользователя]'.join(command.split('{take_user_id}'))
 				commands_list += f"•  {command}\n"
@@ -140,7 +140,7 @@ class Bot(QThread):
 				break
 
 		code_work = True
-		other_user = Server.find_in_database(self.bot_name, f"SELECT * FROM Users WHERE id = '{other_id}'")
+		other_user = Server.bot_database_fetchone(self.bot_name, f"SELECT * FROM Users WHERE id = '{other_id}'")
 		other_user_data = self.vk_session.method('users.get',{'user_ids': other_id, 'fields': 'verified'})[0]
 		if other_user != None:
 			if other_user_find_in_chat_members == True:
@@ -207,34 +207,34 @@ class Bot(QThread):
 
 	def new_message(self, event):
 		id, peer_id, message = event.obj.from_id, event.obj.peer_id, event.obj.text.lower().strip()
-		user_commands = Server.get_user_commands(self.bot_name)
+		bot_commands_list = Server.get_bot_commands_list(self.bot_name)
 
 		user_data = self.vk_session.method('users.get', {'user_ids': id, 'fields': 'verified'})[0]
 		self.signalPrintUserMessage.emit(self.bot_name, f"{user_data['first_name']} {user_data['last_name']}", event.obj.text.strip())
 
-		user = Server.find_in_database(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
+		user = Server.bot_database_fetchone(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
 		if user == None:
-			for user_command in user_commands:
-				if user_command['Flags']['Message_For_New_User'] == True:
-					command_answer = self.default_command(id, user_data, user, user_command)
+			for bot_command in bot_commands_list:
+				if bot_command['Flags']['Message_For_New_User'] == True:
+					command_answer = self.default_command(id, user_data, user, bot_command)
 					self.sender.send_message(peer_id, command_answer)
-			Server.edit_database(self.bot_name, "INSERT INTO Users VALUES (?, ?, ?, ?)", values = (id, 1, 0, 0))
-			user = Server.find_in_database(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
+			Server.bot_database_edit(self.bot_name, "INSERT INTO Users VALUES (?, ?, ?, ?)", values = (id, 1, 0, 0))
+			user = Server.bot_database_fetchone(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
 
 		if peer_id - 2000000000 > 0:
-			Server.edit_database(self.bot_name, f"UPDATE Users SET exp = '{user[3] + 1}' WHERE id = '{id}'")
+			Server.bot_database_edit(self.bot_name, f"UPDATE Users SET exp = '{user[3] + 1}' WHERE id = '{id}'")
 			if user[3] + 1 >= user[1] * 20:
-				for user_command in user_commands:
-					if user_command['Flags']['Message_For_Up_Level'] == True:
-						command_answer = self.default_command(id, user_data, user, user_command)
+				for bot_command in bot_commands_list:
+					if bot_command['Flags']['Message_For_Up_Level'] == True:
+						command_answer = self.default_command(id, user_data, user, bot_command)
 						self.sender.send_message(peer_id, command_answer)
-				Server.edit_database(self.bot_name, f"UPDATE Users SET level = '{user[1] + 1}' WHERE id = '{id}'")
-				user = Server.find_in_database(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
+				Server.bot_database_edit(self.bot_name, f"UPDATE Users SET level = '{user[1] + 1}' WHERE id = '{id}'")
+				user = Server.bot_database_fetchone(self.bot_name, f"SELECT * FROM Users WHERE id = '{id}'")
 
-		self.user_command_answer(peer_id, id, user_data, user, message, user_commands)
+		self.user_command_answer(peer_id, id, user_data, user, message, bot_commands_list)
 
 	def run(self):
-		Server.edit_database(self.bot_name, """
+		Server.bot_database_edit(self.bot_name, """
 			CREATE TABLE IF NOT EXISTS Users(
 				id BIGINT,
 				level BIGINT,

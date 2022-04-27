@@ -103,17 +103,17 @@ class UserCommandWindow(Method.CreateFormWindow):
 		find_command_name = False
 		find_command = False
 
-		for user_command in self.user_commands:
+		for bot_command in self.bot_commands_list:
 			if self.button_text == 'Редактировать команду':
-				if self.user_commands[self.user_command_value]['Command_Name'] == user_command['Command_Name']:
+				if self.bot_commands_list[self.bot_command_value]['Command_Name'] == bot_command['Command_Name']:
 					continue
-				elif self.user_commands[self.user_command_value]['Command'] == user_command['Command']:
+				elif self.bot_commands_list[self.bot_command_value]['Command'] == bot_command['Command']:
 					continue
 
-			if user_command['Command_Name'] == command_name:
+			if bot_command['Command_Name'] == command_name:
 				find_command_name = True
 				break
-			elif user_command['Command'] == command:
+			elif bot_command['Command'] == command:
 				find_command = True
 				break
 
@@ -129,23 +129,23 @@ class UserCommandWindow(Method.CreateFormWindow):
 				'Command_Answer': command_answer
 			}
 			if self.button_text == 'Создать команду':
-				self.user_commands.append(data)
-				Server.update_user_commands(self.bot_name, self.user_commands)
+				self.bot_commands_list.append(data)
+				server_answer_status_code = Server.update_bot_commands_list(self.bot_name, self.bot_commands_list)
+				if server_answer_status_code == 200:
+					self.signalAddNewUserCommand.emit(data)
+					logging.debug(f'{self.bot_name} - Успешное создания команды {command_name}.')
+					MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
 
-				self.signalAddNewUserCommand.emit(data)
-				logging.debug(f'{self.bot_name} - Успешное создания команды {command_name}.')
-				MessageBox(text = 'Вы успешно создали команду.', button_1 = 'Окей')
-
-				self.close()
+					self.close()
 			elif self.button_text == 'Редактировать команду':
-				self.user_commands[self.user_command_value] = data
-				Server.update_user_commands(self.bot_name, self.user_commands)
+				self.bot_commands_list[self.bot_command_value] = data
+				server_answer_status_code = Server.update_bot_commands_list(self.bot_name, self.bot_commands_list)
+				if server_answer_status_code == 200:
+					self.item.setText(command_name)
+					logging.debug(f'{self.bot_name} - Успешное изменения команды.')
+					MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
 
-				self.item.setText(command_name)
-				logging.debug(f'{self.bot_name} - Успешное изменения команды.')
-				MessageBox(text = 'Вы успешно изменили команду.', button_1 = 'Окей')
-
-				self.close()
+					self.close()
 		else:
 			if find_command_name == True and find_command == True:
 				text = f'Команда "{command}" и команда с именем "{command_name}" уже существует!'
@@ -171,33 +171,33 @@ class UserCommandWindow(Method.CreateFormWindow):
 
 	# Сигналы QtCore.pyqtSignal
 	# ==================================================================
-	def widget_settings(self, user_commands: list):
-		self.user_commands = user_commands
+	def widget_settings(self, bot_commands_list: list):
+		self.bot_commands_list = bot_commands_list
 		if self.button_text == 'Создать команду':
 			self.ui.UserCommandButton.setText(self.button_text)
 			self.ui.UserCommandButton.clicked.connect(self.create_new_or_edit_user_command_button)
 		if self.button_text == 'Редактировать команду':
-			self.user_command_value = 0
-			for user_command in self.user_commands:
+			self.bot_command_value = 0
+			for user_command in self.bot_commands_list:
 				if user_command['Command_Name'] == self.item.text():
 					break
-				self.user_command_value += 1
+				self.bot_command_value += 1
 
-			self.ui.CommandNameLineEdit.setText(self.user_commands[self.user_command_value]['Command_Name'])
-			self.ui.CommandlineEdit.setText(self.user_commands[self.user_command_value]['Command'])
-			self.ui.CommandAnsweTextEdit.setText(self.user_commands[self.user_command_value]['Command_Answer'])
+			self.ui.CommandNameLineEdit.setText(self.bot_commands_list[self.bot_command_value]['Command_Name'])
+			self.ui.CommandlineEdit.setText(self.bot_commands_list[self.bot_command_value]['Command'])
+			self.ui.CommandAnsweTextEdit.setText(self.bot_commands_list[self.bot_command_value]['Command_Answer'])
 
-			if self.user_commands[self.user_command_value]['Flags']['Message_For_New_User'] == True:
+			if self.bot_commands_list[self.bot_command_value]['Flags']['Message_For_New_User'] == True:
 				self.message_for_new_user = True
 				icon = QtGui.QIcon()
 				icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 				self.ui.NewUserButton.setIcon(icon)
-			if self.user_commands[self.user_command_value]['Flags']['Message_For_Up_Level'] == True:
+			if self.bot_commands_list[self.bot_command_value]['Flags']['Message_For_Up_Level'] == True:
 				self.message_for_up_level = True
 				icon = QtGui.QIcon()
 				icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 				self.ui.LevelUPButton.setIcon(icon)
-			if self.user_commands[self.user_command_value]['Flags']['Show_Command_In_Commands_List'] == True:
+			if self.bot_commands_list[self.bot_command_value]['Flags']['Show_Command_In_Commands_List'] == True:
 				self.show_command_in_commands_list = True
 				icon = QtGui.QIcon()
 				icon.addPixmap(QtGui.QPixmap("../Icons/iconOn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -227,5 +227,5 @@ class WidgetSettingsTheard(QtCore.QThread):
 		self.bot_name = bot_name
 
 	def run(self):
-		user_commands = Server.get_user_commands(self.bot_name)
-		self.signalWidgetSettings.emit(user_commands)
+		bot_commands_list = Server.get_bot_commands_list(self.bot_name)
+		self.signalWidgetSettings.emit(bot_commands_list)

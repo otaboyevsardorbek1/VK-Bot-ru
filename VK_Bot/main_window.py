@@ -42,6 +42,9 @@ class MainWindow(Method.CreateMainWindow):
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 
+		# Запуск окна
+		self.show()
+
 	# Декораторы
 	# ==================================================================
 	def check_selected_user_bot(func):
@@ -117,15 +120,15 @@ class MainWindow(Method.CreateMainWindow):
 	def print_user_message(self, bot_name: str, user: str, message: str):
 		logging.debug(f'{bot_name} - Новое сообщение от пользователя {user}: {message}.')
 
-		def save_log(log, bot_settings):
+		def update_bot_log(log: list, bot_settings: dict):
 			if bot_settings['Automati_Save_Log'] == True:
 				logging.debug(f'{bot_name} - Сохранения сообщения пользователя {user} в логи бота {bot_name}.')
 				log.append(f'{user}: {message}')
-				Server.update_log(bot_name, log)
+				Server.update_bot_log(bot_name, log)
 			GlobalVariables.new_user_message = False
 
 		self.return_bot_settings_and_log_theard = ReturnBotSettingsAndLog(bot_name)
-		self.return_bot_settings_and_log_theard.signalReturnBotSettingsAndLog.connect(save_log)
+		self.return_bot_settings_and_log_theard.signalReturnBotSettingsAndLog.connect(update_bot_log)
 		self.return_bot_settings_and_log_theard.start()
 
 		if bot_name in GlobalVariables.user_bot_menu_window_online_dict:
@@ -146,8 +149,8 @@ class WidgetSettingsTheard(QtCore.QThread):
 		QtCore.QThread.__init__(self)
 
 	def run(self):
-		user_bot_list = Server.get_user_bot_list()
-		self.signalWidgetSettings.emit(user_bot_list)
+		user_bots_list = Server.get_user_bots_list()
+		self.signalWidgetSettings.emit(user_bots_list)
 
 # Поток для получения настроек бота и логов бота
 class ReturnBotSettingsAndLog(QtCore.QThread):
@@ -159,6 +162,6 @@ class ReturnBotSettingsAndLog(QtCore.QThread):
 		self.bot_name = bot_name
 
 	def run(self):
-		log = Server.get_log(self.bot_name)
+		bot_log = Server.get_bot_log(self.bot_name)
 		bot_settings = Server.get_bot_settings(self.bot_name)
-		self.signalReturnBotSettingsAndLog.emit(log, bot_settings)
+		self.signalReturnBotSettingsAndLog.emit(bot_log, bot_settings)

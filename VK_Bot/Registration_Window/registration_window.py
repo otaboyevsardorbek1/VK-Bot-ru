@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(431, 341)
+        MainWindow.resize(431, 381)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Window = QtWidgets.QFrame(self.centralwidget)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 321))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 411, 361))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -83,7 +83,7 @@ class Ui_MainWindow(object):
         self.MinimizeWindowButton.setDefault(False)
         self.MinimizeWindowButton.setObjectName("MinimizeWindowButton")
         self.Label = QtWidgets.QLabel(self.Window)
-        self.Label.setGeometry(QtCore.QRect(20, 40, 371, 61))
+        self.Label.setGeometry(QtCore.QRect(20, 34, 371, 61))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
         self.Label.setAlignment(QtCore.Qt.AlignCenter)
         self.Label.setObjectName("Label")
         self.LoginLineEdit = QtWidgets.QLineEdit(self.Window)
-        self.LoginLineEdit.setGeometry(QtCore.QRect(20, 110, 371, 41))
+        self.LoginLineEdit.setGeometry(QtCore.QRect(20, 100, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.LoginLineEdit.setFont(font)
@@ -118,7 +118,7 @@ class Ui_MainWindow(object):
         self.LoginLineEdit.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
         self.LoginLineEdit.setObjectName("LoginLineEdit")
         self.PasswordLineEdit_1 = QtWidgets.QLineEdit(self.Window)
-        self.PasswordLineEdit_1.setGeometry(QtCore.QRect(20, 160, 331, 41))
+        self.PasswordLineEdit_1.setGeometry(QtCore.QRect(20, 200, 331, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.PasswordLineEdit_1.setFont(font)
@@ -136,7 +136,7 @@ class Ui_MainWindow(object):
         self.PasswordLineEdit_1.setReadOnly(False)
         self.PasswordLineEdit_1.setObjectName("PasswordLineEdit_1")
         self.CreateAccountButton = QtWidgets.QPushButton(self.Window)
-        self.CreateAccountButton.setGeometry(QtCore.QRect(220, 260, 171, 41))
+        self.CreateAccountButton.setGeometry(QtCore.QRect(220, 300, 171, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -158,7 +158,7 @@ class Ui_MainWindow(object):
 "}")
         self.CreateAccountButton.setObjectName("CreateAccountButton")
         self.AskButton = QtWidgets.QPushButton(self.Window)
-        self.AskButton.setGeometry(QtCore.QRect(45, 270, 141, 21))
+        self.AskButton.setGeometry(QtCore.QRect(45, 310, 141, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(False)
@@ -181,7 +181,7 @@ class Ui_MainWindow(object):
 "}")
         self.AskButton.setObjectName("AskButton")
         self.ShowPasswordButton_1 = QtWidgets.QPushButton(self.Window)
-        self.ShowPasswordButton_1.setGeometry(QtCore.QRect(350, 160, 41, 41))
+        self.ShowPasswordButton_1.setGeometry(QtCore.QRect(350, 200, 41, 41))
         self.ShowPasswordButton_1.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
 "    border-bottom-right-radius: 12px;\n"
@@ -197,7 +197,7 @@ class Ui_MainWindow(object):
         self.ShowPasswordButton_1.setIconSize(QtCore.QSize(32, 32))
         self.ShowPasswordButton_1.setObjectName("ShowPasswordButton_1")
         self.PasswordLineEdit_2 = QtWidgets.QLineEdit(self.Window)
-        self.PasswordLineEdit_2.setGeometry(QtCore.QRect(20, 210, 331, 41))
+        self.PasswordLineEdit_2.setGeometry(QtCore.QRect(20, 250, 331, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.PasswordLineEdit_2.setFont(font)
@@ -215,7 +215,7 @@ class Ui_MainWindow(object):
         self.PasswordLineEdit_2.setReadOnly(False)
         self.PasswordLineEdit_2.setObjectName("PasswordLineEdit_2")
         self.ShowPasswordButton_2 = QtWidgets.QPushButton(self.Window)
-        self.ShowPasswordButton_2.setGeometry(QtCore.QRect(350, 210, 41, 41))
+        self.ShowPasswordButton_2.setGeometry(QtCore.QRect(350, 250, 41, 41))
         self.ShowPasswordButton_2.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
 "    border-bottom-right-radius: 12px;\n"
@@ -228,6 +228,20 @@ class Ui_MainWindow(object):
         self.ShowPasswordButton_2.setIcon(icon)
         self.ShowPasswordButton_2.setIconSize(QtCore.QSize(32, 32))
         self.ShowPasswordButton_2.setObjectName("ShowPasswordButton_2")
+        self.MailLineEdit = QtWidgets.QLineEdit(self.Window)
+        self.MailLineEdit.setGeometry(QtCore.QRect(20, 150, 371, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.MailLineEdit.setFont(font)
+        self.MailLineEdit.setStyleSheet("QLineEdit{\n"
+"    border-radius: 12px;\n"
+"}")
+        self.MailLineEdit.setInputMethodHints(QtCore.Qt.ImhNone)
+        self.MailLineEdit.setInputMask("")
+        self.MailLineEdit.setText("")
+        self.MailLineEdit.setFrame(False)
+        self.MailLineEdit.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
+        self.MailLineEdit.setObjectName("MailLineEdit")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -244,3 +258,4 @@ class Ui_MainWindow(object):
         self.CreateAccountButton.setText(_translate("MainWindow", "Создать аккаунт"))
         self.AskButton.setText(_translate("MainWindow", "Уже есть аккаунт?"))
         self.PasswordLineEdit_2.setPlaceholderText(_translate("MainWindow", "Повторите Password"))
+        self.MailLineEdit.setPlaceholderText(_translate("MainWindow", "Введите свой Mail"))

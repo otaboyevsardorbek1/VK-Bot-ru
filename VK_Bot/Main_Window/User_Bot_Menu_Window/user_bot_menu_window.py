@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(811, 641)
+        Form.resize(811, 651)
         self.Window = QtWidgets.QFrame(Form)
-        self.Window.setGeometry(QtCore.QRect(10, 10, 791, 621))
+        self.Window.setGeometry(QtCore.QRect(10, 10, 791, 631))
         self.Window.setStyleSheet("QFrame{\n"
 "    border-radius: 7px;\n"
 "    background-color: #1B1D23;\n"
@@ -223,7 +223,7 @@ class Ui_Form(object):
         self.SaveBotSettingsButton.setIconSize(QtCore.QSize(25, 25))
         self.SaveBotSettingsButton.setObjectName("SaveBotSettingsButton")
         self.ProgramInfoWindowButton = QtWidgets.QPushButton(self.WindowFrame)
-        self.ProgramInfoWindowButton.setGeometry(QtCore.QRect(0, 0, 121, 31))
+        self.ProgramInfoWindowButton.setGeometry(QtCore.QRect(0, 0, 131, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -232,6 +232,7 @@ class Ui_Form(object):
         self.ProgramInfoWindowButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ProgramInfoWindowButton.setStyleSheet("QPushButton{\n"
 "    color: white;\n"
+"    border: none;\n"
 "    border-top-left-radius: 7px;\n"
 "    background-color: #2C313C;\n"
 "}\n"
@@ -282,7 +283,7 @@ class Ui_Form(object):
         self.IDBotLineEdit.setReadOnly(False)
         self.IDBotLineEdit.setObjectName("IDBotLineEdit")
         self.label_3 = QtWidgets.QLabel(self.Window)
-        self.label_3.setGeometry(QtCore.QRect(400, 484, 281, 20))
+        self.label_3.setGeometry(QtCore.QRect(400, 494, 281, 20))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
@@ -291,7 +292,7 @@ class Ui_Form(object):
         self.label_3.setStyleSheet("")
         self.label_3.setObjectName("label_3")
         self.AutomatiSaveLogButton = QtWidgets.QPushButton(self.Window)
-        self.AutomatiSaveLogButton.setGeometry(QtCore.QRect(678, 487, 20, 21))
+        self.AutomatiSaveLogButton.setGeometry(QtCore.QRect(678, 497, 20, 21))
         self.AutomatiSaveLogButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AutomatiSaveLogButton.setStyleSheet("QPushButton{\n"
 "    border: none;\n"
@@ -365,7 +366,7 @@ class Ui_Form(object):
         self.UserBotButton.setText("")
         self.UserBotButton.setObjectName("UserBotButton")
         self.ClearLogButton = QtWidgets.QPushButton(self.Window)
-        self.ClearLogButton.setGeometry(QtCore.QRect(400, 560, 371, 41))
+        self.ClearLogButton.setGeometry(QtCore.QRect(400, 570, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -387,7 +388,7 @@ class Ui_Form(object):
 "}")
         self.ClearLogButton.setObjectName("ClearLogButton")
         self.SaveLogButton = QtWidgets.QPushButton(self.Window)
-        self.SaveLogButton.setGeometry(QtCore.QRect(400, 510, 371, 41))
+        self.SaveLogButton.setGeometry(QtCore.QRect(400, 520, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -430,7 +431,7 @@ class Ui_Form(object):
         self.Label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.Label_2.setObjectName("Label_2")
         self.LogListWidget = QtWidgets.QListWidget(self.Window)
-        self.LogListWidget.setGeometry(QtCore.QRect(400, 90, 371, 391))
+        self.LogListWidget.setGeometry(QtCore.QRect(400, 90, 371, 401))
         font = QtGui.QFont()
         font.setPointSize(9)
         font.setBold(True)
@@ -468,7 +469,7 @@ class Ui_Form(object):
         self.LogListWidget.setSelectionRectVisible(False)
         self.LogListWidget.setObjectName("LogListWidget")
         self.DeleteUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.DeleteUserCommandButton.setGeometry(QtCore.QRect(20, 560, 371, 41))
+        self.DeleteUserCommandButton.setGeometry(QtCore.QRect(20, 570, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -490,7 +491,7 @@ class Ui_Form(object):
 "}")
         self.DeleteUserCommandButton.setObjectName("DeleteUserCommandButton")
         self.UserCommandsListWidget = QtWidgets.QListWidget(self.Window)
-        self.UserCommandsListWidget.setGeometry(QtCore.QRect(20, 300, 371, 151))
+        self.UserCommandsListWidget.setGeometry(QtCore.QRect(20, 310, 371, 151))
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(True)
@@ -526,7 +527,7 @@ class Ui_Form(object):
         self.UserCommandsListWidget.setSelectionRectVisible(False)
         self.UserCommandsListWidget.setObjectName("UserCommandsListWidget")
         self.Label_3 = QtWidgets.QLabel(self.Window)
-        self.Label_3.setGeometry(QtCore.QRect(20, 254, 371, 41))
+        self.Label_3.setGeometry(QtCore.QRect(20, 254, 371, 51))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -547,7 +548,7 @@ class Ui_Form(object):
         self.Label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.Label_3.setObjectName("Label_3")
         self.EditUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.EditUserCommandButton.setGeometry(QtCore.QRect(20, 510, 371, 41))
+        self.EditUserCommandButton.setGeometry(QtCore.QRect(20, 520, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -569,7 +570,7 @@ class Ui_Form(object):
 "}")
         self.EditUserCommandButton.setObjectName("EditUserCommandButton")
         self.AddUserCommandButton = QtWidgets.QPushButton(self.Window)
-        self.AddUserCommandButton.setGeometry(QtCore.QRect(20, 460, 371, 41))
+        self.AddUserCommandButton.setGeometry(QtCore.QRect(20, 470, 371, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)

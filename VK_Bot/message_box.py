@@ -82,8 +82,10 @@ QPushButton:pressed{
 		self.ui.CloseWindowButton.clicked.connect(lambda: self.close())
 		self.ui.MinimizeWindowButton.clicked.connect(lambda: self.showMinimized())
 
+		# Запуск окна
+		self.show()
+
 class MessageBox:
 	def __init__(self, text='', button_1='', button_2='', font_size=11):
 		self.message_box = MyMessageBox(text, button_1, button_2, font_size)
 		self.message_box.signalButton.connect(lambda: self.message_box.close())
-		self.message_box.show()

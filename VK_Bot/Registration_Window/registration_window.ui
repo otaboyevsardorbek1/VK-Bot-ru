@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>431</width>
-    <height>341</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>411</width>
-      <height>321</height>
+      <height>361</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -142,7 +142,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>40</y>
+       <y>34</y>
        <width>371</width>
        <height>61</height>
       </rect>
@@ -180,7 +180,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>110</y>
+       <y>100</y>
        <width>371</width>
        <height>41</height>
       </rect>
@@ -218,7 +218,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>160</y>
+       <y>200</y>
        <width>331</width>
        <height>41</height>
       </rect>
@@ -262,7 +262,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>220</x>
-       <y>260</y>
+       <y>300</y>
        <width>171</width>
        <height>41</height>
       </rect>
@@ -300,7 +300,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>45</x>
-       <y>270</y>
+       <y>310</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -339,7 +339,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>350</x>
-       <y>160</y>
+       <y>200</y>
        <width>41</width>
        <height>41</height>
       </rect>
@@ -372,7 +372,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>210</y>
+       <y>250</y>
        <width>331</width>
        <height>41</height>
       </rect>
@@ -416,7 +416,7 @@ QPushButton:pressed{
      <property name="geometry">
       <rect>
        <x>350</x>
-       <y>210</y>
+       <y>250</y>
        <width>41</width>
        <height>41</height>
       </rect>
@@ -443,6 +443,44 @@ QPushButton:pressed{
        <width>32</width>
        <height>32</height>
       </size>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="MailLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>150</y>
+       <width>371</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit{
+	border-radius: 12px;
+}</string>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhNone</set>
+     </property>
+     <property name="inputMask">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="placeholderText">
+      <string>Введите свой Mail</string>
+     </property>
+     <property name="cursorMoveStyle">
+      <enum>Qt::LogicalMoveStyle</enum>
      </property>
     </widget>
    </widget>

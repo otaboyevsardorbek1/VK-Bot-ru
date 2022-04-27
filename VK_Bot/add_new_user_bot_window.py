@@ -29,7 +29,7 @@ class AddNewUserBotWindow(Method.CreateFormWindow):
 
 		# Обработчики основных кнопок
 		self.ui.ShowVKTokenButton.clicked.connect(lambda: Method.show_or_hide_text(self.ui.VKTokenLineEdit, self.ui.ShowVKTokenButton))
-		self.ui.AddNewUserBotButton.clicked.connect(self.create_new_user_bot_button)
+		self.ui.AddNewUserBotButton.clicked.connect(self.add_new_user_bot_button)
 
 		# Обработчики кнопок с панели
 		self.ui.CloseWindowButton.clicked.connect(self.close_window_button)
@@ -49,7 +49,7 @@ class AddNewUserBotWindow(Method.CreateFormWindow):
 		message_box = MessageBox(text='Вы не создали бота, хотите его создать?', button_1='Да', button_2='Нет')
 		message_box.message_box.signalButton.connect(lambda text: create_new_user_bot_button_signal(self, message_box.message_box, text))
 
-	def create_new_user_bot_button(self):
+	def add_new_user_bot_button(self):
 		bot_name = self.ui.UserBotNameLineEdit.text()
 		server_answer_status_code = Server.create_user_bot(bot_name, {
 				'Automati_Save_Log': False,
