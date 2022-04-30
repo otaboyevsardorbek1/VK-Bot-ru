@@ -12,7 +12,7 @@ import json
 # Функция для подтверждения почты на сервере
 def mail_confirmation(gunique_code: str):
 	try:
-		server_answer = requests.post(f'{Config.SERVER}/vk_bot/mail_confirmation/{gunique_code}')
+		server_answer = requests.get(f'{Config.SERVER}/vk_bot/mail_confirmation/{gunique_code}')
 		server_answer_text = json.loads(server_answer.text)
 		MessageBox(text=server_answer_text['Answer'], button_2='Окей')
 		return server_answer.status_code
