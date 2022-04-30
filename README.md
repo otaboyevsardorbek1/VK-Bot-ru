@@ -30,6 +30,8 @@ python main.py (Для Linux: python3 main.py)
 ![software_authorization_window](Icons/authorization_window.jpg)
 ## Окно регистрации:
 ![software_registration_window](Icons/registration_window.jpg)
+## Окно подтверждения почты:
+![software_mail_confirmation_window](Icons/mail_confirmation_window.jpg)
 ## Главное окно:
 ![software_main_window](Icons/main_window.jpg)
 ## Окно информации о программе:
