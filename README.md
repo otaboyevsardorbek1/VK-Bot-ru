@@ -12,7 +12,7 @@ VK Bot - программа для добавление неограниченн
 ```sh
 git clone https://github.com/EXG1O/VK-Bot.git
 cd VK-Bot/VK_Bot
-python main.py (Для Linux: python3 main.py)
+python main.py
 ```
 3. Регистрируем аккаунт;
 4. Авторизируемся в аккаунт;
