@@ -256,47 +256,9 @@ QPushButton:pressed{
      <widget class="QPushButton" name="ProgramInfoWindowButton">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>0</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-	color: white;
-	border: none;
-	background-color: #2C313C;
-}
-
-QPushButton:hover{
-	background-color: #45494D;
-}
-
-QPushButton:pressed{
-	background-color: #1B1D23;
-}</string>
-      </property>
-      <property name="text">
-       <string>О программе</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="SettingsProgramWindowButton">
-      <property name="geometry">
-       <rect>
         <x>0</x>
         <y>0</y>
-        <width>101</width>
+        <width>121</width>
         <height>31</height>
        </rect>
       </property>
@@ -327,7 +289,7 @@ QPushButton:pressed{
 }</string>
       </property>
       <property name="text">
-       <string>Настрйоки</string>
+       <string>О программе</string>
       </property>
      </widget>
     </widget>

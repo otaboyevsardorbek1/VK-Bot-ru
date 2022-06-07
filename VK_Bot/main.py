@@ -6,7 +6,6 @@ from PyQt5 import QtWidgets
 # GUI
 import Registration_Window.registration_window as registration_window
 import Authorization_Window.authorization_window as authorization_window
-from mail_confirmation_window import MailConfirmationWindow
 from main_window import MainWindow
 
 # Другое
@@ -52,6 +51,11 @@ class RegistrationWindow(Method.CreateMainWindow): # Окно регистрац
 		logging.debug('Выход из окна регистрации.')
 		self.close()
 
+	def authorization_window_button(self):
+		logging.debug('Переход в окно авторизации.')
+		AuthorizationWindow()
+		self.close()
+
 	def register_account(self):
 		login = self.ui.LoginLineEdit.text()
 		mail =  self.ui.MailLineEdit.text()
@@ -60,25 +64,9 @@ class RegistrationWindow(Method.CreateMainWindow): # Окно регистрац
 
 		server_answer_status_code = Server.register_account(login, mail, password_1, password_2)
 		if server_answer_status_code == 200:
-			logging.debug('Переход в окно подтверждения почты.')
-			self.mail_confirmation_window = MailConfirmationWindow()
-			self.mail_confirmation_window.signalMailConfirmed.connect(self.mail_confirmed_signal)
-			self.mail_confirmation_window.show()
-
-	def authorization_window_button(self):
-		logging.debug('Переход в окно авторизации.')
-		AuthorizationWindow()
-		self.close()
-	# ==================================================================
-
-	# Сигналы QtCore.pyqtSignal
-	# ==================================================================
-	def mail_confirmed_signal(self):
-		logging.debug('Успешное регистрация аккаунта.')
-		logging.debug('Переход в окно авторизации.')
-		self.auth = AuthorizationWindow()
-		self.auth.show()
-		self.close()
+			logging.debug('Переход в окно авторизации.')
+			AuthorizationWindow()
+			self.close()
 	# ==================================================================
 
 class AuthorizationWindow(Method.CreateMainWindow): # Окно авторизации
